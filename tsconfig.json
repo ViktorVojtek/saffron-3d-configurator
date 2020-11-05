@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "typeRoots": ["custom-types", "node_modules/@types"]
+  },
+  "paths": {
+    "preact": ["custom-types/preact"],
+    // explicitly cast to our installed version of react < 16
+    "react": ["node_modules/@types/react" /* , "custom-types/react" */]
+  },
+  "skipLibCheck": true,
+  "suppressImplicitAnyIndexErrors": true,
+  "lib": ["dom", "es2017"],
+  "baseUrl": ".",
+  "include": ["./src/**/*"]
+}

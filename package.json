@@ -1,0 +1,55 @@
+{
+  "name": "preact-app-temp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "keywords": [],
+  "author": "VV",
+  "license": "ISC",
+  "sideEffects": false,
+  "alias": {
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@types/core-js": "^2.5.3",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.1",
+    "@yushijinhun/three-minifier-webpack": "^0.2.0-alpha.2",
+    "babel-loader": "^8.0.2",
+    "copy-webpack-plugin": "^6.0.3",
+    "core-js": "^3.6.5",
+    "css-loader": "^1.0.0",
+    "file-loader": "^6.0.0",
+    "style-loader": "^0.23.0",
+    "ts-loader": "^8.0.1",
+    "typescript": "^3.9.7",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^5.0.9"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "helmet-csp": "^3.2.0",
+    "nodemailer": "^6.4.14",
+    "preact": "^10.4.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.1",
+    "three": "0.121.1"
+  }
+}
