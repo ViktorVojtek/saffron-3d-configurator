@@ -36,7 +36,9 @@ export default function ({
     dispatch({ type: 'TOGGLE_FORM', payload: false });
   };
 
-  const hancdleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm: (
+    event: React.FormEvent<HTMLFormElement>
+  ) => Promise<void> = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -45,14 +47,28 @@ export default function ({
     const email = (form.email as HTMLInputElement).value;
     const message = (form.message as HTMLInputElement).value;
 
-    const formData = {
+    const formData: string = JSON.stringify({
       firstName,
       lastName,
       message,
       email,
-    };
+    });
 
-    // console.log(formData);
+    const url: string = 'http://localhost:3224/send-mail';
+
+    const resp: Response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: formData,
+    });
+
+    if (resp.status === 200) {
+      const mailResp = await resp.json();
+
+      console.log(mailResp);
+    }
   };
 
   return (
@@ -69,7 +85,7 @@ export default function ({
               ))
             : null}
         </ImagesContainer>
-        <Form onSubmit={hancdleSubmitForm}>
+        <Form onSubmit={handleSubmitForm}>
           <H2>Nezáväzná objednávka</H2>
           <HR />
           <H3>Objednaný produkt:</H3>
@@ -126,9 +142,7 @@ export default function ({
               rows={3}
             />
           </FormControl>
-          <SubmitBtn type='submit' disabled>
-            Odoslať objednávku
-          </SubmitBtn>
+          <SubmitBtn type='submit'>Odoslať objednávku</SubmitBtn>
         </Form>
       </Wrapper>
     </Container>

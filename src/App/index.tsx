@@ -66,7 +66,7 @@ export default function (): JSX.Element {
           <EditBtn style={{ left: '50%!important' }} onClick={handleToggleEdit}>
             Úpravy
           </EditBtn>
-          <OrderBtn onClick={handleToggleForm}>Objednávka</OrderBtn>
+          <OrderBtn onClick={handleToggleForm}>Dopyt</OrderBtn>
           <OrderForm
             show={showForm}
             data={models[objIdx]}
