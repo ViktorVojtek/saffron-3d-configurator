@@ -124,8 +124,9 @@ export default function (): void {
     onDocumentTouchDown,
     false
   );
-  window.addEventListener('onresize', () => {
-    console.log(`${renderer.domElement} has been resized`);
+  window.addEventListener('resize', () => {
+    console.log(renderer.domElement);
+    console.log('has been resized');
     onWindowResize();
   }, false);
 

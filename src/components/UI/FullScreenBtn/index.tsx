@@ -1,75 +1,38 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { animate } from '../../../utils';
-import {
-  appWrapperId,
-  camera,
-  composer,
-  renderer,
-} from '../../../utils/constants';
-import { useStore } from '../../../utils/store';
+import { appWrapperId, renderer } from '../../../utils/constants';
 import FSBtn from './styled';
 
 export default (): JSX.Element => {
-  const {
-    dispatch,
-    state: { dimensions },
-  } = useStore();
   const [fullscreen, setFullscreen] = useState(false);
 
-  const handleChangeFullscreen: () => void = () => {
-    const grandAppParent = renderer.domElement.closest(`#${appWrapperId}`)
-      .parentElement;
-    const gAPDimensions = JSON.parse(
-      grandAppParent.getAttribute('data-dimensions')
-    );
+  useEffect(() => {
+    const changeFullScreen = () => {
+      if (!document.fullscreenElement) {
+        setFullscreen(false);
+        animate();
+      }
+    };
 
-    let width: number, height: number;
+    renderer.domElement
+      .closest(`#${appWrapperId}`)
+      .addEventListener('fullscreenchange', changeFullScreen, false);
 
-    if (!fullscreen === true) {
-      grandAppParent.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-      `;
-      renderer.domElement.style.cssText = `
-        width: 100vw;
-        height: 100vh;
-      `;
+    () =>
+      renderer.domElement
+        .closest(`#${appWrapperId}`)
+        .removeEventListener('fullscreenchange', changeFullScreen);
+  }, []);
 
-      width = window.innerWidth;
-      height = window.innerHeight;
-
-      // grandAppParent.requestFullscreen();
-    } else {
-      grandAppParent.style.cssText = `
-        position: static;
-        width: ${gAPDimensions[0]}px;
-        height: ${gAPDimensions[1]}px;
-      `;
-      renderer.domElement.style.cssText = `
-        width: ${gAPDimensions[0]}px;
-        height: ${gAPDimensions[1]}px;
-      `;
-
-      width = gAPDimensions[0];
-      height = gAPDimensions[1];
+  const handleTurnFullscreenOn: () => void = () => {
+    if (!fullscreen) {
+      renderer.domElement.closest(`#${appWrapperId}`).requestFullscreen();
     }
 
-    renderer.setSize(width, height, true);
-    composer.setSize(width, height);
-
-    dispatch({ type: 'SET_DIMENSIONS', payload: { ...dimensions, width } });
-
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
     animate();
-
-    setFullscreen(!fullscreen);
+    setFullscreen(true);
   };
 
-  return <FSBtn fullscreen={fullscreen} onClick={handleChangeFullscreen} />;
+  return <FSBtn fullscreen={fullscreen} onClick={handleTurnFullscreenOn} />;
 };
