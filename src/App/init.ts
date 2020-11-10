@@ -48,9 +48,9 @@ export default function (): void {
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.minDistance = 5.5;
   
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.75;
-  controls.rotateSpeed = 0.35;
+  // controls.enableDamping = true;
+  // controls.dampingFactor = 0.75;
+  // controls.rotateSpeed = 0.35;
   controls.addEventListener('change', animate);
   // END
 
@@ -124,11 +124,7 @@ export default function (): void {
     onDocumentTouchDown,
     false
   );
-  window.addEventListener('resize', () => {
-    console.log(renderer.domElement);
-    console.log('has been resized');
-    onWindowResize();
-  }, false);
+  window.addEventListener('resize', onWindowResize, false);
 
   dispatch({
     type: 'SET_DIMENSIONS',
