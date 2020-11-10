@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { animate } from '../../../utils';
-import { appWrapperId, camera, renderer } from '../../../utils/constants';
+import {
+  appWrapperId,
+  camera,
+  composer,
+  renderer,
+} from '../../../utils/constants';
 import { useStore } from '../../../utils/store';
 import FSBtn from './styled';
 
@@ -36,6 +41,8 @@ export default (): JSX.Element => {
 
       width = window.innerWidth;
       height = window.innerHeight;
+
+      // grandAppParent.requestFullscreen();
     } else {
       grandAppParent.style.cssText = `
         position: static;
@@ -52,6 +59,7 @@ export default (): JSX.Element => {
     }
 
     renderer.setSize(width, height, true);
+    composer.setSize(width, height);
 
     dispatch({ type: 'SET_DIMENSIONS', payload: { ...dimensions, width } });
 

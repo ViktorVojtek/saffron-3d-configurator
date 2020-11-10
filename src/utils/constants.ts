@@ -6,6 +6,8 @@ import {
   Vector2
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 
 export type CameraPosType = {
   x: number;
@@ -29,6 +31,8 @@ export const renderer: WebGLRenderer = new WebGLRenderer({
   powerPreference: 'high-performance',
 });
 
+export const composer: EffectComposer = new EffectComposer(renderer);
+
 export const appParent: HTMLDivElement = renderer.domElement.closest(
   `#${appWrapperId}`
 );
@@ -39,6 +43,8 @@ export const camera: PerspectiveCamera = new PerspectiveCamera(
   0.1,
   1000
 );
+
+export const renderPass: RenderPass = new RenderPass(scene, camera);
 
 export const controls: OrbitControls = new OrbitControls(
   camera,

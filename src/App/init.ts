@@ -3,15 +3,18 @@ import {
   scene,
   camera,
   cameraPosStart,
+  composer,
   containerId,
   controls,
-  renderer
+  renderer,
+  renderPass
 } from '../utils/constants';
 import {
   ACESFilmicToneMapping,
   PCFSoftShadowMap,
   Object3D,
   sRGBEncoding,
+  Vector2
 } from 'three';
 import Lights from '../components/THREE/Lights';
 import Ground from '../components/THREE/Ground';
@@ -22,6 +25,9 @@ import {
   onWindowResize,
 } from '../utils';
 import { useStore } from '../utils/store';
+
+import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
+import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass';
 
 export default function (): void {
   const { dispatch } = useStore();
@@ -53,15 +59,15 @@ export default function (): void {
   renderer.clearDepth();
   renderer.setPixelRatio(window.devicePixelRatio || 1);
 
-  renderer.setClearColor(0xffffff, 1);
+  // renderer.setClearColor(0xffffff, 1);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = PCFSoftShadowMap;
 
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.375;
+  renderer.toneMappingExposure = 0.75; // 0.375;
 
   renderer.outputEncoding = sRGBEncoding;
-  renderer.gammaFactor = 2.25;
+  renderer.gammaFactor = 2.2; //2.75;
 
   renderer.physicallyCorrectLights = true;
 
@@ -85,13 +91,43 @@ export default function (): void {
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
+  const saoPass = new SAOPass(scene, camera, false, false, new Vector2(1024, 1024));
+
+  saoPass.renderToScreen = true;
+
+  saoPass.params.saoBias = 0.5;
+  saoPass.params.saoIntensity = 0.0016; // 0.0015;
+  saoPass.params.saoScale = 3.5;
+  saoPass.params.saoKernelRadius = 8;
+  saoPass.params.saoMinResolution = 0;
+  saoPass.params.saoBlur = 1;
+  saoPass.params.saoBlurRadius = 2.5;
+  saoPass.params.saoBlurStdDev = 2;
+  saoPass.params.saoBlurDepthCutoff = 0.01;
+
+  const ssaaRenderPass: SSAARenderPass = new SSAARenderPass(scene, camera, 0xffffff, 0);
+
+  // ssaaRenderPass.unbiased = true;
+  ssaaRenderPass.setSize(width, height);
+  ssaaRenderPass.sampleLevel = 2;
+
+  composer.setSize(width, height);
+  composer.setPixelRatio(window.devicePixelRatio || 1);
+
+  composer.addPass(renderPass);
+  composer.addPass(ssaaRenderPass);
+  composer.addPass(saoPass);
+
   renderer.domElement.addEventListener('click', onDocumentMouseDown, false);
   renderer.domElement.addEventListener(
     'touchstart',
     onDocumentTouchDown,
     false
   );
-  window.addEventListener('resize', onWindowResize, false);
+  window.addEventListener('onresize', () => {
+    console.log(`${renderer.domElement} has been resized`);
+    onWindowResize();
+  }, false);
 
   dispatch({
     type: 'SET_DIMENSIONS',
