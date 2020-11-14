@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useStore } from '../../../utils/store';
+import { domainUri } from '../../../utils/constants';
 import {
   Container,
   CloseBtn,
@@ -54,7 +55,7 @@ export default function ({
       email,
     });
 
-    const url: string = 'http://localhost:3224/send-mail';
+    const url: string = `${domainUri}/send-mail`;
 
     const resp: Response = await fetch(url, {
       method: 'POST',
@@ -142,7 +143,9 @@ export default function ({
               rows={3}
             />
           </FormControl>
-          <SubmitBtn type='submit'>Odoslať objednávku</SubmitBtn>
+          <SubmitBtn type='submit' disabled>
+            Odoslať objednávku
+          </SubmitBtn>
         </Form>
       </Wrapper>
     </Container>
