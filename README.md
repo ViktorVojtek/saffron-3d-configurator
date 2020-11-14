@@ -21,4 +21,5 @@ This project uses _webpack-dev-server_ to spin up an Express server with Hot-Rel
 ###### Configuration
 
 This 3D configurator use file **data.json** located in _./public/saffron/data.json_ to hold information of configurable items and its assets, like 3d models (title, position, scale, materials, etc.).
-To make any changes in configurable objects, to be seen in this configurator modify this file and related paths to assets in _./public/static_ directory, where all assets are located.
+To make any changes in configurable objects modify this file.
+Make sure you have all assets located in _./public/static_ directory.
