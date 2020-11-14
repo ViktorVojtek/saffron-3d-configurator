@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useStore } from '../store'; 
 import { animate, fetchObjects, IModel } from '../index';
 import Model from '../../components/THREE/Model';
-import { scene, vendor } from '../constants';
+import { scene, domainUri, vendor } from '../constants';
 import { Object3D } from 'three';
 
 export const useModels: (
@@ -27,7 +27,7 @@ export const useModels: (
         }
 
         if (models.length < 1) {
-          const modelItems = await fetchObjects(`./${vendor}/data.json`);
+          const modelItems = await fetchObjects(`${domainUri}/${vendor}/data.json`);
 
           dispatch({ type: 'SET_MODELS', payload: modelItems });
         } else {
