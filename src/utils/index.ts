@@ -43,5 +43,3 @@ export { handleScreenshots } from './fn/screenshots';
 export { changeBedMaterial, changeHead, changeLeg, changeLegMaterial } from './fn/changeParts';
 
 export { onProgress } from './fn/progress';
-
-export { toggleEditBtn } from './fn/toggleEdit';

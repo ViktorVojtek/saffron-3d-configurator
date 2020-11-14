@@ -55,23 +55,16 @@ export const MenuButtonComponent = styled.button<IMBC>`
 export const MenuWrapper = styled.div`
   display: ${({ show }: IMenuWrapperProps) => (show ? 'block' : 'none')};
   background: transparent;
-  // border-radius: 0.25rem;
   position: relative;
   padding: 0.4rem 0.75rem;
   margin: 0 auto;
-  // width: fit-content;
   width: 65%;
-  // overflow-x: scroll;
-  // overflow-y: hidden;
   pointer-events: all;
-  // white-space: nowrap;
 `;
 
 interface IMWN {
   bed?: boolean;
 }
-// ${({ bed }: IMWN) => bed && 'justify-content: center;'}
-// ${({ bed }: IMWN) => (bed ? 'flex' : 'block')};
 
 export const MenuWrapperNarrow = styled.div<IMWN>`
   background: rgba(0, 0, 0, 0.75);
@@ -139,7 +132,6 @@ export const MenuTitle = styled.strong`
   text-align: ${({ left }: IMenuTitle) => (left ? 'left' : 'center')};
 `;
 
-// ${({ bed }) => bed && 'position: absolute; left: 0.75rem;'}
 export const MenuTitleP = styled.p<IMWN>`
   margin-top: 0;
   margin-bottom: 0.5rem;

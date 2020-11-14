@@ -71,11 +71,8 @@ export function changeLegMaterial(i:number): void {
 
   headItems.traverse((child: any) => {
     if (child.isMesh && child.visible && child.name.toLowerCase() === 'frame') {
-      // console.log(child.name);
       headIsFrame = true;
       headItem = child;
-      // console.log(headIdx);
-      // console.log(models[objIdx].textures.head[headIdx].maps[matIdx]);
       headTexture = models[objIdx].textures.head[headIdx].maps[matIdx].wood[i];
     }
   });
@@ -146,7 +143,7 @@ export function changeHead(items: any[], i: number): void {
 
       if (child.name.toLowerCase() === items[i].title.toLowerCase()) {
         const headMaterial: MeshLambertMaterial = new MeshLambertMaterial({
-          reflectivity: 0.15 // 0.225,
+          reflectivity: 0.15
         });
 
         child.material = headMaterial;
@@ -195,7 +192,6 @@ export function changeLeg(items: any[], i: number) {
 
       if (child.name.toLowerCase() === items[i].title.toLowerCase()) {
         const legMaterial: MeshLambertMaterial = new MeshLambertMaterial({
-          // roughness: 0.3,
           reflectivity: 0.225,
         });
 
@@ -229,28 +225,22 @@ function changeMaterial(
   textureImg: string,
   callback?: () => void
 ): void {
-  const Loader = AjaxTextureLoader(); // : TextureLoader = new TextureLoader();
+  const Loader = AjaxTextureLoader();
 
   if ((item as any).material && (item as any).material.map) {
     (item as any).material.map.dispose();
   }
 
-  // console.log(textureImg);
-  // console.log(item);
-
   Loader.load(textureImg, (texture: Texture) => {
-    // console.log(texture);
     texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
     texture.encoding = sRGBEncoding;
 
     (item as any).material.map = texture;
     (item as any).material.needsUpdate = true;
 
-    // console.log('Mat has been changed');
-
     if (typeof callback === 'function') {
       callback();
     }
-    // console.log(scene);
+    
   }, (event: ProgressEvent<EventTarget>) => { onProgress(event, ToLoadEnum.TEXTURE) });
 }

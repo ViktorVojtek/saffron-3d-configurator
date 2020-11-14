@@ -5,8 +5,8 @@ export default function (): Mesh<PlaneBufferGeometry, ShadowMaterial> {
   const material: ShadowMaterial = new ShadowMaterial();
 
   material.transparent = true;
-  material.opacity = 0.35; // 0.3;
-  material.color = new Color(0x000000); // new Color(0x494949);
+  material.opacity = 0.35;
+  material.color = new Color(0x000000);
 
   const plane: Mesh<PlaneBufferGeometry, ShadowMaterial> = new Mesh(
     geometry,
@@ -17,8 +17,6 @@ export default function (): Mesh<PlaneBufferGeometry, ShadowMaterial> {
   plane.position.set(0, 0, 0);
   plane.receiveShadow = true;
   plane.rotation.x = -Math.PI / 2;
-
-  // plane.callback = function () { console.log(this.name); };
 
   return plane;
 }

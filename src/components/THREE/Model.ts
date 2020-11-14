@@ -65,7 +65,7 @@ export default function (model: IModel): Promise<Object3D> {
       const group: Group = new Group();
 
       let material: MeshLambertMaterial = new MeshLambertMaterial({
-        reflectivity: 0.15// 0.225,
+        reflectivity: 0.15
       });
 
       if (texture) {
@@ -110,7 +110,7 @@ export default function (model: IModel): Promise<Object3D> {
 
         const headMaterial: MeshLambertMaterial = new MeshLambertMaterial({
           map: headTxtImage,
-          reflectivity: 0.15 // 0.225,
+          reflectivity: 0.15
         });
 
         heads.traverse((child: any) => {
@@ -118,14 +118,13 @@ export default function (model: IModel): Promise<Object3D> {
             child.isMesh &&
             child.name.toLowerCase() === model.head.toLowerCase()
           ) {
-            // console.log('SET HEAD FROM MODEL FN');
             child.material = headMaterial;
             child.material.needsUpdate = true;
             child.visible = true;
             
             dispatch({ type: 'SET_HEAD_TITLE', payload: model.head });
 
-            let legTxtImage: Texture; // = await AsyncTextureLoader(legTexture);
+            let legTxtImage: Texture;
 
             ajaxTextureLoader.load(legTexture, (lTextureImg: Texture) => {
               legTxtImage = lTextureImg;
@@ -135,7 +134,6 @@ export default function (model: IModel): Promise<Object3D> {
 
               const legMaterial: MeshLambertMaterial = new MeshLambertMaterial({
                 map: legTxtImage,
-                // roughness: 0.3,
                 reflectivity: 0.225,
               });
 

@@ -28,7 +28,6 @@ export default (
     (sprite as any).callback = () => {
       if (sprite.visible) {
         callBack();
-        // console.log('callback clicked');
       }
     };
   }

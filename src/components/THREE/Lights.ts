@@ -25,12 +25,12 @@ export default function (): Object3D {
   
   directionalLight.shadow.mapSize.width = 4096;
   directionalLight.shadow.mapSize.height = 4096;
-  directionalLight.shadow.camera.near = 1; // 0.5;
-  directionalLight.shadow.camera.far = 5000; // 50;
-  directionalLight.shadow.camera.left = -10; // -5;
-  directionalLight.shadow.camera.right = 10; // 5;
-  directionalLight.shadow.camera.top = 10; // 5;
-  directionalLight.shadow.camera.bottom = -10; // -5;
+  directionalLight.shadow.camera.near = 1;
+  directionalLight.shadow.camera.far = 5000;
+  directionalLight.shadow.camera.left = -10;
+  directionalLight.shadow.camera.right = 10;
+  directionalLight.shadow.camera.top = 10;
+  directionalLight.shadow.camera.bottom = -10;
 
   const group: Object3D = new Group();
 
