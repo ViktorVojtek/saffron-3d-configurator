@@ -1,8 +1,8 @@
 [![Saffron](https://www.saffronbeds.com/wp-content/uploads/2020/01/logo_saffron_black_edit_full_size.jpg)](https://www.saffronbeds.com)
 
-# 3D configurator "**Saffron Beds**"
+# 3D configurator of "Saffron Beds"
 
-Javascript extension made with [Threejs] and [Reactjs]. This extension could be loaded to the website with simple loader script **saffron-app-loader.min.js** located in the _./public/js_ directory after build process.
+Javascript extension made with [Threejs](https://threejs.org) and [Reactjs](https://reactjs.org). This extension could be loaded to the website with simple loader script **saffron-app-loader.min.js** located in the _./public/js_ directory after build process.
 
 ## Getting Started
 
