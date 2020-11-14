@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { domainUri } from '../../../../utils/constants';
 
 interface IFSBtn {
   fullscreen: boolean;
@@ -15,10 +16,8 @@ const FSBtn = styled.button<IFSBtn>`
   height: ${btnSize}px;
   border: 0 none;
   outline: none;
-  background: url('./static/images/fullscreen-icon.png');
+  background: url(${domainUri + '/static/images/fullscreen-icon.png'});
   background-size: ${btnSize}px;
 `;
-
-// ${({ fullscreen }) => !fullscreen ? 'fullscreen-icon' : 'fullscreen-icon-off'}.png');
 
 export default FSBtn;
