@@ -26,8 +26,8 @@ import {
 } from '../utils';
 import { useStore } from '../utils/store';
 
-import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
-import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass';
+// import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
+// import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass';
 
 export default function (): void {
   const { dispatch } = useStore();
@@ -64,7 +64,7 @@ export default function (): void {
   renderer.shadowMap.type = PCFSoftShadowMap;
 
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.75; // 0.375;
+  renderer.toneMappingExposure = 0.45; // 0.375;
 
   renderer.outputEncoding = sRGBEncoding;
   renderer.gammaFactor = 2.2; //2.75;
@@ -91,7 +91,7 @@ export default function (): void {
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
-  const saoPass = new SAOPass(scene, camera, false, false, new Vector2(1024, 1024));
+  /* const saoPass = new SAOPass(scene, camera, false, false, new Vector2(1024, 1024));
 
   saoPass.renderToScreen = true;
 
@@ -116,7 +116,7 @@ export default function (): void {
 
   composer.addPass(renderPass);
   composer.addPass(ssaaRenderPass);
-  composer.addPass(saoPass);
+  composer.addPass(saoPass); */
 
   renderer.domElement.addEventListener('click', onDocumentMouseDown, false);
   renderer.domElement.addEventListener(
