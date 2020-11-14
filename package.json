@@ -1,7 +1,7 @@
 {
   "name": "preact-app-temp",
   "version": "1.0.0",
-  "description": "",
+  "description": "3D configurator javascript plugin of \"Saffron Beds\" made with threejs and react.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.js",
