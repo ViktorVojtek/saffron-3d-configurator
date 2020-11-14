@@ -20,6 +20,12 @@ export { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 export const appWrapperId: string = 'App'; 
 export const containerId: string = 'canvas';
 export const vendor: string = 'saffron';
+
+
+const protocol: string = 'https';
+const domainName: string = 'enli.technology';
+export const domainUri: string = `${protocol}://${vendor}.${domainName}`;
+
 export const cameraPosStart: CameraPosType = { x: 3, y: 2.25, z: 8 };
 export const cameraPosChange: CameraPosType = { x: 0, y: 1.25, z: 8 };
 export const scene: Scene = new Scene();
