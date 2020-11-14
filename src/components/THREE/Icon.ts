@@ -1,5 +1,5 @@
-import { Color, Sprite, SpriteMaterial, LinearEncoding, Texture, TextureLoader } from 'three';
-import { renderer } from '../../utils/constants';
+import { Color, Sprite, SpriteMaterial, Texture, TextureLoader } from 'three';
+import { domainUri, renderer } from '../../utils/constants';
 
 export default (
   name: string,
@@ -7,7 +7,7 @@ export default (
   callBack?: () => void
 ) => {
   const spriteMap: Texture = new TextureLoader().load(
-    '../static/images/add.png'
+    `${domainUri}/static/images/add.png`
   );
 
   spriteMap.anisotropy = renderer.capabilities.getMaxAnisotropy();
