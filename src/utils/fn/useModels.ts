@@ -26,8 +26,16 @@ export const useModels: (
           dispatch({ type: 'SET_OBJ_IDX', payload: MODEL_IDX });
         }
 
+        // console.log(models);
+
         if (models.length < 1) {
-          const modelItems = await fetchObjects(`${domainUri}/${vendor}/data.json`);
+          const url: string = `${domainUri}/${vendor}/data.json`;
+          // console.log(url);
+          const data = await fetchObjects(url);
+
+          // console.log(data);
+          
+          const modelItems = data.models;
 
           dispatch({ type: 'SET_MODELS', payload: modelItems });
         } else {

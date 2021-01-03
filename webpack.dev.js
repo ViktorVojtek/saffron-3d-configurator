@@ -7,6 +7,7 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'public/'),
+    open: 'Google Chrome',
     port: 3000,
     publicPath: 'http://localhost:3000/',
     hot: true,

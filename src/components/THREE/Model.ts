@@ -152,9 +152,9 @@ export default function (model: IModel): Promise<Object3D> {
 
                   group.name = `Group - ${model.titleID}`;
 
-                  group.add(HeadIcon);
+                  /* group.add(HeadIcon);
                   group.add(BedIcon);
-                  group.add(LegIcon);
+                  group.add(LegIcon); */
 
                   group.add(updatedObject);
 

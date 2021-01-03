@@ -2,11 +2,20 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect, Fragment } from 'react';
 import { useStore } from '../utils/store';
-import { useModels, handleScreenshots } from '../utils';
+import {
+  changeBedMaterial,
+  changeHead,
+  useModels,
+  handleScreenshots,
+} from '../utils';
+import { useSaffronData } from '../utils/fn/hooks';
 import { appWrapperId } from '../utils/constants';
 
 import { AppWrapper, OrderBtn, EditBtn } from './styled';
+import OldMenu from '../components/UI/_old_Menu';
+
 import Menu from '../components/UI/Menu';
+
 import Button from '../components/UI/Button';
 import FSButton from '..//components/UI/FullScreenBtn';
 import Loader from '../components/UI/Loader';
@@ -19,6 +28,9 @@ export default function (): JSX.Element {
   const [edit, toggleEdit] = useState(false);
   const [title, setTitle] = useState('');
   const { state, dispatch } = useStore();
+
+  console.log(state);
+
   const {
     menuItem,
     menuItems,
@@ -52,20 +64,81 @@ export default function (): JSX.Element {
     toggleEdit(!edit);
   };
 
+  const handleSetMenu = (data: any, i: number) => {
+    const headsData = data[i].headThumbs;
+    const bedsData = data.map((bed) => {
+      const { title } = bed;
+      return { title };
+    });
+    const materialsData = data[i].matThumbs;
+    const tuftData = data[i].textures.tuft;
+
+    const returnData = [
+      {
+        title: 'Čelá',
+        items: headsData,
+        handler: (n: number) => {
+          changeHead(headsData, n);
+        },
+      },
+      {
+        title: 'Postele',
+        items: bedsData,
+        handler: (n: number) => {
+          dispatch({ type: 'SET_OBJ_IDX', payload: n });
+        },
+      },
+      {
+        title: 'Materiál',
+        items: materialsData,
+        handler: (n: number) => {
+          changeBedMaterial(n);
+        },
+      },
+      {
+        title: 'Prešitie',
+        items: tuftData,
+        handler: (n: number) => {
+          changeBedMaterial(n, true);
+        },
+      },
+    ];
+
+    return returnData;
+  };
+
   const { search } = window.location;
+
+  // console.log(models);
+  /* const computedHeadsItems = models[objIdx || 0]?.headThumbs?.map(
+    (cMenuItem, i) => {
+      const { thumb, title } = cMenuItem;
+
+      return {
+        title,
+        thumb,
+      };
+    }
+  ); */
+  let menuData = [];
+
+  if (models && models.length > 0) {
+    menuData = handleSetMenu(models, objIdx);
+  }
 
   return (
     <AppWrapper id={appWrapperId}>
+      {menuData && menuData.length > 0 && <Menu items={menuData} />}
       {loaded ? (
         <Fragment>
           <Title title={models[objIdx].title} />
-          {objIdx > 0 && search.length === 0 && <Button />}
-          {objIdx < models.length - 1 && search.length === 0 && (
+          {/* objIdx > 0 && search.length === 0 && <Button /> */}
+          {/* objIdx < models.length - 1 && search.length === 0 && (
             <Button direction='right' />
-          )}
-          <EditBtn style={{ left: '50%!important' }} onClick={handleToggleEdit}>
+          ) */}
+          {/* <EditBtn style={{ left: '50%!important' }} onClick={handleToggleEdit}>
             Úpravy
-          </EditBtn>
+          </EditBtn> */}
           <OrderBtn onClick={handleToggleForm}>Dopyt</OrderBtn>
           <OrderForm
             show={showForm}
@@ -81,7 +154,7 @@ export default function (): JSX.Element {
         label={loadingContent}
       />
       {!showForm && (
-        <Menu
+        <OldMenu
           show={showMenu}
           items={menuItems}
           second={tufts}
