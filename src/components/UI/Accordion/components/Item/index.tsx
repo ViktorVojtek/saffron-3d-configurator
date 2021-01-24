@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Button, ItemBtn, ItemContent, ItemWrapper } from './styled';
+import { Button, ItemBtn, ItemContent, ItemImg, ItemWrapper } from './styled';
 
 type Props = {
   childHandler?: (i: number) => void;
-  childItems: { title: string }[];
+  childItems: { title: string; thumb?: string }[];
   itemNumber: number;
   handleOnClick: (i: number) => void;
+  horizontal?: boolean;
   show: boolean;
   title: string;
 };
@@ -14,22 +15,30 @@ const Item: (props: Props) => JSX.Element = ({
   childHandler,
   childItems,
   handleOnClick,
+  horizontal,
   itemNumber,
   show,
   title,
 }) => (
   <ItemWrapper key={`${title}-${itemNumber}`} show={show}>
-    <Button onClick={() => handleOnClick(itemNumber)} show={show}>
-      <h5>{title}</h5>
+    <Button
+      onClick={() => handleOnClick(itemNumber)}
+      show={show}
+      horizontal={horizontal}
+    >
+      <p>
+        <strong>{title}</strong>
+      </p>
     </Button>
-    <ItemContent show={show}>
-      {childItems.map(({ title }, i) => {
+    <ItemContent show={show} horizontal={horizontal}>
+      {childItems.map(({ title, thumb }, i) => {
         let parsedTitle = title;
 
         if (title.indexOf('_') > -1) {
           parsedTitle = title.replace('_', ' ');
         }
 
+        // ItemBtn
         return (
           <ItemBtn
             onClick={() => {
@@ -38,6 +47,7 @@ const Item: (props: Props) => JSX.Element = ({
               }
             }}
           >
+            <ItemImg src={thumb} />
             {parsedTitle}
           </ItemBtn>
         );

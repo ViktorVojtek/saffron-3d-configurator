@@ -10,6 +10,7 @@ type Props = {
     title: string;
     items: any[];
     handler?: (i: number) => void;
+    horizontal?: boolean;
   }[];
 };
 
@@ -24,12 +25,13 @@ const Accordion: (props: Props) => JSX.Element = ({ defaultActive, data }) => {
     setActive(n);
   };
 
-  const accordions = data.map(({ items, title, handler }, i) => (
+  const accordions = data.map(({ items, title, handler, horizontal }, i) => (
     <Item
       title={title}
       childItems={items}
       itemNumber={i}
       handleOnClick={handleSetActive}
+      horizontal={horizontal}
       childHandler={handler}
       show={i === active}
     />

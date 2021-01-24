@@ -6,4 +6,8 @@ export const AccordionWrapper = styled.ul`
   padding: 0;
   display: flex;
   flex-flow: column nowrap;
+
+  @media only screen and (max-width: 580px) {
+    
+  }
 `;

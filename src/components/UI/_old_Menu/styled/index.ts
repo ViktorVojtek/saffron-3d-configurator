@@ -125,7 +125,7 @@ interface IMenuTitle {
 
 export const MenuTitle = styled.strong`
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Josefin Sans", Sans-serif;
   font-size: 0.75rem;
   margin-top: 0.2rem;
   display: block;

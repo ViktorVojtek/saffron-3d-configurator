@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { H4 } from './styled';
+import { H4, Wrapper } from './styled';
 
 export default function ({ title }: { title: string }): JSX.Element {
-  return <H4>Typ postele: {title}</H4>;
+  return (
+    <Wrapper>
+      <H4>Typ postele: {title}</H4>
+    </Wrapper>
+  );
 }

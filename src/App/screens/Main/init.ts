@@ -9,7 +9,7 @@ import {
   controls,
   renderer,
   renderPass
-} from '../utils/constants';
+} from '../../../utils/constants';
 import {
   ACESFilmicToneMapping,
   PCFSoftShadowMap,
@@ -17,15 +17,15 @@ import {
   sRGBEncoding,
   Vector2
 } from 'three';
-import Lights from '../components/THREE/Lights';
-import Ground from '../components/THREE/Ground';
+import Lights from '../../../components/THREE/Lights';
+import Ground from '../../../components/THREE/Ground';
 import {
   animate,
   onDocumentMouseDown,
   onDocumentTouchDown,
   onWindowResize,
-} from '../utils';
-import { useStore } from '../utils/store';
+} from '../../../utils';
+import { useStore } from '../../../utils/store';
 
 // import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass';
 // import { SSAARenderPass } from 'three/examples/jsm/postprocessing/SSAARenderPass';
@@ -75,13 +75,15 @@ export default function (): void {
   const lights: Object3D = Lights();
   const ground: Object3D = Ground();
 
-  scene.add(lights);
-  scene.add(ground);
+  if (!scene.getObjectByName('Lights') && !scene.getObjectByName('Ground')) {
+    scene.add(lights);
+    scene.add(ground);
+  }
 
   const dimContainer = document.getElementById(containerId);
   const dimensions = JSON.parse(dimContainer.getAttribute('data-dimensions'));
 
-  document.getElementById(appWrapperId).appendChild(renderer.domElement);
+  document.getElementById(canvasWrapperId).appendChild(renderer.domElement);
 
   const width: number = dimensions[0];
   const height: number = dimensions[1];

@@ -32,7 +32,7 @@ app.use('/', express.static(pubPath));
 
 app.post('/send-mail', async (req, res, next) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
   
     const mailResp = await sendMail(req.body, next);
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { useStore } from '../../../utils/store';
 import { domainUri } from '../../../utils/constants';
 import {
@@ -68,17 +69,16 @@ export default function ({
     if (resp.status === 200) {
       const mailResp = await resp.json();
 
-      console.log(mailResp);
+      // console.log(mailResp);
     }
   };
 
   return (
     <Container show={show}>
       <Wrapper>
-        <CloseBtn
-          onClick={handleCloseOrderForm}
-          dangerouslySetInnerHTML={{ __html: htmlTimes }}
-        />
+        <Link to='/'>
+          <CloseBtn dangerouslySetInnerHTML={{ __html: htmlTimes }} />
+        </Link>
         <ImagesContainer>
           {images && images.length > 0
             ? images.map((item: string, i: number) => (

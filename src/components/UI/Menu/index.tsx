@@ -12,7 +12,7 @@ const Menu: ({ items }: Props) => JSX.Element = ({ items }) => {
   const [show, toggle] = useState(false);
 
   const handleToggle = () => {
-    console.log('clicked');
+    // console.log('clicked');
     toggle(!show);
   };
 

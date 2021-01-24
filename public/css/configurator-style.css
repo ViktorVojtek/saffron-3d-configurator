@@ -7,12 +7,15 @@ html,
 *:-webkit-full-screen,
 *:-moz-full-screen {
   background-color: white !important;
+  font-family: 'Josefin Sans', Sans-serif;
   z-index: 1;
 }
+* {
+  font-family: 'Josefin Sans', Sans-serif;
+}
 #canvas {
-  border: 1px solid #001;
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100vh;
   display: block;
   margin: 0 auto;
 }

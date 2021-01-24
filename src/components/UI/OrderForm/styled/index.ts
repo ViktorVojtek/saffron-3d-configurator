@@ -37,17 +37,17 @@ export const CloseBtn = styled.button`
 `;
 
 export const H2 = styled.h2`
-  font-family: sans-serif;
+  font-family: "Josefin Sans", Sans-serif;
   font-weight: 300;
 `;
 
 export const H3 = styled.h3`
-  font-family: sans-serif;
+  font-family: "Josefin Sans", Sans-serif;
   font-weight: 200;
 `;
 
 export const H4 = styled.h4`
-  font-family: sans-serif;
+  font-family: "Josefin Sans", Sans-serif;
   color: #000;
   font-weight: 700;
   padding-left: 1rem;
@@ -59,7 +59,7 @@ export const HR = styled.hr`
 `;
 
 export const P = styled.p`
-  font-family: sans-serif;
+  font-family: "Josefin Sans", Sans-serif;
   font-weight: 200;
 `;
 
