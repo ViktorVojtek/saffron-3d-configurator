@@ -40,6 +40,6 @@ export { onWindowResize } from './fn/resize';
 
 export { handleScreenshots } from './fn/screenshots';
 
-export { changeBedMaterial, changeHead, changeLeg, changeLegMaterial } from './fn/changeParts';
+export { changeMaterial, changeBedMaterial, changeHead, changeLeg, changeLegMaterial } from './fn/changeParts';
 
 export { onProgress } from './fn/progress';

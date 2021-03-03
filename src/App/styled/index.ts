@@ -16,6 +16,7 @@ export const OrderBtn = styled.button`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+  font-size: 1rem;
   outline: none;
 `;
 

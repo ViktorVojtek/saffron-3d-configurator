@@ -19,6 +19,8 @@ import {
   Wrapper,
 } from './styled';
 
+const { Fragment } = React;
+
 export default function ({
   show,
   data,
@@ -30,13 +32,13 @@ export default function ({
 }): JSX.Element {
   const {
     dispatch,
-    state: { headTitle, legMatTitle, legTitle, matTitle },
+    state: { headTitle, legMatTitle, legTitle, matTitle, tuftTitle },
   } = useStore();
   const htmlTimes = '&times;';
 
-  const handleCloseOrderForm = () => {
+  /* const handleCloseOrderForm = () => {
     dispatch({ type: 'TOGGLE_FORM', payload: false });
-  };
+  }; */
 
   const handleSubmitForm: (
     event: React.FormEvent<HTMLFormElement>
@@ -47,6 +49,7 @@ export default function ({
     const firstName = (form.firstname as HTMLInputElement).value;
     const lastName = (form.surname as HTMLInputElement).value;
     const email = (form.email as HTMLInputElement).value;
+    const phone = (form.phone as HTMLInputElement).value;
     const message = (form.message as HTMLInputElement).value;
 
     const formData: string = JSON.stringify({
@@ -54,6 +57,7 @@ export default function ({
       lastName,
       message,
       email,
+      phone,
     });
 
     const url: string = `${domainUri}/send-mail`;
@@ -74,30 +78,23 @@ export default function ({
   };
 
   return (
-    <Container show={show}>
+    <Fragment>
+      <Link to="/">
+        <CloseBtn dangerouslySetInnerHTML={{ __html: htmlTimes }} />
+      </Link>
       <Wrapper>
-        <Link to='/'>
-          <CloseBtn dangerouslySetInnerHTML={{ __html: htmlTimes }} />
-        </Link>
-        <ImagesContainer>
-          {images && images.length > 0
-            ? images.map((item: string, i: number) => (
-                <Img src={item} key={`img-${i}`} />
-              ))
-            : null}
-        </ImagesContainer>
         <Form onSubmit={handleSubmitForm}>
-          <H2>Nezáväzná objednávka</H2>
+          <H2>Zhrnutie</H2>
           <HR />
           <H3>Objednaný produkt:</H3>
           {data
             ? [
-                <P key='op-0'>
+                <P key="op-0">
                   Typ postele <strong>{data.title}</strong>, typ materiálu
                   postele <strong>{matTitle.toLowerCase()}</strong>.
                 </P>,
                 <P
-                  key='op-1'
+                  key="op-1"
                   dangerouslySetInnerHTML={{
                     __html:
                       headTitle.toLowerCase() !== 'frame'
@@ -105,49 +102,73 @@ export default function ({
                         : `Typ čela <strong>${headTitle}</strong> materiál rámu <strong>${legMatTitle.toLowerCase()}</strong>.`,
                   }}
                 />,
-                <P key='op-2'>
+                <P key="op-2">
+                  Typ farby prešitia <strong>{tuftTitle.toLowerCase()}</strong>.
+                </P>,
+                <P key="op-3">
                   Typ nôh <strong>{legTitle}</strong>, typ materiálu nôh{' '}
                   <strong>{legMatTitle.toLowerCase()}</strong>.
                 </P>,
-                <HR key='div-0' />,
+                <HR key="div-0" />,
               ]
             : null}
           <FormControl>
             <Input
-              type='text'
-              id='firstname'
-              name='firstname'
-              placeholder='Zadajte svoje meno'
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="Zadajte svoje meno"
             />
           </FormControl>
           <FormControl>
             <Input
-              type='text'
-              id='surname'
-              name='surname'
-              placeholder='Zadajte priezvisko'
+              type="text"
+              id="surname"
+              name="surname"
+              placeholder="Zadajte priezvisko"
             />
           </FormControl>
           <FormControl>
             <Input
-              type='email'
-              id='email'
-              name='email'
-              placeholder='Zadajte svoj e-mail'
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Zadajte svoj e-mail"
             />
           </FormControl>
           <FormControl>
+            <Input
+              type="phone"
+              id="phone"
+              name="phone"
+              placeholder="Zadajte tel. číslo"
+            />
+          </FormControl>
+          <FormControl marginOff>
             <TextArea
-              id='message'
-              placeholder='Napíšte nám správu...'
+              id="message"
+              placeholder="Napíšte nám správu..."
               rows={3}
             />
           </FormControl>
-          <SubmitBtn type='submit' disabled>
-            Odoslať objednávku
+          <ImagesContainer>
+            {images && images.length > 0
+              ? images.map((item: string, i: number) => (
+                  <Img src={item} key={`img-${i}`} />
+                ))
+              : null}
+          </ImagesContainer>
+          <FormControl>
+            <input type="checkbox" /> Súhlas so spracovaním osobných údajov.
+          </FormControl>
+          <FormControl>
+            <input type="checkbox" /> Chcem aby sa mi ozval predajca Saffronu.
+          </FormControl>
+          <SubmitBtn type="submit" disabled>
+            Poslať zhrnutie na môj email
           </SubmitBtn>
         </Form>
       </Wrapper>
-    </Container>
+    </Fragment>
   );
 }

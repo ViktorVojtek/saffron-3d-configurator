@@ -3,15 +3,19 @@ import { useStore } from '../store';
 import { animate, fetchObjects, IModel } from '../index';
 import Model from '../../components/THREE/Model';
 import { scene, domainUri, vendor } from '../constants';
-import { Object3D } from 'three';
+import { Object3D, Texture, sRGBEncoding, Mesh, MeshLambertMaterial } from 'three';
+import { AjaxTextureLoader, onProgress } from '../../utils';
+import { ToLoadEnum } from '../../utils/store';
+import { renderer } from '../../utils/constants';
 
 export const useModels: (
   models: any[],
   objIdx: number,
   tuftIdx: number,
+  legIdx: number,
   edit: boolean,
   menuItem: number
-) => void = (models, robjIdx, tuftIdx, edit, menuItem) => {
+) => void = (models, robjIdx, tuftIdx, legIdx, edit, menuItem) => {
   const { state, dispatch } = useStore();
   const { currentModelName } = state;
 
@@ -38,76 +42,245 @@ export const useModels: (
           const modelItems = data.models;
 
           dispatch({ type: 'SET_MODELS', payload: modelItems });
+          dispatch({ type: 'SET_HEAD_TITLE', payload: modelItems[0].head });
         } else {
           const { state } = useStore();
-          const { matIdx, objIdx } = state;
+          const { matIdx, legMatIdx, legIsSet, legTitle, objIdx, headIdx, headTitle, headIsSet, tuftIdx } = state;
           const activeModelName: string = `Group - ${models[objIdx].vendor}: ${models[objIdx].title}`;
           const menuItems: any[] = await setCurrentMenuItems(menuItem, models, objIdx);
 
-          if (activeModelName !== currentModelName) {
-            const modelData: IModel = {
-              head: models[objIdx].head,
-              headPosition: models[objIdx].headPosition,
-              leg: models[objIdx].leg,
-              legTexture:
-                models[objIdx].textures.leg[models[objIdx].legIdx].maps[0].map,
-              path: models[objIdx].model[0],
-              position: models[objIdx].position,
-              scale: models[objIdx].scale,
-              bedTexture: models[objIdx].textures.bed[matIdx].map,
-              headTexture:
-                models[objIdx].textures.head[models[objIdx].headIdx].maps[
-                  matIdx
-                ].map,
-              tuft: models[objIdx].textures.tuft[tuftIdx],
-              titleID: `${models[objIdx].vendor}: ${models[objIdx].title}`,
-              size: models[objIdx].size,
-              bedTSize: models[objIdx].bedTSize,
-              headTSize: models[objIdx].headTSize,
-              legTSize: models[objIdx].legTSize
-            };
+          console.log('ACTIVE MODEL: ', activeModelName);
+          console.log('PREVIOS MODEL', currentModelName);
 
+          console.log('LEG IS SET: ', legIsSet);
+          console.log('LEG TITLE: ', legTitle);
+
+          const modelData: IModel = {
+            head: headIsSet ? headTitle : models[objIdx].head,
+            headPosition: models[objIdx].headPosition,
+            leg: legIsSet ? (
+              legTitle.toLowerCase() === 'aurelia' && objIdx > 0 ? 'Cube' : legTitle
+            ) : models[objIdx].leg, // models[objIdx].leg,
+            legTexture:
+              models[objIdx].textures.leg[legIdx || models[objIdx].legIdx].maps[legMatIdx || 0].map,
+            path: models[objIdx].model[0],
+            position: models[objIdx].position,
+            scale: models[objIdx].scale,
+            bedTexture: tuftIdx > 0 ? models[objIdx].textures.tuft[tuftIdx].maps[matIdx] : models[objIdx].textures.bed[matIdx].map,
+            headTexture: headIsSet ?
+              models[objIdx].textures.head[headIdx].maps[matIdx].map :
+              models[objIdx].textures.head[models[objIdx].headIdx].maps[
+                matIdx
+              ].map,
+            tuft: models[objIdx].textures.tuft[tuftIdx],
+            titleID: `${models[objIdx].vendor}: ${models[objIdx].title}`,
+            size: models[objIdx].size,
+            bedTSize: models[objIdx].bedTSize,
+            headTSize: models[objIdx].headTSize,
+            legTSize: models[objIdx].legTSize
+          };
+
+          console.log('\n');
+          console.log('MODEL DATA, LEG: ', modelData.leg);
+
+          if (activeModelName !== currentModelName) {
             const objectExist: Object3D = scene.getObjectByName(
-              currentModelName
+              activeModelName, // currentModelName
             );
 
+            // Hide all Models
+            scene.traverse((child: any) => {
+              if (child.name.toLowerCase().indexOf('group - saffron') > -1) {
+                child.visible = false;
+              }
+            });
+
+            console.log('OBJECT EXIST IN SCENE: ', objectExist);
+            console.log('\n');
+
             if (!objectExist) {
+              console.log('MODEL MOT EXIST, ADD IN');
+              // console.log(modelData);
+              // modelData.head = models[objIdx].head;
+              // console.log(modelData.head);
+
               addModelToScene(modelData, activeModelName);
             } else {
+              console.log('MODEL EXIST, PROCESS');
               objectExist.visible = false;
-              animate();
+              // animate();
 
               const activeExistInObjects: Object3D = scene.getObjectByName(
                 activeModelName
               );
 
-              if (activeExistInObjects) {
-                activeExistInObjects.visible = true;
-              } else {
-                addModelToScene(modelData, activeModelName);
-              }
+              console.log('\n');
+              console.log(activeExistInObjects);
+
+              // if (activeExistInObjects) {
+                console.log('Selected bed exists in scene');
+                activeExistInObjects.visible = false;
+                const TextureLoader = AjaxTextureLoader();
+
+                const bed = activeExistInObjects.getObjectByName('Bed') as Mesh;
+                const heads = activeExistInObjects.getObjectByName('Heads');
+                const head = headIsSet ? headTitle : models[objIdx].head;
+                const legs = activeExistInObjects.getObjectByName('Legs');
+                const leg = legIsSet ? legTitle : models[objIdx].leg;
+
+                const headTexture = modelData.headTexture;
+                const bedTexture = modelData.bedTexture;
+                const legTexture = modelData.legTexture;
+
+                // Change Head/Texture
+                heads.traverse((child: any) => {
+                  if (child.isMesh) {
+                    child.visible = false;
+
+                    if (child.name.toLowerCase() === head.toLowerCase()) {
+                      console.log('Head FOUND: ', head);
+
+                      TextureLoader.load(headTexture, (texture: Texture) => {
+                        console.log('Head Texture Loaded');
+                        // child.visible = false;
+                        const newHeadMaterial = new MeshLambertMaterial({
+                          reflectivity: 0.15,
+                        });
+
+                        child.material = newHeadMaterial;
+                        child.material.needsUpdate = true;
+
+                        if ((child.material && child.material.map)) {
+                          child.material.map.dispose();
+                        }
+
+                        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                        texture.encoding = sRGBEncoding;
+
+                        console.log(child.material.map);
+                        console.log(texture);
+                        
+                        child.material.map = texture;
+                        child.material.needsUpdate = true;
+
+                        // Change Bed Texture
+                        TextureLoader.load(bedTexture, (texture: Texture) => {
+                          console.log('Head Texture Loaded');
+                          texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                          texture.encoding = sRGBEncoding;
+
+                          const bedMaterial =  new MeshLambertMaterial({
+                            reflectivity: 0.15,
+                          });
+                          
+                          bed.material = bedMaterial;
+                          bed.material.needsUpdate = true;
+
+                          if ((bed.material && (bed.material as any).map)) {
+                            (bed.material as any).map.dispose();
+                          }
+
+                          (bed.material as any).map = texture;
+                          bed.material.needsUpdate = true;
+
+                          // Head visibility
+                          // child.visible = true;
+
+                          legs.traverse((legItem: any) => {
+                            if (legItem.isMesh) {
+                              legItem.visible = false;
+
+                              if(legItem.name.toLowerCase() === leg.toLowerCase()) {
+                                console.log('FOUND LEG: ', leg);
+                                // Load Leg texture
+                                TextureLoader.load(legTexture, (texture: Texture) => {
+                                  console.log('Legs Texture Loaded');
+                                  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                                  texture.encoding = sRGBEncoding;
+        
+                                  const legMaterial =  new MeshLambertMaterial({
+                                    reflectivity: 0.15,
+                                  });
+                                  
+                                  legItem.material = legMaterial;
+                                  legItem.material.needsUpdate = true;
+        
+                                  if ((legItem.material && (legItem.material as any).map)) {
+                                    (legItem.material as any).map.dispose();
+                                  }
+        
+                                  (legItem.material as any).map = texture;
+                                  legItem.material.needsUpdate = true;
+
+                                  // Leg visibility
+                                  legItem.visible = true;
+        
+                                  // Head visibility
+                                  child.visible = true;
+        
+                                  // Model visibility
+                                  activeExistInObjects.visible = true;
+                                  animate();
+                                }, (event: ProgressEvent<EventTarget>) => {
+                                  console.log('Texture loading');
+        
+                                  onProgress(event, ToLoadEnum.HEAD_TEXTURE)
+                                }, (err) => console.log(err));
+                              }
+                            }
+                          });
+
+                          // Model visibility
+                          // activeExistInObjects.visible = true;
+                          // animate();
+                        }, (event: ProgressEvent<EventTarget>) => {
+                          console.log('Texture loading');
+
+                          onProgress(event, ToLoadEnum.HEAD_TEXTURE)
+                        }, (err) => console.log(err));
+                        // End Bed
+                      }, (event: ProgressEvent<EventTarget>) => {
+                        console.log('Texture loading');
+
+                        onProgress(event, ToLoadEnum.HEAD_TEXTURE)
+                      }, (err) => console.log(err));
+                    }
+                  }
+                });
+              // } else {
+                // console.log('NOT EXIST IN OBJECTS OF SCENE');
+                // console.log(modelData);
+                // modelData.head = models[objIdx].head;
+                /* modelData.headTexture = models[objIdx].textures.head[models[objIdx].headIdx].maps[
+                  matIdx
+                ].map; */
+                // console.log(modelData.head);
+                // console.log(modelData.headTexture);
+
+                // addModelToScene(modelData, activeModelName);
+              // }
             }
 
             dispatch({
               type: 'SET_CURRENT_MODEL_NAME',
               payload: activeModelName,
             });
-            dispatch({ type: 'SET_HEAD_IDX', payload: models[objIdx].headIdx });
-            dispatch({
+            // dispatch({ type: 'SET_HEAD_IDX', payload: models[objIdx].headIdx });
+            /* dispatch({
               type: 'SET_HEAD_TITLE',
               payload: models[objIdx].head,
-            });
+            }); */
           }
 
           dispatch({ type: 'SET_MENU_ITEMS', payload: menuItems });
 
-          scene.traverse((child) => {
+          /* scene.traverse((child) => {
             if (child.name.indexOf('Icon - ') > -1) {
               child.visible = edit;
             }
-          });
+          }); */
 
-          animate();
+          // animate();
         }
       } catch (err) {
         console.log(err);

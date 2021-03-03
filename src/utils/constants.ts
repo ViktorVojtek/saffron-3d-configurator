@@ -25,7 +25,7 @@ export const vendor: string = 'saffron';
 
 const protocol: string = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 const domainName: string = process.env.NODE_ENV === 'production' ? 'enli.technology' : 'localhost:3000';
-export const domainUri: string = `${protocol}://${process.env.NODE_ENV === 'production' ? vendor + '-update.' : ''}${domainName}`;
+export const domainUri: string = `${protocol}://${process.env.NODE_ENV === 'production' ? vendor + '.' : ''}${domainName}`;
 
 export const cameraPosStart: CameraPosType = { x: 3, y: 2.25, z: 8 };
 export const cameraPosChange: CameraPosType = { x: 0, y: 1.25, z: 8 };

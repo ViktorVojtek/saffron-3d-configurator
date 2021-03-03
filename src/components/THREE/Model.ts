@@ -1,12 +1,12 @@
 import {
   Group,
-  Sprite,
+  // Sprite,
   MeshLambertMaterial,
   Object3D,
   Texture,
   sRGBEncoding
 } from 'three';
-import Icon from './Icon';
+// import Icon from './Icon';
 import { animate, AjaxTextureLoader, IModel, onProgress } from '../../utils';
 import { FBXLoader, renderer } from '../../utils/constants';
 import { useStore, ToLoadEnum } from '../../utils/store';
@@ -14,7 +14,7 @@ import { useStore, ToLoadEnum } from '../../utils/store';
 export default function (model: IModel): Promise<Object3D> {
   const { dispatch } = useStore();
 
-  const HeadIcon: Sprite = Icon('Head', { x: 0.1, y: 1.75, z: -0.9 }, () => {
+  /* const HeadIcon: Sprite = Icon('Head', { x: 0.1, y: 1.75, z: -0.9 }, () => {
     dispatch({ type: 'SET_TUFTS', payload: false });
     dispatch({ type: 'SET_MENU_ITEM', payload: 1 });
     dispatch({ type: 'TOGGLE_MENU', payload: true });
@@ -28,7 +28,7 @@ export default function (model: IModel): Promise<Object3D> {
     dispatch({ type: 'SET_TUFTS', payload: false });
     dispatch({ type: 'SET_MENU_ITEM', payload: 2 });
     dispatch({ type: 'TOGGLE_MENU', payload: true });
-  });
+  }); */
 
   return new Promise(function (resolve, reject) {
     const Loader: FBXLoader = new FBXLoader();
@@ -122,7 +122,7 @@ export default function (model: IModel): Promise<Object3D> {
             child.material.needsUpdate = true;
             child.visible = true;
             
-            dispatch({ type: 'SET_HEAD_TITLE', payload: model.head });
+            // dispatch({ type: 'SET_HEAD_TITLE', payload: model.head });
 
             let legTxtImage: Texture;
 
@@ -146,7 +146,7 @@ export default function (model: IModel): Promise<Object3D> {
                   child.material.needsUpdate = true;
                   child.visible = true;
                   
-                  dispatch({ type: 'SET_LEG_TITLE', payload: model.leg });
+                  // dispatch({ type: 'SET_LEG_TITLE', payload: model.leg });
 
                   updatedObject.castShadow = true;
 

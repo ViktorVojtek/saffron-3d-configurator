@@ -10,9 +10,13 @@ export const AppWrapper = styled.div`
 export const CanvasWrapper = styled.div`
   width: 59.89%;
   float: right;
+  position: relative;
 
-  @media only screen and (max-width: 580px) {
-    margin-top: 40%;
+  @media only screen and (max-width: 980px) {
+    width: 54%;
+  }
+  @media only screen and (max-width: 770px) {
+    // margin-top: 40%;
     width: 100%;
     float: none;
   }
@@ -28,6 +32,7 @@ export const OrderBtn = styled.button`
   bottom: 1rem;
   right: 1rem;
   outline: none;
+  font-size: 1rem;
 `;
 
 export const EditBtn = styled.button`

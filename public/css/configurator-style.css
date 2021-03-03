@@ -24,3 +24,12 @@ html,
   height: 100% !important;
   width: 100% !important;
 }
+
+@media only screen and (max-width: 770px) and (orientation: landscape) {
+  #canvas canvas {
+    height: 45% !important;
+    width: 36% !important;
+    margin: 0 auto;
+    display: block;
+  }
+}

@@ -5,7 +5,7 @@ import Accordion from '../Accordion';
 const { useState } = React;
 
 type Props = {
-  items: any;
+  items: any[];
 };
 
 const Menu: ({ items }: Props) => JSX.Element = ({ items }) => {
@@ -17,9 +17,9 @@ const Menu: ({ items }: Props) => JSX.Element = ({ items }) => {
   };
 
   return (
-    <MenuWrapper show={show}>
-      <MenuToggleBtn onClick={handleToggle} show={show} />
-      <Accordion defaultActive={1} data={items} />
+    <MenuWrapper show>
+      {/* <MenuToggleBtn onClick={handleToggle} show={show} /> */}
+      <Accordion defaultActive={0} data={items} />
     </MenuWrapper>
   );
 };

@@ -4,7 +4,7 @@ import { animate } from '../../../utils';
 import { appWrapperId, renderer } from '../../../utils/constants';
 import FSBtn from './styled';
 
-export default (): JSX.Element => {
+export default function FullScreenButton(): JSX.Element {
   const [fullscreen, setFullscreen] = useState(false);
 
   useEffect(() => {
@@ -15,19 +15,24 @@ export default (): JSX.Element => {
       }
     };
 
-    renderer.domElement
-      .closest(`#${appWrapperId}`)
-      .addEventListener('fullscreenchange', changeFullScreen, false);
+    document.addEventListener('fullscreenchange', changeFullScreen, false);
 
     () =>
-      renderer.domElement
-        .closest(`#${appWrapperId}`)
-        .removeEventListener('fullscreenchange', changeFullScreen);
+      document.removeEventListener('fullscreenchange', changeFullScreen, false);
   }, []);
 
   const handleTurnFullscreenOn: () => void = () => {
     if (!fullscreen) {
-      renderer.domElement.closest(`#${appWrapperId}`).requestFullscreen();
+      const docElm = document.documentElement as any;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
     }
 
     animate();
@@ -35,4 +40,4 @@ export default (): JSX.Element => {
   };
 
   return <FSBtn fullscreen={fullscreen} onClick={handleTurnFullscreenOn} />;
-};
+}

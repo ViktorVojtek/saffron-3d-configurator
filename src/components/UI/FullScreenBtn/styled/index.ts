@@ -19,7 +19,7 @@ const FSBtn = styled.button<IFSBtn>`
   background: url(${domainUri + '/static/images/fullscreen-icon.png'});
   background-size: ${btnSize}px;
 
-  @media only screen and (max-width: 580px) {
+  @media only screen and (max-width: 770px) {
     display: none; 
   }
 `;

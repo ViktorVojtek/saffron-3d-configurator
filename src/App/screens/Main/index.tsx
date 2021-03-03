@@ -8,6 +8,7 @@ import {
   changeHead,
   useModels,
   changeLeg,
+  changeLegMaterial,
   handleScreenshots,
 } from '../../../utils';
 // import { useSaffronData } from '../utils/fn/hooks';
@@ -26,7 +27,7 @@ import Title from '../../../components/UI/Title';
 
 import initScene from './init';
 
-export default function (): JSX.Element {
+export default function Main(): JSX.Element {
   // const [edit, toggleEdit] = useState(false);
   const [title, setTitle] = useState('');
   const { state, dispatch } = useStore();
@@ -37,7 +38,7 @@ export default function (): JSX.Element {
     menuItem,
     menuItems,
     objIdx,
-    showMenu,
+    // showMenu,
     showForm,
     models,
     progress,
@@ -45,7 +46,10 @@ export default function (): JSX.Element {
     loaded,
     loadingContent,
     tuftIdx,
-    tufts,
+    legIdx,
+    legIsSet,
+    headIsSet,
+    // tufts,
   } = state;
 
   // Set initial scene
@@ -55,7 +59,7 @@ export default function (): JSX.Element {
   useMenuTitle(menuItem, setTitle);
 
   // Load 3D model according to objIdx
-  useModels(models, objIdx, tuftIdx, false, menuItem);
+  useModels(models, objIdx, tuftIdx, legIdx, false, menuItem);
 
   const handleToggleForm: () => void = () => {
     dispatch({ type: 'TOGGLE_FORM', payload: true });
@@ -69,19 +73,30 @@ export default function (): JSX.Element {
   const handleSetMenu = (data: any, i: number) => {
     const headsData = data[i].headThumbs;
     const bedsData = data.map((bed) => {
-      const { title } = bed;
-      return { title };
+      const { title, thumb, description } = bed;
+      return { description, title, thumb };
     });
     const materialsData = data[i].matThumbs;
-    const tuftData = data[i].textures.tuft;
+    const tuftData = data[i].tufThumbs;
     const legsData = data[i].legThumbs;
 
     const returnData = [
       {
-        title: 'Postel',
+        title: 'Model',
         items: bedsData,
         handler: (n: number) => {
+          // dispatch({ type: 'SET_MAT_IDX', payload: 0 });
           dispatch({ type: 'SET_OBJ_IDX', payload: n });
+
+          if (n > 0) {
+            if (legIdx === 1) {
+              dispatch({ type: 'SET_LEG_IDX', payload: 0 });
+            }
+            if (legIdx === 2) {
+              dispatch({ type: 'SET_LEG_IDX', payload: 1 });
+            }
+          }
+          // dispatch({ type: 'SET_LEG_IDX', payload: 0 });
         },
         horizontal: true,
       },
@@ -90,6 +105,12 @@ export default function (): JSX.Element {
         items: headsData,
         handler: (n: number) => {
           changeHead(headsData, n);
+          if (!headIsSet) {
+            dispatch({ type: 'SET_HEAD_ISSET' });
+          }
+          console.log('GOING TO SET HEAD TO: ', headsData[n].title);
+          dispatch({ type: 'SET_HEAD_TITLE', payload: headsData[n].title });
+          dispatch({ type: 'SET_HEAD_IDX', payload: n });
         },
         horizontal: true,
       },
@@ -98,6 +119,12 @@ export default function (): JSX.Element {
         items: materialsData,
         handler: (n: number) => {
           changeBedMaterial(n);
+          dispatch({ type: 'SET_MAT_IDX', payload: n });
+          dispatch({
+            type: 'SET_MAT_TITLE',
+            payload: models[objIdx].matThumbs[n].title,
+          });
+          console.log('MATERIAL: ', models[objIdx].matThumbs[n].title);
         },
         horizontal: true,
       },
@@ -106,6 +133,7 @@ export default function (): JSX.Element {
         items: tuftData,
         handler: (n: number) => {
           changeBedMaterial(n, true);
+          dispatch({ type: 'SET_TUFT_IDX', payload: n });
         },
         horizontal: true,
       },
@@ -114,8 +142,22 @@ export default function (): JSX.Element {
         items: legsData,
         handler: (n: number) => {
           changeLeg(legsData, n);
+          if (!legIsSet) {
+            dispatch({ type: 'SET_LEG_ISSET' });
+          }
+          dispatch({ type: 'SET_LEG_IDX', payload: n });
+          dispatch({ type: 'SET_LEG_TITLE', payload: legsData[n].title });
         },
         horizontal: true,
+        secondData: {
+          title: 'Materiály nôh',
+          items: data[i].textures.leg[legIdx].thumbs,
+          handler: (n: number) => {
+            changeLegMaterial(n);
+            dispatch({ type: 'SET_LEG_MAT_IDX', payload: n });
+          },
+          horizontal: true,
+        },
       },
     ];
 
@@ -145,16 +187,7 @@ export default function (): JSX.Element {
 
   return (
     <AppWrapper id={appWrapperId}>
-      {loaded ? (
-        <Fragment>
-          {menuData && menuData.length > 0 && <Menu items={menuData} />}
-          <Title title={models[objIdx].title} />
-          <Link to='/order'>
-            <OrderBtn onClick={handleToggleForm}>Dopyt</OrderBtn>
-          </Link>
-          {!showForm && <FSButton />}
-        </Fragment>
-      ) : null}
+      {loaded && menuData && menuData.length > 0 && <Menu items={menuData} />}
       <Loader
         show={progress < 100}
         progress={progress}
@@ -168,7 +201,17 @@ export default function (): JSX.Element {
           title={title ? title : false}
         />
       ) */}
-      <CanvasWrapper id={canvasWrapperId} />
+      <CanvasWrapper id={canvasWrapperId}>
+        {loaded && (
+          <Fragment>
+            <Title title={models[objIdx].title} />
+            <Link to="/order">
+              <OrderBtn onClick={handleToggleForm}>Zhrnutie</OrderBtn>
+            </Link>
+            {!showForm && <FSButton />}
+          </Fragment>
+        )}
+      </CanvasWrapper>
     </AppWrapper>
   );
 }

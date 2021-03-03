@@ -19,18 +19,21 @@ interface IState {
   menuItem: number;
   menuItems: any[];
   models: any[];
-  matIdx: number;
-  matTitle: string;
-  objIdx: number;
-  headIdx: number;
+  matIdx: number | undefined;
+  matTitle: string | undefined;
+  objIdx: number | undefined;
   legIdx: number;
+  legIsSet: boolean;
   legMatIdx: number;
   legTitle: string;
   legMatTitle: string;
   tuft: any;
   tufts: boolean;
-  tuftIdx: number;
+  tuftIdx: number | undefined;
+  tuftTitle: string;
   headTitle: string;
+  headIdx: number | undefined;
+  headIsSet: boolean;
   objectUUID: string;
   objectID: number;
   orderImages: any[];
@@ -54,14 +57,17 @@ const initialState: IState = {
   matIdx: 0,
   matTitle: 'Antracit',
   objIdx: 0,
-  headIdx: 0,
+  headIdx: undefined,
   legIdx: 0,
+  legIsSet: false,
   legMatIdx: 0,
   legMatTitle: 'Prírodný dub',
   legTitle: 'Cube',
   tuft: {},
   tuftIdx: 0,
-  headTitle: 'Basic',
+  tuftTitle: 'Biela',
+  headTitle: '',
+  headIsSet: false,
   objectUUID: '',
   objectID: 0,
   orderImages: [],
@@ -105,8 +111,12 @@ const reducer = (state: IState, action: any) => {
       return { ...state, legMatTitle: action.payload };
     case 'SET_LEG_TITLE':
       return { ...state, legTitle: action.payload };
+    case 'SET_LEG_ISSET':
+      return { ...state, legIsSet: true };
     case 'SET_HEAD_TITLE':
       return { ...state, headTitle: action.payload };
+    case 'SET_HEAD_ISSET':
+      return { ...state, headIsSet: true };
     case 'SET_MAT_IDX':
       return { ...state, matIdx: action.payload };
     case 'SET_MAT_TITLE':
@@ -129,6 +139,8 @@ const reducer = (state: IState, action: any) => {
       return { ...state, tuftIdx: action.payload };
     case 'SET_TUFTS':
       return { ...state, tufts: action.payload };
+    case 'SET_TUFT_TITLE':
+      return { ...state, tuftTitle: action.payload };
     default:
       return { ...state };
   }

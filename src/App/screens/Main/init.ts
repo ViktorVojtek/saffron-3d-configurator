@@ -48,6 +48,7 @@ export default function (): void {
   
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.minDistance = 5.5;
+  controls.maxDistance = 15;
   
   // controls.enableDamping = true;
   // controls.dampingFactor = 0.75;

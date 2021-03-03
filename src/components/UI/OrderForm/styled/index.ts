@@ -34,6 +34,7 @@ export const CloseBtn = styled.button`
   right: 0.75rem;
   font-size: 1.25rem;
   outline: none;
+  z-index: 10;
 `;
 
 export const H2 = styled.h2`
@@ -64,24 +65,48 @@ export const P = styled.p`
 `;
 
 export const Img = styled.img`
-  width: 100%;
+  width: calc(100vh / 1.8);
   display: block;
   margin: 0 auto;
+
+  @media only screen and (max-width: 770px) {
+    max-width: 95%;
+    margin-bottom: 1.25rem;
+    margin-top: -1.25rem;
+  }
 `;
 
 export const ImagesContainer = styled.div`
   border-right: 1px solid #ededed;
-  width: calc(50% - 1px);
-  position: absolute;
+  width: calc(50% - 2px);
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  @media only screen and (max-width: 770px) {
+    width: 100%;
+    position: static;
+    border-right: 0;
+  }
 `;
 
 export const Form = styled.form`
   width: 50%;
   margin-left: 50%;
   padding: 0 2.5rem;
+  overflow-x: hidden;
+
+  @media only screen and (max-width: 770px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
-export const FormControl = styled.div`
+export const FormControl = styled.div<{ marginOff?: boolean }>`
   margin-bottom: 1.25rem;
+
+  @media only screen and (max-width: 770px) {
+    ${({ marginOff }) => marginOff && 'margin-bottom: 0;'}
+  }
 `;
 
 export const Input = styled.input`
@@ -103,6 +128,7 @@ export const SubmitBtn = styled.button`
   border-radius: 0.25rem;
   color: #fff;
   outline: none;
+  margin-bottom: 1rem;
 
   &:disabled {
     background-color: #1c608e;

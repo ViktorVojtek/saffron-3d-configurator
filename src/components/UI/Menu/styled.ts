@@ -12,13 +12,19 @@ export const MenuWrapper = styled.div<{ show: boolean }>`
   // transform: translateX(${({ show }) => show ? '0' : '-100%'});
   transition: transform .3s;
   width: 40%;
+  overflow-y: auto;
   // z-index: 5;
 
-  @media only screen and (max-width: 580px) {
+  @media only screen and (max-width: 980px) {
+    width: 45.9%;
+  }
+  @media only screen and (max-width: 770px) {
     position: absolute;
     background-color: #fff;
     transform: translateX(${({ show }) => (show ? '0' : '-100%')});
+    bottom: 0;
     width: 100%;
+    height: 55%;
     z-index: 1;
   }
 `;
@@ -34,6 +40,7 @@ export const MenuToggleBtn = styled.button<{ show: boolean }>`
   // border-left: 0 none;
   // border-radius: 0 6px 6px 0;
   outline: none;
+  right: -100px;
   z-index: -1;
 
   &:after {
@@ -42,7 +49,7 @@ export const MenuToggleBtn = styled.button<{ show: boolean }>`
     height: 20px;
   }
 
-  @media only screen and (max-width: 580px) {
+  @media only screen and (max-width: 770px) {
     right: ${({show}) => (show ? '0' : '-50px')};
     top: -1px;
     z-index: 10;

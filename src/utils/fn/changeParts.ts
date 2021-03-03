@@ -5,16 +5,18 @@ import { AjaxTextureLoader, onProgress } from '../index';
 import { useStore, ToLoadEnum } from '../store';
 
 export function changeBedMaterial(i: number, tuft?: boolean) {
-  const { state, dispatch } = useStore();
-  const { currentModelName, headTitle, matIdx, models, objIdx } = state;
+  const { state } = useStore();
+  const { currentModelName, headTitle, matIdx, models, objIdx, tuftIdx } = state;
 
-  if (!tuft) {
+  /* if (!tuft) {
     dispatch({ type: 'SET_MAT_IDX', payload: i });
     dispatch({
       type: 'SET_MAT_TITLE',
       payload: models[objIdx].matThumbs[i].title,
     });
-  }
+  } else {
+    dispatch({ type: 'SET_TUFT_TITLE', payload: models[objIdx].textures.tuft[i].title });
+  } */
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const bedItem = object.getObjectByName('Bed');
@@ -22,12 +24,15 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
 
   const bedTexture: string = tuft
     ? models[objIdx].textures.tuft[i].maps[matIdx]
-    : models[objIdx].textures.bed[i].map;
+    : (
+      tuftIdx > 0 ? models[objIdx].textures.tuft[tuftIdx].maps[i] : models[objIdx].textures.bed[i].map
+    );
   const headTextures: any[] = models[objIdx].textures.head;
   
   let headTexture: string;
 
   if (!tuft) {
+    // SET HEAD TEXTURE IF NOT TUFT CHANGE
     for (let j: number = 0; j <= headTextures.length; j += 1) {
       if (headTextures[j].title.toLowerCase() === headTitle.toLowerCase()) {
         headTexture = headTextures[j].maps[i].map;
@@ -35,6 +40,9 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
       }
     }
   }
+
+  console.log('Change bed material, head material accordingly.');
+  console.log(headTexture);
 
   changeMaterial(bedItem, bedTexture, () => {
     if (!tuft) {
@@ -53,10 +61,10 @@ export function changeLegMaterial(i:number): void {
     }
   } = useStore();
 
-  dispatch({
+  /* dispatch({
     type: 'SET_LEG_MAT_TITLE',
     payload: models[objIdx].textures.leg[legIdx].thumbs[i].title,
-  });
+  }); */
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const legItems: Object3D = object.getObjectByName('Legs');
@@ -118,21 +126,23 @@ export function changeLegMaterial(i:number): void {
     }
   }
 
-  dispatch({ type: 'SET_LEG_MAT_IDX', payload: i });
+  // dispatch({ type: 'SET_LEG_MAT_IDX', payload: i });
 }
 
 export function changeHead(items: any[], i: number): void {
   const { state, dispatch } = useStore();
-  const { currentModelName, matIdx, models, objIdx } = state;
+  const { currentModelName, headIdx, legMatIdx, matIdx, models, objIdx } = state;
   const object: Object3D = scene.getObjectByName(currentModelName);
   const headItems: Object3D = object.getObjectByName('Heads');
   const headTextures: any[] = models[objIdx].textures.head;
+  let jNumFound: number = 0;
 
   let headTexture: string;
 
   for (let j: number = 0; j < headTextures.length; j += 1) {
     if (headTextures[j].title.toLowerCase() === items[i].title.toLowerCase()) {
       headTexture = headTextures[j].maps[matIdx].map;
+      jNumFound = j;
       break;
     }
   }
@@ -141,6 +151,12 @@ export function changeHead(items: any[], i: number): void {
     if (child.isMesh) {
       child.visible = false;
 
+      if (items[i].title.toLowerCase() === 'frame') {
+        console.log(models[objIdx].textures.head[jNumFound]);
+        console.log(models[objIdx].textures.head[jNumFound].maps[matIdx]);
+        headTexture = models[objIdx].textures.head[jNumFound].maps[matIdx].wood[legMatIdx];
+      }
+      
       if (child.name.toLowerCase() === items[i].title.toLowerCase()) {
         const headMaterial: MeshLambertMaterial = new MeshLambertMaterial({
           reflectivity: 0.15
@@ -152,8 +168,8 @@ export function changeHead(items: any[], i: number): void {
         changeMaterial(child, headTexture, () => {
           child.visible = true;
 
-          dispatch({ type: 'SET_HEAD_TITLE', payload: items[i].title });
-          dispatch({ type: 'SET_HEAD_IDX', payload: i});
+          // dispatch({ type: 'SET_HEAD_TITLE', payload: items[i].title });
+          // dispatch({ type: 'SET_HEAD_IDX', payload: i});
 
           animate();
         });
@@ -168,11 +184,11 @@ export function changeLeg(items: any[], i: number) {
     state: { currentModelName, legMatIdx, models, objIdx }
   } = useStore();
   
-  dispatch({ type: 'SET_LEG_IDX', payload: i });
+  /* dispatch({ type: 'SET_LEG_IDX', payload: i });
   dispatch({
     type: 'SET_LEG_TITLE',
     payload: models[objIdx].legThumbs[i].title,
-  });
+  }); */
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const legItems: Object3D = object.getObjectByName('Legs');
@@ -220,7 +236,7 @@ export function changeLeg(items: any[], i: number) {
   });
 }
 
-function changeMaterial(
+export function changeMaterial(
   item: Object3D,
   textureImg: string,
   callback?: () => void

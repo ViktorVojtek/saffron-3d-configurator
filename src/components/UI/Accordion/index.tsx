@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AccordionWrapper } from './styled';
 import Item from './components/Item';
 
-const { useEffect, useState } = React;
+const { useEffect, useState, Fragment } = React;
 
 type Props = {
   defaultActive?: number;
@@ -11,6 +11,12 @@ type Props = {
     items: any[];
     handler?: (i: number) => void;
     horizontal?: boolean;
+    secondData?: {
+      title: string;
+      items: any[];
+      handler?: (i: number) => void;
+      horizontal?: boolean;
+    };
   }[];
 };
 
@@ -25,19 +31,24 @@ const Accordion: (props: Props) => JSX.Element = ({ defaultActive, data }) => {
     setActive(n);
   };
 
-  const accordions = data.map(({ items, title, handler, horizontal }, i) => (
-    <Item
-      title={title}
-      childItems={items}
-      itemNumber={i}
-      handleOnClick={handleSetActive}
-      horizontal={horizontal}
-      childHandler={handler}
-      show={i === active}
-    />
-  ));
+  // let secondAccItems: JSX.Element[] | undefined;
 
-  return <AccordionWrapper>{accordions}</AccordionWrapper>;
+  const accordionItems = data.map(
+    ({ items, title, handler, horizontal, secondData }, i) => (
+      <Item
+        title={title}
+        childItems={items}
+        itemNumber={i}
+        handleOnClick={handleSetActive}
+        horizontal={horizontal}
+        childHandler={handler}
+        show={i === active}
+        secondData={secondData}
+      />
+    )
+  );
+
+  return <AccordionWrapper>{accordionItems}</AccordionWrapper>;
 };
 
 export default Accordion;

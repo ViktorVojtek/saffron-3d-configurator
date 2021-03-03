@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 35%;
+  width: 100%;
 `;
 
 export const H4 = styled.h4`
@@ -15,5 +15,6 @@ export const H4 = styled.h4`
   // padding-left: 1rem;
   position: absolute;
   text-align: center;
+  font-size: 1.35rem;
   width: 100%;
 `;
