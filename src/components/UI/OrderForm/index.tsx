@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../utils/store';
-import { domainUri } from '../../../utils/constants';
+// import { domainUri } from '../../../utils/constants';
 import {
-  Container,
+  // Container,
   CloseBtn,
   Form,
   FormControl,
@@ -18,8 +18,9 @@ import {
   TextArea,
   Wrapper,
 } from './styled';
+import TextInput from './TextInput';
 
-const { Fragment } = React;
+const { Fragment, useState } = React;
 
 export default function ({
   show,
@@ -34,11 +35,38 @@ export default function ({
     dispatch,
     state: { headTitle, legMatTitle, legTitle, matTitle, tuftTitle },
   } = useStore();
+  const [state, setState] = useState({
+    formData: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
+    seller: false,
+    gdpr: false,
+  });
   const htmlTimes = '&times;';
 
   /* const handleCloseOrderForm = () => {
     dispatch({ type: 'TOGGLE_FORM', payload: false });
   }; */
+  const { gdpr, seller } = state;
+
+  const handleToggleGdpr: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void = (event) => {
+    const gdpr: boolean = event.currentTarget.checked;
+
+    setState({ ...state, gdpr });
+  };
+  const handleToggleSeller: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void = (event) => {
+    const seller: boolean = event.currentTarget.checked;
+
+    setState({ ...state, seller });
+  };
 
   const handleSubmitForm: (
     event: React.FormEvent<HTMLFormElement>
@@ -52,28 +80,47 @@ export default function ({
     const phone = (form.phone as HTMLInputElement).value;
     const message = (form.message as HTMLInputElement).value;
 
+    let valid: boolean = true;
+
+    if (!firstName) {
+      valid = false;
+    } else if (!lastName) {
+      valid = false;
+    } else if (!email) {
+      valid = false;
+    } else if (!gdpr) {
+      valid = false;
+    }
+
     const formData: string = JSON.stringify({
       firstName,
       lastName,
       message,
       email,
+      images,
       phone,
+      seller,
     });
 
-    const url: string = `${domainUri}/send-mail`;
+    // console.log(formData);
 
-    const resp: Response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: formData,
-    });
+    if (valid) {
+      // TODO: Replace hardcoded url by the real one from server
+      const url: string = `http://localhost:3224/send-mail`;
 
-    if (resp.status === 200) {
-      const mailResp = await resp.json();
+      const resp: Response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: formData,
+      });
 
-      // console.log(mailResp);
+      if (resp.status === 200) {
+        const mailResp = await resp.json();
+
+        console.log(mailResp);
+      }
     }
   };
 
@@ -87,63 +134,60 @@ export default function ({
           <H2>Zhrnutie</H2>
           <HR />
           <H3>Objednaný produkt:</H3>
-          {data
-            ? [
-                <P key="op-0">
-                  Typ postele <strong>{data.title}</strong>, typ materiálu
-                  postele <strong>{matTitle.toLowerCase()}</strong>.
-                </P>,
-                <P
-                  key="op-1"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      headTitle.toLowerCase() !== 'frame'
-                        ? `Typ čela <strong>${headTitle}</strong>.`
-                        : `Typ čela <strong>${headTitle}</strong> materiál rámu <strong>${legMatTitle.toLowerCase()}</strong>.`,
-                  }}
-                />,
-                <P key="op-2">
-                  Typ farby prešitia <strong>{tuftTitle.toLowerCase()}</strong>.
-                </P>,
-                <P key="op-3">
-                  Typ nôh <strong>{legTitle}</strong>, typ materiálu nôh{' '}
-                  <strong>{legMatTitle.toLowerCase()}</strong>.
-                </P>,
-                <HR key="div-0" />,
-              ]
-            : null}
-          <FormControl>
-            <Input
-              type="text"
-              id="firstname"
-              name="firstname"
-              placeholder="Zadajte svoje meno"
-            />
-          </FormControl>
-          <FormControl>
-            <Input
-              type="text"
-              id="surname"
-              name="surname"
-              placeholder="Zadajte priezvisko"
-            />
-          </FormControl>
-          <FormControl>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Zadajte svoj e-mail"
-            />
-          </FormControl>
-          <FormControl>
-            <Input
-              type="phone"
-              id="phone"
-              name="phone"
-              placeholder="Zadajte tel. číslo"
-            />
-          </FormControl>
+          {data ? (
+            <React.Fragment>
+              <P key="op-0">
+                Typ postele <strong>{data.title}</strong>, typ materiálu postele{' '}
+                <strong>{matTitle.toLowerCase()}</strong>.
+              </P>
+              <P
+                key="op-1"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    headTitle.toLowerCase() !== 'frame'
+                      ? `Typ čela <strong>${headTitle}</strong>.`
+                      : `Typ čela <strong>${headTitle}</strong> materiál rámu <strong>${legMatTitle.toLowerCase()}</strong>.`,
+                }}
+              />
+              <P key="op-2">
+                Typ farby prešitia <strong>{tuftTitle.toLowerCase()}</strong>.
+              </P>
+              ,
+              <P key="op-3">
+                Typ nôh <strong>{legTitle}</strong>, typ materiálu nôh{' '}
+                <strong>{legMatTitle.toLowerCase()}</strong>.
+              </P>
+              <HR key="div-0" />
+            </React.Fragment>
+          ) : null}
+          <TextInput
+            id="firstname"
+            name="firstName"
+            placeholder="Zadajte svoje meno"
+            errorText="Nezadali ste meno"
+            validate
+          />
+          <TextInput
+            id="lastname"
+            name="lastName"
+            placeholder="Zadajte priezvisko"
+            errorText="Nezadali ste priezvisko"
+            validate
+          />
+          <TextInput
+            type="email"
+            id="email"
+            name="Email"
+            placeholder="Zadajte email"
+            errorText="Email nie je v správnom tvare"
+            validate
+          />
+          <TextInput
+            type="phone"
+            id="phone"
+            name="Číslo"
+            placeholder="Zadajte tel. číslo"
+          />
           <FormControl marginOff>
             <TextArea
               id="message"
@@ -159,12 +203,14 @@ export default function ({
               : null}
           </ImagesContainer>
           <FormControl>
-            <input type="checkbox" /> Súhlas so spracovaním osobných údajov.
+            <input type="checkbox" onChange={handleToggleGdpr} /> Súhlas so
+            spracovaním osobných údajov.
           </FormControl>
           <FormControl>
-            <input type="checkbox" /> Chcem aby sa mi ozval predajca Saffronu.
+            <input type="checkbox" onChange={handleToggleSeller} /> Chcem aby sa
+            mi ozval predajca Saffronu.
           </FormControl>
-          <SubmitBtn type="submit" disabled>
+          <SubmitBtn type="submit" disabled={!gdpr}>
             Poslať zhrnutie na môj email
           </SubmitBtn>
         </Form>

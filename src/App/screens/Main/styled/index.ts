@@ -13,7 +13,7 @@ export const CanvasWrapper = styled.div`
   position: relative;
 
   @media only screen and (max-width: 980px) {
-    width: 54%;
+    width: 50%;
   }
   @media only screen and (max-width: 770px) {
     // margin-top: 40%;
