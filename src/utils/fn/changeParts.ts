@@ -28,7 +28,7 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
       tuftIdx > 0 ? models[objIdx].textures.tuft[tuftIdx].maps[i] : models[objIdx].textures.bed[i].map
     );
   const headTextures: any[] = models[objIdx].textures.head;
-  
+
   let headTexture: string;
 
   if (!tuft) {
@@ -53,7 +53,7 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
   });
 }
 
-export function changeLegMaterial(i:number): void {
+export function changeLegMaterial(i: number): void {
   const {
     dispatch,
     state: {
@@ -156,7 +156,7 @@ export function changeHead(items: any[], i: number): void {
         console.log(models[objIdx].textures.head[jNumFound].maps[matIdx]);
         headTexture = models[objIdx].textures.head[jNumFound].maps[matIdx].wood[legMatIdx];
       }
-      
+
       if (child.name.toLowerCase() === items[i].title.toLowerCase()) {
         const headMaterial: MeshLambertMaterial = new MeshLambertMaterial({
           reflectivity: 0.15
@@ -183,7 +183,7 @@ export function changeLeg(items: any[], i: number) {
     dispatch,
     state: { currentModelName, legMatIdx, models, objIdx }
   } = useStore();
-  
+
   /* dispatch({ type: 'SET_LEG_IDX', payload: i });
   dispatch({
     type: 'SET_LEG_TITLE',
@@ -217,17 +217,17 @@ export function changeLeg(items: any[], i: number) {
         changeMaterial(child, legTexture, () => {
           child.visible = true;
 
-          if (models[objIdx].title.toLowerCase() === 'aurelia') {
+          /* if (models[objIdx].title.toLowerCase() === 'aurelia') {
             if (child.name.toLowerCase() !== 'aurelia') {
               if (object.position.y === 0) {
-                object.position.set(0, 0.04, 0);
+                // object.position.set(0, 0.04, 0);
               }
             } else {
               if (object.position.y !== 0) {
                 object.position.set(0, 0, 0);
               }
             }
-          }
+          } */
 
           animate();
         });
@@ -257,6 +257,6 @@ export function changeMaterial(
     if (typeof callback === 'function') {
       callback();
     }
-    
+
   }, (event: ProgressEvent<EventTarget>) => { onProgress(event, ToLoadEnum.TEXTURE) });
 }

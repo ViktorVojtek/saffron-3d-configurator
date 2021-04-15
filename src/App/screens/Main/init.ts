@@ -34,7 +34,7 @@ export default function (): void {
   const { dispatch } = useStore();
 
   // CAMERA SET UP
-  
+
   const { x, y, z } = cameraPosStart;
 
   camera.position.set(x, y, z);
@@ -42,14 +42,14 @@ export default function (): void {
   // END
 
   // CONTROLS SETTINGS
-  
+
   controls.target.set(0, 0.9, 0);
   controls.update();
-  
+
   controls.maxPolarAngle = Math.PI / 2.05;
   controls.minDistance = 5.5;
   controls.maxDistance = 15;
-  
+
   // controls.enableDamping = true;
   // controls.dampingFactor = 0.75;
   // controls.rotateSpeed = 0.35;
@@ -86,8 +86,13 @@ export default function (): void {
 
   document.getElementById(canvasWrapperId).appendChild(renderer.domElement);
 
-  const width: number = dimensions[0];
-  const height: number = dimensions[1];
+  const { offsetHeight, offsetWidth } = document.getElementById(canvasWrapperId);
+
+  console.log(offsetHeight);
+  console.log(offsetWidth);
+
+  const width: number = offsetWidth; // dimensions[0];
+  const height: number = offsetHeight; // dimensions[1];
 
   renderer.setSize(width, height, true);
   renderer.compile(scene, camera);

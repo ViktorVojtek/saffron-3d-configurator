@@ -210,7 +210,8 @@ export default function ({
             <input type="checkbox" onChange={handleToggleSeller} /> Chcem aby sa
             mi ozval predajca Saffronu.
           </FormControl>
-          <SubmitBtn type="submit" disabled={!gdpr}>
+          {/* !gdpr */}
+          <SubmitBtn type="submit" disabled={true}>
             Poslať zhrnutie na môj email
           </SubmitBtn>
         </Form>

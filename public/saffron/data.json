@@ -142,15 +142,11 @@
       ],
       "legThumbs": [
         {
-          "thumb": "https://saffron.enli.technology/static/images/legs_set/aurelia.png",
-          "title": "Aurelia"
-        },
-        {
-          "thumb": "https://saffron.enli.technology/static/images/legs_set/cube.png",
+          "thumb": "https://saffron.enli.technology/static/images/legs_set/leg-1.jpg",
           "title": "Cube"
         },
         {
-          "thumb": "https://saffron.enli.technology/static/images/legs_set/lean.png",
+          "thumb": "https://saffron.enli.technology/static/images/legs_set/leg-2.jpg",
           "title": "Lean"
         }
       ],
@@ -1313,10 +1309,10 @@
         "y": -109.43675231933594,
         "z": -62
       },
-      "leg": "Aurelia",
+      "leg": "Cube",
       "legIdx": 0,
       "tuftIdx": 0,
-      "position": [0, 0.065, 0],
+      "position": [0, 0.1, 0],
       "scale": 0.01,
       "size": 20395392,
       "bedTSize": 1250084,

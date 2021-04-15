@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
-export const ItemWrapper = styled.li<{ show: boolean; }>`
+export const ItemWrapper = styled.li<{ show: boolean; big?: boolean; }>`
   // min-height: 52px;
   width: 100%;
   // overflow-y: auto;
   // padding-bottom: 52px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // space-between;
   
   &:first-child {
     border-top: 1px solid #000;
@@ -35,7 +38,7 @@ export const ItemWrapper = styled.li<{ show: boolean; }>`
       }
 
       @media only screen and (max-width: 770px) {
-        height: 55%;
+        height: 80%;
       }
       `
       : ''
@@ -62,12 +65,12 @@ export const ItemBtn = styled.button<{ second?: boolean; }>`
   white-space: normal;
   color: #000;
 
-  &:first-child {
-    padding-left: 1rem;
+  /* &:first-child {
+    // padding-left: 1rem;
   }
   &:last-child {
     padding-right: 1rem;
-  }
+  } */
 
   &:hover {
     background-color: #fff;
@@ -80,18 +83,21 @@ export const ItemBtn = styled.button<{ second?: boolean; }>`
   }
 `;
 
-export const CheckMark = styled.div<{ selected: boolean }>`
+export const CheckMark = styled.div<{ selected: boolean; desc?: boolean; }>`
   align-items: center;
   box-sizing: border-box;
-  border: ${({ selected }) => selected ? '4px solid #4C33FF' : '4px solid transparent'};
-  margin: 0 0.5rem;
-  padding: 0 0.75rem 1rem 0.75rem;
+  border: ${({ selected }) => selected ? '4px solid rgba(33,28,23,.65)' : '4px solid transparent'};
+  // margin: 0 1rem 0 0.5rem; // 0 0.5rem;
+  padding: 0.5rem; // 0 0.75rem 1rem 0.75rem;
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ desc }) => (desc ? 'row' : 'column')}; // column;
+  height: 80%;
+  min-width: -webkit-fill-available;
+  overflow: hidden;
 
   &:hover {
-    border: ${({ selected }) => selected ? '4px solid #4C33FF' : '4px solid rgba(76, 51, 255, 0.35)'};
+    border: ${({ selected }) => selected ? '4px solid rgba(33,28,23,.35)' : '4px solid rgba(33,28,23,.35)'};
     
     &:before {
       content: '\\2713';
@@ -101,7 +107,7 @@ export const CheckMark = styled.div<{ selected: boolean }>`
       position: absolute;
       right: 0;
       top: 0;
-      background-color: rgba(76, 51, 255, 0.35);
+      background-color: rgba(33,28,23,.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -118,41 +124,43 @@ export const CheckMark = styled.div<{ selected: boolean }>`
       position: absolute;
       right: 0;
       top: 0;
-      background-color: #4C33FF;
+      background-color: rgba(33,28,23,.65);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     &:hover::before  {
-      // background-color: rgba(76, 51, 255, 0.35)!important;
+      background-color: rgba(33,28,23,.35)!important;
     }
     `
   )}
   
-  @media only screen and (max-width: 770px) {
-    display: inline-block;
-    padding: 0 0.75rem 0.5rem 0.75rem;
+  @media only screen and (min-width: 770px) {
+    flex-wrap: wrap;
   }
 `;
 
 export const ItemSpanTitle = styled.h5`
+  margin: 0.5rem 0;
+
   @media only screen and (max-width: 770px) {
     clear: both;
     display: inline-block;
-    margin-top: 0.5rem;
     width: 100%;
   }
 `;
 
 export const ItemImg = styled.img<{ single?: boolean; }>`
-  max-width: 90%;
+  max-width: 90%!important;
   // margin: 0.75rem 0.75rem 0.75rem 0;
-  margin: 0.75rem auto;
+  // height: 80%!important;
+  // margin: 0.75rem auto;
+  margin: 0 auto!important;
 
   @media only screen and (max-width: 770px) {
     margin: 0 auto;
-    width: ${({ single }) => (single ? '30%' : '40%')};
+    width: ${({ single }) => (single ? '50%' : '40%')};
     float: ${({ single }) => (single ? 'none' : 'left')};
   }
 `;
@@ -160,10 +168,11 @@ export const ItemImg = styled.img<{ single?: boolean; }>`
 export const ItemSpanDesc = styled.span`
   text-align: left;
   padding-left: 0.5rem;
+  font-size: 1rem;
 
   @media only screen and (max-width: 770px) {
-    width: 55%;
-    float: right;
+    // width: 55%;
+    // float: right;
     font-size: .75rem;
   }
 `;
@@ -213,10 +222,10 @@ export const CarouselNavBtn = styled.button<{ left?: boolean }>`
 `;
 
 export const ContainerForSecond = styled.div<{ show?: boolean; second?: boolean; moreHeight?: boolean; }>`
-  display: ${({ show }) => show ? 'flex' : 'none'};
-  height: 88%;
+  display: ${({ show }) => show ? 'block' : 'none'};
+  height: calc(100% - 70px);
   position: relative;
-  ${({ second }) => second && 'overflow-y: auto; flex-direction: column;'}
+  ${({ second }) => second && 'overflow: auto; flex-direction: column;'}
 
   @media only screen and (max-width: 770px) {
     height: ${({ moreHeight }) => (moreHeight ? '100%' : 'auto')};
@@ -225,8 +234,9 @@ export const ContainerForSecond = styled.div<{ show?: boolean; second?: boolean;
 
 export const CarouselWrapper = styled.div<{ second?: boolean; show?: boolean; moreHeight?: boolean; }>`
   display: ${({ show }) => show ? 'flex' : 'none'};
-  height: 88%;
+  height: calc(100% - 70px);
   position: relative;
+  // height: 100%!important;
   // ${({ second }) => (second && 'margin-top: 0.5rem;')}
 
   @media only screen and (max-width: 770px) {
@@ -250,18 +260,19 @@ export const Button = styled.button<{ horizontal?: boolean; show: boolean }>`
   border: 0 none;
   border-bottom: 1px solid #000;
   border-radius: 0;
-  color: ${({ show }) => show ? '#fff' : '#35342D'};
+  color: ${({ show }) => show ? '#fff' : '#35342D'}!important;
   width: 100%;
   text-align: center;
   outline: none;
-  position: static; // sticky;
-  ${({ horizontal }) => (horizontal ? 'left' : 'top')}: -1px;
+  position: ${({ show }) => (show ? 'absolute' : 'sticky')}; //absolute; // sticky;
+  ${({ horizontal }) => (horizontal ? 'top' : 'top')}: -1px;
   font-family: "Josefin Sans", Sans-serif;
   font-size: 1.15rem;
   text-transform: uppercase;
   transition: all .3s;
   padding: 1.5rem;
   margin: 0;
+  z-index: 1;
 
   &:hover {
     background-color: rgba(33, 28, 23, .65);

@@ -9,15 +9,18 @@ export const AppWrapper = styled.div`
 
 export const CanvasWrapper = styled.div`
   width: 59.89%;
+  height: 95%;
   float: right;
   position: relative;
 
   @media only screen and (max-width: 980px) {
     width: 50%;
+    height: 85%;
   }
   @media only screen and (max-width: 770px) {
     // margin-top: 40%;
     width: 100%;
+    height: 45%;
     float: none;
   }
 `;

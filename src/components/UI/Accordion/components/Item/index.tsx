@@ -114,15 +114,35 @@ function Carousel(props: CarouselProps) {
                 handleSelect(i);
               }}
             >
-              <CheckMark selected={state.selected === i}>
-                <ItemSpanTitle>{parsedTitle}</ItemSpanTitle>
-                {color ? (
-                  <ItemColor color={color} />
-                ) : (
-                  <ItemImg src={thumb} single={description === undefined} />
-                )}
-                {description && <ItemSpanDesc>{description}</ItemSpanDesc>}
-              </CheckMark>
+              {description ? (
+                <CheckMark desc selected={state.selected === i}>
+                  {color ? (
+                    <ItemColor color={color} />
+                  ) : (
+                    <ItemImg src={thumb} single={description === undefined} />
+                  )}
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      paddingLeft: '0.5rem',
+                    }}
+                  >
+                    <ItemSpanTitle>{parsedTitle}</ItemSpanTitle>
+                    <ItemSpanDesc>{description}</ItemSpanDesc>
+                  </div>
+                </CheckMark>
+              ) : (
+                <CheckMark selected={state.selected === i}>
+                  <ItemSpanTitle>{parsedTitle}</ItemSpanTitle>
+                  {color ? (
+                    <ItemColor color={color} />
+                  ) : (
+                    <ItemImg src={thumb} single={description === undefined} />
+                  )}
+                  {description && <ItemSpanDesc>{description}</ItemSpanDesc>}
+                </CheckMark>
+              )}
             </ItemBtn>
           );
         })}
@@ -182,7 +202,9 @@ const Item: (props: Props) => JSX.Element = ({
           {''}
           {secondData && (
             <React.Fragment>
-              <h5>{` ${secondData.title}`}</h5>
+              <h5
+                style={{ margin: '.5rem 0', padding: '0 0 0 .5rem' }}
+              >{` ${secondData.title}`}</h5>
               <Carousel
                 show={show}
                 horizontal={horizontal}

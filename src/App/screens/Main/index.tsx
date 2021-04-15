@@ -201,7 +201,14 @@ export default function Main(): JSX.Element {
           title={title ? title : false}
         />
       ) */}
-      <CanvasWrapper id={canvasWrapperId}>
+      <CanvasWrapper
+        id={canvasWrapperId}
+        style={
+          loaded && menuData && menuData.length > 0
+            ? { height: '100vh!important' }
+            : {}
+        }
+      >
         {loaded && (
           <Fragment>
             <Title title={models[objIdx].title} />
