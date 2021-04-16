@@ -38,6 +38,10 @@ export const ItemWrapper = styled.li<{ show: boolean; big?: boolean; }>`
       }
 
       @media only screen and (max-width: 770px) {
+        height: 60%; // 80%;
+      }
+
+      @media only screen and (min-width: 780px) {
         height: 80%;
       }
       `
@@ -163,6 +167,10 @@ export const ItemImg = styled.img<{ single?: boolean; }>`
     width: ${({ single }) => (single ? '50%' : '40%')};
     float: ${({ single }) => (single ? 'none' : 'left')};
   }
+
+  @media only screen and (min-width: 780px) {
+    max-width: 70%!important;
+  }
 `;
 
 export const ItemSpanDesc = styled.span`
@@ -234,25 +242,23 @@ export const ContainerForSecond = styled.div<{ show?: boolean; second?: boolean;
 
 export const CarouselWrapper = styled.div<{ second?: boolean; show?: boolean; moreHeight?: boolean; }>`
   display: ${({ show }) => show ? 'flex' : 'none'};
-  height: calc(100% - 70px);
+  height: calc(100% - 50px);
   position: relative;
   // height: 100%!important;
   // ${({ second }) => (second && 'margin-top: 0.5rem;')}
 
   @media only screen and (max-width: 770px) {
-    height: ${({ moreHeight }) => (moreHeight ? '100%' : 'auto')};
+    // height: ${({ moreHeight }) => (moreHeight ? '100%' : 'auto')};
     margin-top: 0;
   }
 `;
 
 export const ItemContent = styled.div<{ horizontal?: boolean; show: boolean }>`
   display: ${({ show }) => (show ? 'flex' : 'none')};
-  // flex-flow: ${({ horizontal }) => (horizontal ? 'row' : 'column')};
-  // margin-top: 1rem;
-  // ${({ horizontal }) => horizontal ? 'height: calc(100% - 45px);' : ''}
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+  width: 100%;
 `;
 
 export const Button = styled.button<{ horizontal?: boolean; show: boolean }>`
