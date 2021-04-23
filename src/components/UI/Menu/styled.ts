@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MenuWrapper = styled.div<{ show: boolean }>`
-  background-color: rgba(255, 255, 255, .75);
+  background-color: #fff; // rgba(255, 255, 255, .75);
   border-right: 1px solid #000;
   float: left;
   height: 100%;

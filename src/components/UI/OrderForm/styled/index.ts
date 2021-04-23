@@ -83,7 +83,7 @@ export const ImagesContainer = styled.div`
   top: 0;
   left: 0;
 
-  @media only screen and (max-width: px) {
+  @media only screen and (max-width: 770px) {
     width: 100%;
     position: static;
     border-right: 0;

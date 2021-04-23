@@ -26,7 +26,7 @@ export const ItemWrapper = styled.li<{ show: boolean; big?: boolean; }>`
     show
       ?
       `
-      background-color: rgb(115, 115, 115, .05);
+      // background-color: rgb(115, 115, 115, .05);
       border-bottom: 1px solid #000;
       height: 67%;
       // flex-grow: 1;
@@ -41,8 +41,8 @@ export const ItemWrapper = styled.li<{ show: boolean; big?: boolean; }>`
         height: 60%; // 80%;
       }
 
-      @media only screen and (min-width: 780px) {
-        height: 80%;
+      @media only screen and (max-width: 480px) {
+        height: 50%; // 80%;
       }
       `
       : ''
@@ -68,6 +68,8 @@ export const ItemBtn = styled.button<{ second?: boolean; }>`
   scroll-behavior: smooth;
   white-space: normal;
   color: #000;
+  padding: 3rem 3rem 1rem 3rem;
+  height: fit-content;
 
   /* &:first-child {
     // padding-left: 1rem;
@@ -81,14 +83,27 @@ export const ItemBtn = styled.button<{ second?: boolean; }>`
     color: #000;
   }
 
-  @media only screen and (max-width: 770px) {
-    width: 100%; // 50%;
-    margin: 0 auto;
+  @media only screen and (max-width: 980px) {
+    padding: 5rem;
   }
+
+  @media only screen and (max-width: 770px) {
+    width: 80%; // 50%;
+    margin: 0 10%;
+    padding: 3rem 3rem 1rem 3rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 3rem 1rem 3rem;
+  }
+
 `;
 
 export const CheckMark = styled.div<{ selected: boolean; desc?: boolean; }>`
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   border: ${({ selected }) => selected ? '4px solid rgba(33,28,23,.65)' : '4px solid transparent'};
   // margin: 0 1rem 0 0.5rem; // 0 0.5rem;
@@ -146,6 +161,7 @@ export const CheckMark = styled.div<{ selected: boolean; desc?: boolean; }>`
 `;
 
 export const ItemSpanTitle = styled.h5`
+  font-size: 1.25rem;
   margin: 0.5rem 0;
 
   @media only screen and (max-width: 770px) {
@@ -170,6 +186,10 @@ export const ItemImg = styled.img<{ single?: boolean; }>`
 
   @media only screen and (min-width: 780px) {
     max-width: 70%!important;
+  }
+
+  @media only screen and (min-width: 980px) {
+    max-width: 50%!important;
   }
 `;
 
@@ -242,7 +262,7 @@ export const ContainerForSecond = styled.div<{ show?: boolean; second?: boolean;
 
 export const CarouselWrapper = styled.div<{ second?: boolean; show?: boolean; moreHeight?: boolean; }>`
   display: ${({ show }) => show ? 'flex' : 'none'};
-  height: calc(100% - 50px);
+  // height: calc(100% - 50px);
   position: relative;
   // height: 100%!important;
   // ${({ second }) => (second && 'margin-top: 0.5rem;')}

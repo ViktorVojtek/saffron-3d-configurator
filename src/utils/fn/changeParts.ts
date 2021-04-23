@@ -6,8 +6,12 @@ import { useStore, ToLoadEnum } from '../store';
 
 export function changeBedMaterial(i: number, tuft?: boolean) {
   const { state } = useStore();
-  const { currentModelName, headTitle, matIdx, models, objIdx, tuftIdx } = state;
+  const { currentModelName, headTitle, headIsSet, matIdx, models, objIdx, tuftIdx } = state;
 
+  console.log('CHANGE MATERIAL OF:');
+  console.log(models[objIdx]);
+
+  console.log(headTitle);
   /* if (!tuft) {
     dispatch({ type: 'SET_MAT_IDX', payload: i });
     dispatch({
@@ -20,7 +24,7 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const bedItem = object.getObjectByName('Bed');
-  const headItem = object.getObjectByName(headTitle);
+  const headItem = headIsSet ? object.getObjectByName(headTitle) : object.getObjectByName(models[objIdx].head);
 
   const bedTexture: string = tuft
     ? models[objIdx].textures.tuft[i].maps[matIdx]
@@ -31,12 +35,22 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
 
   let headTexture: string;
 
+  console.log(headTextures);
+  console.log('headIsSet', headIsSet);
+
   if (!tuft) {
     // SET HEAD TEXTURE IF NOT TUFT CHANGE
-    for (let j: number = 0; j <= headTextures.length; j += 1) {
-      if (headTextures[j].title.toLowerCase() === headTitle.toLowerCase()) {
-        headTexture = headTextures[j].maps[i].map;
-        break;
+    for (let j: number = 0; j < headTextures.length; j += 1) {
+      if(headIsSet) {
+        if (headTextures[j].title.toLowerCase() === headTitle.toLowerCase()) {
+          headTexture = headTextures[j].maps[i].map;
+          break;
+        }  
+      } else {
+        if(headTextures[j].title.toLowerCase() === models[objIdx].head.toLowerCase()) {
+          headTexture = headTextures[j].maps[i].map;
+          break;
+        }
       }
     }
   }
@@ -46,6 +60,10 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
 
   changeMaterial(bedItem, bedTexture, () => {
     if (!tuft) {
+      console.log('Going to change Head');
+      console.log(headItem);
+
+      console.log(headTexture);
       changeMaterial(headItem, headTexture, () => animate());
     } else {
       animate();

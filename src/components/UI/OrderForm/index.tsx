@@ -152,7 +152,6 @@ export default function ({
               <P key="op-2">
                 Typ farby prešitia <strong>{tuftTitle.toLowerCase()}</strong>.
               </P>
-              ,
               <P key="op-3">
                 Typ nôh <strong>{legTitle}</strong>, typ materiálu nôh{' '}
                 <strong>{legMatTitle.toLowerCase()}</strong>.

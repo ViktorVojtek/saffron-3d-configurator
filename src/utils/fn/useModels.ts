@@ -82,6 +82,7 @@ export const useModels: (
 
           console.log('\n');
           console.log('MODEL DATA, LEG: ', modelData.leg);
+          console.log('MODEL DATA HEAD', modelData.head);
 
           if (activeModelName !== currentModelName) {
             const objectExist: Object3D = scene.getObjectByName(

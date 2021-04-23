@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
 export const AccordionWrapper = styled.ul`
-  height: 100vh;
+  height: auto;
   margin: 0;
   padding: 0;
-  // display: flex;
-  // flex-flow: column nowrap;
+  
+  @media only screen and (min-width: 770px) {
+    height: 100vh;
+  }
+
+  @media only screen and (max-width: 480px) {
+    height: auto;
+  }
 `;
