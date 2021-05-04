@@ -6,21 +6,12 @@ import { useStore, ToLoadEnum } from '../store';
 
 export function changeBedMaterial(i: number, tuft?: boolean) {
   const { state } = useStore();
-  const { currentModelName, headTitle, headIsSet, matIdx, models, objIdx, tuftIdx } = state;
+  const { currentModelName, headTitle, headIsSet, legMatIdx, matIdx, models, objIdx, tuftIdx } = state;
 
   console.log('CHANGE MATERIAL OF:');
   console.log(models[objIdx]);
 
   console.log(headTitle);
-  /* if (!tuft) {
-    dispatch({ type: 'SET_MAT_IDX', payload: i });
-    dispatch({
-      type: 'SET_MAT_TITLE',
-      payload: models[objIdx].matThumbs[i].title,
-    });
-  } else {
-    dispatch({ type: 'SET_TUFT_TITLE', payload: models[objIdx].textures.tuft[i].title });
-  } */
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const bedItem = object.getObjectByName('Bed');
@@ -43,12 +34,20 @@ export function changeBedMaterial(i: number, tuft?: boolean) {
     for (let j: number = 0; j < headTextures.length; j += 1) {
       if(headIsSet) {
         if (headTextures[j].title.toLowerCase() === headTitle.toLowerCase()) {
-          headTexture = headTextures[j].maps[i].map;
+          if (headTitle.toLowerCase() === 'frame') {
+            headTexture = headTextures[j].maps[i].wood[legMatIdx];
+          } else {
+            headTexture = headTextures[j].maps[i].map;
+          }
           break;
         }  
       } else {
         if(headTextures[j].title.toLowerCase() === models[objIdx].head.toLowerCase()) {
-          headTexture = headTextures[j].maps[i].map;
+          if (models[objIdx].head.toLowerCase() === 'frame') {
+            headTexture = headTextures[j].maps[i].wood[legMatIdx];
+          } else {
+            headTexture = headTextures[j].maps[i].map;
+          }
           break;
         }
       }
@@ -78,11 +77,6 @@ export function changeLegMaterial(i: number): void {
       currentModelName, headIdx, legIdx, legTitle, matIdx, models, objIdx
     }
   } = useStore();
-
-  /* dispatch({
-    type: 'SET_LEG_MAT_TITLE',
-    payload: models[objIdx].textures.leg[legIdx].thumbs[i].title,
-  }); */
 
   const object: Object3D = scene.getObjectByName(currentModelName);
   const legItems: Object3D = object.getObjectByName('Legs');
