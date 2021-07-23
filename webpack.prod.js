@@ -1,12 +1,36 @@
-const path = require('path');
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 
-module.exports = merge(common, {
-  mode: 'production',
-  devtool: 'source-map',
-  output: {
-    path: path.resolve(__dirname, 'public/js/'),
-    filename: '[name].min.js',
+module.exports = {
+  entry: ['./index.tsx'],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
-});
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  output: {
+    path: `${__dirname}/public`,
+    publicPath: '/',
+    filename: 'app.min.js',
+  },
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: true,
+    }),
+  ],
+};

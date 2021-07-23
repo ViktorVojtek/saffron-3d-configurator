@@ -1,24 +1,26 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "target": "es2018",
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "noImplicitAny": false,
+    "module": "esnext",
+    "outDir": "dist/",
+    "noImplicitAny": true,
     "removeComments": true,
+    "preserveConstEnums": true,
     "sourceMap": true,
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "typeRoots": ["custom-types", "node_modules/@types"]
+    "target": "ESNext",
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "preserve",
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable", "ESNext"],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "paths": {
-    "preact": ["custom-types/preact"],
-    // explicitly cast to our installed version of react < 16
-    "react": ["node_modules/@types/react" /* , "custom-types/react" */]
-  },
-  "skipLibCheck": true,
-  "suppressImplicitAnyIndexErrors": true,
-  "lib": ["dom", "es2017"],
-  "baseUrl": ".",
-  "include": ["./src/**/*"]
+  "include": ["src", "index.tsx"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
