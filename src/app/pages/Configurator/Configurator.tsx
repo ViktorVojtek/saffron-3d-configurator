@@ -22,13 +22,14 @@ import data from '../../../assets/data.json';
 
 function Configurator(): JSX.Element {
   const animate = useAnimate();
+  const setup = useSetUpModel();
+  const [isLoading, loading] = useIsLoading();
+  const [{ allSet }, toggleAllSet] = useModelState();
   const [{ bedIdx, headIdx, matIdx, legMatIdx, tuftIdx }, _dispatch] = useStore();
   const [{ data: object3D }, loadModel] = useLoadModel();
-  const [isLoading, loading] = useIsLoading();
-  const setup = useSetUpModel();
-  const [{ allSet }, toggleAllSet] = useModelState();
-  
+
   const url: string = data.model[bedIdx];
+  
   // Object settings
   const objectOptions: ObjectOptions = useMemo(() => ({
     name: data.bed[bedIdx].title.toLowerCase(),
@@ -57,24 +58,33 @@ function Configurator(): JSX.Element {
 
   // Load model if not in scene
   useEffect(() => {
-    if(!isInScene) {
-      loadModel(url);
+    if (isInScene) {
+      return;
     }
+
+    loading(true);
+    loadModel(url);
   }, [isInScene, url]);
 
-  // Add model to scene
+  // Add model to scene when loaded
   useEffect(() => {
-    if(object3D) {
-      useAddToScene(object3D as Group, data.bed[bedIdx].title);
+    if (!object3D) {
+      return;
     }
+    
+    useAddToScene(object3D as Group, data.bed[bedIdx].title);
   }, [object3D]);
 
   // Setup model base on options
   useEffect(() => {
-    if (isInScene) {
-      useHideModels();
-      setup(objectOptions);
+    if (!isInScene) {
+      return;
     }
+
+    console.log('Model setup');
+
+    useHideModels();
+    setup(objectOptions);
   }, [bedIdx, headIdx, matIdx, legMatIdx, tuftIdx, isInScene]);
 
   // Animate changes
@@ -109,10 +119,6 @@ function Configurator(): JSX.Element {
     );
 
     return '';
-  } */
-
-  /* if (isLoading) {
-    return <Loader progress={99} />;
   } */
 
   return (

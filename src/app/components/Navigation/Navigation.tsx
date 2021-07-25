@@ -54,11 +54,19 @@ function Navigation(props: Props): JSX.Element {
     }
 
     function onClick(n: number): void {
+      if (idx === n) {
+        return;
+      }
+
       loading(true);
       dispatch({ type: item.action, payload: n });
     }
 
     function handleOnButtonPress(n: number): void {
+      if (active === n) {
+        return;
+      }
+
       setActive(n);
     }
 
@@ -70,6 +78,7 @@ function Navigation(props: Props): JSX.Element {
             data={item.data}
             onItemPress={onClick}
             selected={idx}
+            visible={active === i}
           />
         </NavigationItem>
       </StyledLi>

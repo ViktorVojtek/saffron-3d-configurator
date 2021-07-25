@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   ACESFilmicToneMapping,
@@ -28,13 +28,14 @@ type Props = {
 };
 
 function Canvas(props: Props): JSX.Element {
-  const wrapper = useRef(null);
   const { loading } = props;
+
+  const wrapper = useRef(null);
   const history = useHistory();
   const animate = useAnimate();
   const { takeScreenshots } = useScreeshot();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let canvas: HTMLCanvasElement | undefined = undefined;
 
     if (!wrapper) {
@@ -129,13 +130,18 @@ function Canvas(props: Props): JSX.Element {
   return (
     <>
       <StyledWrapper ref={wrapper}>
-        <StyledAbsolute>
-          <Button onClick={handleOnClick} type="button">
-            <Trans>Summary</Trans>
-          </Button>
-        </StyledAbsolute>
+      {
+        loading ? (
+          <Loader progress={99} />
+        ) : (
+          <StyledAbsolute>
+            <Button onClick={handleOnClick} type="button">
+              <Trans>Summary</Trans>
+            </Button>
+          </StyledAbsolute>
+        )
+      }
       </StyledWrapper>
-      {loading && <Loader progress={99} />}
     </>
   );
 }
