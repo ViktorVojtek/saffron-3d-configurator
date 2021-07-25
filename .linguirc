@@ -4,5 +4,9 @@
     "path": "src/locales/{locale}/messages",
     "include": ["src"]
   }],
-  "format": "po"
+  "format": "po",
+  "sourceLocale": "en",
+  "fallbackLocales": {
+    default: "en"
+  }
 }

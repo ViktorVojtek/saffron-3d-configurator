@@ -13,6 +13,112 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/app/pages/Summary/Sumary.tsx:107
+msgid "Bed material type: {0}"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:104
+msgid "Bed type: {0}"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:85
+msgid "Configured bed"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:45
+msgid "Cover"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:23
+msgid "Email is required"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:146
+msgid "Fill in your message"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:129
+msgid "Fill in your name"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:141
+msgid "Fill in your phone number"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:133
+#: src/app/pages/Summary/Sumary.tsx:137
+msgid "Fill in your surname"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:35
+msgid "Head"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:110
+msgid "Head type: {0}"
+msgstr ""
+
 #: src/components/App/App.tsx:35
-msgid "Hello {name}!"
+#~ msgid "Hello {name}!"
+#~ msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:151
+msgid "I consent to the processing of personal data."
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:155
+msgid "I want a Saffron dealer to contact me."
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:119
+msgid "Leg material type: {0}"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:116
+msgid "Leg type: {0}"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:63
+msgid "Legs"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:72
+msgid "Legs Material"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:54
+msgid "Mattress Stitches"
+msgstr ""
+
+#: src/app/hooks/useNavData.tsx:25
+msgid "Model"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:27
+msgid "Must consent the processing of, personal data"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:101
+msgid "Ordered Product"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:161
+msgid "Send summary"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:113
+msgid "Stitching color type: {0}"
+msgstr ""
+
+#: src/app/components/Canvas/Canvas.tsx:134
+#: src/app/pages/Summary/Sumary.tsx:97
+msgid "Summary"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:21
+msgid "What's your name?"
+msgstr ""
+
+#: src/app/pages/Summary/Sumary.tsx:22
+msgid "What's your surname?"
 msgstr ""

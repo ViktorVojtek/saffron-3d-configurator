@@ -12,10 +12,11 @@ import { StoreProvider } from './hooks/useStore/store';
 import { LoadingProvider } from './hooks/useIsLoading';
 import { NavigationProvider } from './hooks/useNavigation';
 import { ModelStateProvider } from './hooks/useModelState';
+import { ScreenshotsProvider } from './hooks/useScreenshot';
+
 import GlobalStyle from './components/styled/Global';
 import Configurator from './pages/Configurator';
 import Summary from './pages/Summary';
-
 
 export default function App() {
   const locale = useLocale();
@@ -32,16 +33,18 @@ export default function App() {
           <LoadingProvider>
             <NavigationProvider>
               <ModelStateProvider>
-                <Router>
-                  <Switch>
-                    <Route path="/summary">
-                      <Summary />
-                    </Route>
-                    <Route path="/">
-                      <Configurator />
-                    </Route>
-                  </Switch>
-                </Router>
+                <ScreenshotsProvider>
+                  <Router>
+                    <Switch>
+                      <Route path="/summary">
+                        <Summary />
+                      </Route>
+                      <Route path="/">
+                        <Configurator />
+                      </Route>
+                    </Switch>
+                  </Router>
+                </ScreenshotsProvider>
               </ModelStateProvider>
             </NavigationProvider>
           </LoadingProvider>

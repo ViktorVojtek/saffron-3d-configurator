@@ -92,6 +92,7 @@ const StyledFlex = styled.div<Props>`
   align-items: ${({ alignItems }) => alignItems};
   align-content: ${({ alignContent }) => alignContent};
   align-self: ${({ alignSelf }) => alignSelf};
+  flex-basis: ${({ flexBasis }) => flexBasis};
   flex-wrap: ${({ wrap }) => wrap};
   flex-grow: ${({ grow }) => grow};
 `;
@@ -117,6 +118,7 @@ export default function Flex(props: Props) {
     alignItems,
     alignContent,
     alignSelf,
+    flexBasis,
     flexDirection,
     gap,
     wrap,
@@ -137,6 +139,7 @@ export default function Flex(props: Props) {
       alignItems={alignItems}
       alignContent={alignContent}
       alignSelf={alignSelf}
+      flexBasis={flexBasis}
       justifyContent={justifyContent}
       flexDirection={flexDirection}
       flexShrink={flexShrink}

@@ -21,7 +21,7 @@ export default function Checkbox(props: CheckboProps) {
   });
 
   return (
-    <Flex flexDirection="row" gap={Gap.SM} flexBasis={0} alignItems="center">
+    <Flex flexDirection="row" gap={Gap.SM} alignItems="center">
       <input
         ref={field.ref}
         value={field.value}
@@ -29,7 +29,7 @@ export default function Checkbox(props: CheckboProps) {
         type="checkbox"
         {...rest}
       />
-      <Flex flexDirection="column" gap={0} flexBasis={0} alignSelf="center">
+      <Flex flexDirection="column" gap={0} alignSelf="center">
         {label && (
           <p style={{margin: 0}}>{label}</p>
         )}

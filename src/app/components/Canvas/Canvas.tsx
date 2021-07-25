@@ -32,7 +32,7 @@ function Canvas(props: Props): JSX.Element {
   const { loading } = props;
   const history = useHistory();
   const animate = useAnimate();
-  const takeScreenshots = useScreeshot();
+  const { takeScreenshots } = useScreeshot();
 
   useEffect(() => {
     let canvas: HTMLCanvasElement | undefined = undefined;
@@ -122,9 +122,7 @@ function Canvas(props: Props): JSX.Element {
   function handleOnClick(): void {
     const path = '/summary';
 
-    const screenshots = takeScreenshots();
-
-    console.log(screenshots);
+    takeScreenshots();
     history.push(path);
   }
 

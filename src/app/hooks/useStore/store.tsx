@@ -1,11 +1,16 @@
-import React, { createContext, useReducer, Dispatch, ReactNode } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  Dispatch,
+  ReactNode,
+  useEffect
+} from 'react';
 import Reducer, { Action } from './reducer';
+import useStorage from '../useStorage';
 
 export type State = {
   bedIdx: number;
-  // baseIsSet: boolean;
   headIdx: number | undefined;
-  // headIsSet: boolean;
   matIdx: number;
   tuftIdx: number;
   legIdx: number;
@@ -14,14 +19,14 @@ export type State = {
 
 const initState: State = {
   bedIdx: 0,
-  // baseIsSet: false,
   headIdx: undefined,
-  // headIsSet: false,
   matIdx: 0,
   tuftIdx: 0,
   legIdx: 0,
   legMatIdx: 0
 }
+
+const storageKey = 'saffronAppState';
 
 export const StoreContext = createContext<{
   state: State;
@@ -37,7 +42,16 @@ type StoreProviderProps = {
 
 export const StoreProvider = (props: StoreProviderProps) => {
   const { children } = props;
-  const [state, dispatch] = useReducer<(state: State, action: Action) => State>(Reducer, initState);
+  
+  const storage = useStorage();
+  const [state, dispatch] = useReducer<(state: State, action: Action) => State>(
+    Reducer,
+    JSON.parse(storage.getItem(storageKey) as string) || initState
+  );
+
+  useEffect(() => {
+    storage.setItem(storageKey, JSON.stringify(state));
+  }, [state])
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

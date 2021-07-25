@@ -1,5 +1,9 @@
 export default function useStorage(): Storage {
-  const { localStorage: storage } = window;
+  if (!window?.localStorage) {
+    throw new Error('Local storage is not accessible!');
+  }
 
-  return storage;
+  const { localStorage } = window;
+
+  return localStorage;
 }

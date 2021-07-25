@@ -296,6 +296,64 @@
           "title": "Siena White",
           "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/c38_siena_white.jpg"
         }
+      ],
+      "leg": [
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood1.png",
+          "title": {
+            "cs": "Přírodní dub",
+            "en": "Prírodný dub",
+            "sk": "Natural oak"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood2.png",
+          "title": {
+            "cs": "Ořech",
+            "en": "Walnut",
+            "sk": "Orech"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood3.png",
+          "title": {
+            "cs": "Bílá lesklá",
+            "en": "White glossy",
+            "sk": "Biela lesklá"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood4.png",
+          "title": {
+            "cs": "Tmavý ořech",
+            "en": "Dark walnut",
+            "sk": "Tmavý orech"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood5.png",
+          "title": {
+            "cs": "Třešeň",
+            "en": "Cherry",
+            "sk": "Čerešňa"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood6.png",
+          "title": {
+            "cs": "Černá lesklá",
+            "en": "Black glossy",
+            "sk": "Čierna lesklá"
+          }
+        },
+        {
+          "thumb": "./static/images/material_set/saffron/legs/wood7.png",
+          "title": {
+            "cs": "Antracit",
+            "en": "Antracit",
+            "sk": "Antracit"
+          }
+        }
       ]
     },
     "bed": [
