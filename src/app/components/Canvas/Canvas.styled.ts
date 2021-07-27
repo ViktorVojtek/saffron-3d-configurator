@@ -1,14 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
-  flex: 2;
-  position: relative;
-
-  @media screen and (max-width: 768px) {
-    flex: 1;
-  }
+  width: 100%;
+  height: 100%;
 `;
-
 
 export const StyledAbsolute = styled.div`
   bottom: 1rem;

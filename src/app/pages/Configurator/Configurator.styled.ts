@@ -7,7 +7,12 @@ export const StyledContainer = styled.div`
 
   @media screen and (max-width: 768px) {
     flex-direction: column-reverse;
-    height: 100vh;
     overflow-y: auto;
   }
+`;
+
+export const StyledRelativeView = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;

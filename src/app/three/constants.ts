@@ -55,10 +55,10 @@ type CameraTarget = {
 };
 
 export const cameraTarget: CameraTarget = { x: 0, y: 0.9, z: 0};
-
 export const cameraPosStart: CameraPosType = { x: 3, y: 2.25, z: 8 };
 export const cameraPosChange: CameraPosType = { x: 0, y: 1.25, z: 8 };
 export const scene: Scene = new Scene();
+export const sceneName = 'Saffron';
 
 export const renderer: WebGLRenderer = new WebGLRenderer({
   antialias: true,

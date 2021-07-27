@@ -41,7 +41,7 @@ export default function useNavData(): [
         case 'Cover':
           return {
             action: ActionEnumType.MAT_IDX,
-            id: 'COVER',
+            // id: 'COVER',
             title: t`Cover`,
             data: data.textures.thumbnail.material.map(((_item: Keyable) => ({
               image: _item.thumbnail,
@@ -61,18 +61,18 @@ export default function useNavData(): [
           return {
             action: ActionEnumType.LEG_IDX,
             title: t`Legs`,
-            data: data.textures.thumbnail.tuft.map(((_item: Keyable) => ({
-              image: _item?.thumbnail,
-              title: _item?.title
+            data: data.leg.map(((_item: Keyable) => ({
+              image: _item.thumbnail,
+              title: _item.title
             })))
           };
         case 'Leg Material':
           return {
-            action: ActionEnumType.LEG_IDX,
+            action: ActionEnumType.LEG_MAT_IDX,
             title: t`Legs Material`,
-            data: data.textures.thumbnail.tuft.map(((_item: Keyable) => ({
+            data: data.textures.thumbnail.leg.map(((_item: Keyable) => ({
               image: _item?.thumbnail,
-              title: _item?.title
+              title: _item?.title[locale]
             })))
           };
         default: undefined;

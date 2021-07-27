@@ -1,18 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, ReactNode } from 'react';
+import { Trans } from '@lingui/macro';
 import useRadians from '../../hooks/useRadians';
 import { StyledCircle, StyledWrapper } from './Loader.styled';
+// import LoaderSVGIcon from './LoaderSVGIcon';
+import Text from '../styled/Text';
 
 type Props = {
-  progress: number;
+  children?: ReactNode;
+  progress?: number;
 }
 
 export default function Loader(props: Props): JSX.Element {
-  const { progress } = props;
+  const { children, progress } = props;
   const circleRef = useRef(null);
-  const radians: [number, number] = useRadians(progress, circleRef);
-
-  // console.log(progress);
-  // console.log(radians);
+  const [circumference, offset] = useRadians(progress as number, circleRef);
 
   return (
     <StyledWrapper>
@@ -23,11 +24,19 @@ export default function Loader(props: Props): JSX.Element {
           r='40'
           cx='50'
           cy='50'
-          circumference={radians[0]}
-          offset={radians[1]}
+          circumference={circumference}
+          offset={offset}
         />
       </svg>
-      <p>Loading</p>
+      {children ? (
+        children
+      ) : (
+        <Text><Trans>Loading</Trans></Text>
+      )}
     </StyledWrapper>
   );
 }
+
+Loader.defaultProps = {
+  progress: 99
+};

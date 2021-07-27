@@ -6,8 +6,9 @@ export const StyledImageContainer = styled.div`
 `;
 
 export const StyledImg = styled.img`
-  object-fit: contain;
+  object-fit: cover;
   width: 80%;
+  height: 50vh;
 `;
 
 export const StyledWrapper = styled.div`

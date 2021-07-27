@@ -1,4 +1,4 @@
-import React, { ReactNode, Children, Fragment } from 'react';
+import React, { ComponentPropsWithoutRef, ReactNode, Children, Fragment } from 'react';
 import styled from 'styled-components';
 import { getRemUnit } from '../../../utils';
 import { space } from '../../../constants';
@@ -48,7 +48,7 @@ function prepareGap(gap: Gap | number) {
   return getGap(gap);
 }
 
-type Props = {
+type Props = ComponentPropsWithoutRef<'div'> & {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'

@@ -1,42 +1,50 @@
 import React, { memo, useMemo, useEffect } from 'react';
-import { Group } from 'three';
+import { isMobileOnly } from 'react-device-detect';
+import {Grid, Col, Row} from 'react-styled-flexboxgrid';
+import { t, Trans } from '@lingui/macro';
+import { ObjectOptions } from '../../@types';
 import {
-  useAddToScene,
-  useAnimate,
-  useHideModels,
-  useIsInScene,
   useLoadModel,
-  useIsLoading,
-  useScreeshot,
-  useSetUpModel,
+  useLoading,
+  useScene,
   useStore,
-  useModelState
+  useModelState,
 } from '../../hooks';
-import { ObjectOptions, ModelStateActionType } from '../../@types';
 import Canvas from '../../components/Canvas';
-
-import { StyledContainer } from './Configurator.styled';
+import LoaderBase from '../../components/Loader';
 import Navigation from '../../components/Navigation';
+import Text from '../../components/styled/Text';
+import { StyledRelativeView } from './Configurator.styled';
 
 import data from '../../../assets/data.json';
 
 function Configurator(): JSX.Element {
-  const animate = useAnimate();
-  const setup = useSetUpModel();
-  const [isLoading, loading] = useIsLoading();
-  const [{ allSet }, toggleAllSet] = useModelState();
-  const [{ bedIdx, headIdx, matIdx, legMatIdx, tuftIdx }, _dispatch] = useStore();
-  const [{ data: object3D }, loadModel] = useLoadModel();
-
-  const url: string = data.model[bedIdx];
+  const [isLoading] = useLoading();
+  const [{ progress }, loadModel] = useLoadModel();
+  const [{ MODEL, TEXTURES }] = useModelState();
+  const [scene] = useScene();
+  const [{
+    bedIdx,
+    headIdx,
+    legIdx,
+    legMatIdx,
+    matIdx,
+    tuftIdx
+  }] = useStore();
   
   // Object settings
-  const objectOptions: ObjectOptions = useMemo(() => ({
+  const object: ObjectOptions = useMemo(() => ({
     name: data.bed[bedIdx].title.toLowerCase(),
     base: { 
-      textureMap: bedIdx > 0
-        ? data.textures.bed[bedIdx][matIdx].textureMap as string
-        : data.textures.bed[bedIdx][matIdx].textureMap[legMatIdx] as string
+      textureMap: !!bedIdx
+        ? (
+          !!tuftIdx
+            ? (data.textures.bed[bedIdx][matIdx] as any).textureTuftMap[tuftIdx] as string
+            : data.textures.bed[bedIdx][matIdx].textureMap as string
+        )
+        : (
+          data.textures.bed[bedIdx][matIdx].textureMap[legMatIdx] as string
+        )
     },
     head: {
       name: data.head[headIdx || 0].title.toLowerCase(),
@@ -46,86 +54,69 @@ function Configurator(): JSX.Element {
         : data.textures.head[headIdx || 0][bedIdx][matIdx].textureMap[legMatIdx],
     },
     leg: {
-      name: bedIdx < 1 ? data.leg[0].toLowerCase() : data.leg[1].toLowerCase(),
+      name: !bedIdx
+        ? data.leg[legIdx].title.toLowerCase()
+        : data.leg[legIdx < 1 ? 1 : legIdx].title.toLowerCase(),
       position: data.position[bedIdx].leg,
       textureMap: data.textures.leg[bedIdx][legMatIdx].textureMap
     },
     position: data.position[bedIdx].bed,
     scale: data.scale,
-  }), [bedIdx, headIdx, matIdx, tuftIdx, legMatIdx]);
+    url: data.model[bedIdx]
+  }), [bedIdx, headIdx, matIdx, tuftIdx, legIdx, legMatIdx]);
 
-  const isInScene: boolean = useIsInScene(data.bed[bedIdx].title.toLowerCase());
-
-  // Load model if not in scene
   useEffect(() => {
-    if (isInScene) {
-      return;
-    }
+    loadModel(object);
+  }, [bedIdx, headIdx, matIdx, tuftIdx, legIdx, legMatIdx, object]);
 
-    loading(true);
-    loadModel(url);
-  }, [isInScene, url]);
-
-  // Add model to scene when loaded
-  useEffect(() => {
-    if (!object3D) {
-      return;
-    }
-    
-    useAddToScene(object3D as Group, data.bed[bedIdx].title);
-  }, [object3D]);
-
-  // Setup model base on options
-  useEffect(() => {
-    if (!isInScene) {
-      return;
-    }
-
-    console.log('Model setup');
-
-    useHideModels();
-    setup(objectOptions);
-  }, [bedIdx, headIdx, matIdx, legMatIdx, tuftIdx, isInScene]);
-
-  // Animate changes
-  useEffect(() => {
-    if (!allSet) {
-      return;
-    }
-
-    loading(false);
-    toggleAllSet({ type: ModelStateActionType.ALL_SET, payload: false });
-    
-    if (!isLoading) {
-      animate();
-    }
-  }, [allSet, isLoading]);
-
-  /* function getBedTextureUrl(): string {
-    const whenIsTuft: string = tuftIdx > 0
-      ? data.textures.bed[bedIdx][matIdx].textureTuftMap[tuftIdx][matIdx] as string
-      : data.textures.bed[bedIdx][matIdx].textureMap as string;
-
-    const texture: string = bedIdx > 0
-    ? (
-        tuftIdx > 0
-          ? data.textures.bed[bedIdx][matIdx].textureTuftMap[tuftIdx][matIdx] as string
-          : data.textures.bed[bedIdx][matIdx].textureMap as string
-      )
-    : (
-      tuftIdx > 0
-       ? ''
-       : data.textures.bed[bedIdx][matIdx].textureMap[legMatIdx] as string
+  function Loader(): JSX.Element {
+    return (
+      <LoaderBase progress={progress}>
+        <Text>
+          <Trans>Loading {MODEL !== 'done' ? t`Model` : (TEXTURES !== 'done' ? t`Textures` : '')}</Trans>
+        </Text>
+      </LoaderBase>
     );
+  }
 
-    return '';
-  } */
+  if (isLoading && scene.children.length < 3) {
+    return <Loader />;
+  }
+
+  if (isMobileOnly) {
+    return (
+      <Grid fluid id="appWrapper">
+        <Col>
+          <Row id="canvasWrapper">
+            <StyledRelativeView>
+              {
+                isLoading && <Loader />
+              }
+              <Canvas />
+            </StyledRelativeView>
+          </Row>
+          <Row>
+            <Navigation data={data} />
+          </Row>
+        </Col>
+      </Grid>
+    );
+  }
 
   return (
-    <StyledContainer id="appWrapper">
-      <Navigation data={data} />
-      <Canvas loading={isLoading} />
-    </StyledContainer>
+    <Grid fluid id="appWrapper">
+      <Row reverse={isMobileOnly}>
+        <Col xs={12} md={4} reverse={isMobileOnly}>
+          <Navigation data={data} />
+        </Col>
+        <Col xs={12} md={8} reverse={isMobileOnly} id="canvasWrapper">
+          <StyledRelativeView>
+            {isLoading && <Loader />}
+            <Canvas />
+          </StyledRelativeView>
+        </Col>
+      </Row>
+    </Grid>
   );
 }
 

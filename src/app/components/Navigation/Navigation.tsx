@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { isMobileOnly } from 'react-device-detect';
 import Carousel from '../Carousel';
 import {
   StyledWrapper, StyledUl, StyledLi, StyledButton
 } from './Navigation.styled';
-import { useIsLoading, useLocale, useNavData, useNavigation, useStore } from '../../hooks';
+import { useLoading, useLocale, useNavData, useNavigation, useStore } from '../../hooks';
 import { ActionEnumType } from '../../@types';
 import NavigationItem from './NavigationItem';
 
@@ -19,7 +20,7 @@ function Navigation(props: Props): JSX.Element {
   const { data } = props;
   const [{ bedIdx, headIdx, matIdx, legIdx, legMatIdx, tuftIdx }, dispatch] = useStore();
   const locale = useLocale();
-  const [_isLoading, loading] = useIsLoading();
+  const [_isLoading, loading] = useLoading();
   const [navdata, setData] = useNavData();
   const [active, setActive] = useNavigation();
 
@@ -86,7 +87,7 @@ function Navigation(props: Props): JSX.Element {
   });
 
   return (
-    <StyledWrapper>
+    <StyledWrapper border={!isMobileOnly}>
       <StyledUl>
         {navigation}
       </StyledUl>

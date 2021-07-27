@@ -21,12 +21,13 @@
     "@typescript-eslint/parser": "2.19.2",
     "lodash": "^4.17.21",
     "prop-types": "15.7.2",
-    "react": "16.8.6",
+    "react": "^17.0.2",
     "react-device-detect": "^1.17.0",
-    "react-dom": "16.8.6",
+    "react-dom": "^17.0.2",
     "react-hook-form": "^7.11.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-styled-flexboxgrid": "^3.2.1",
     "styled-components": "5.0.0",
     "three": "^0.130.1",
     "zod": "^3.5.1"
@@ -53,6 +54,7 @@
     "@types/lodash": "^4.14.171",
     "@types/react-router-dom": "^5.1.7",
     "@types/three": "^0.130.0",
+    "@yushijinhun/three-minifier-webpack": "^0.3.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-loader": "8.0.4",
@@ -75,7 +77,8 @@
     "typescript": "^4.3.5",
     "webpack": "4.41.6",
     "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.10.3"
+    "webpack-dev-server": "3.10.3",
+    "webpack-merge": "^5.8.0"
   },
   "peerDependencies": {
     "@babel/core": "7.5.0",
@@ -119,8 +122,8 @@
     "add-locale": "lingui add-locale",
     "extract": "lingui extract",
     "compile": "lingui compile",
-    "watch": "webpack --config ./webpack.config.js --mode development",
-    "dev": "webpack-dev-server",
+    "watch": "webpack --config ./webpack.dev.js --mode development",
+    "dev": "webpack-dev-server --open --config ./webpack.dev.js --mode development",
     "build": "webpack --config ./webpack.prod.js --mode production"
   },
   "repository": {

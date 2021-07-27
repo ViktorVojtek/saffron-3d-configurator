@@ -1,5 +1,7 @@
 import { remPx } from '../constants';
 
+export * from '../three/utils';
+
 export const getRemUnitFlat: (n: number) => number = (n) => Math.round(n * remPx || 16);
 
 export const getRemUnit: (n: number) => string = (n) =>

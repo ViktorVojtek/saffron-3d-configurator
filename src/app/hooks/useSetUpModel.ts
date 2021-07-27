@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Object3D } from 'three';
 import setObjectHead from '../three/utils/setObjectHead';
-import { scene } from '../three/constants';
 import setObjectBase from '../three/utils/setObjectBase';
 import setLegs from '../three/utils/setLegs';
-import useModelState, { ModelStateActionType } from './useModelState';
+
+import useAnimate from './useAnimate';
+import useScene from './useScene';
+import useModelState, { ModelAction } from './useModelState';
 
 type Coords = {
   x: number;
@@ -29,33 +31,43 @@ export type ObjectOptions = {
   leg: LegOptions;
   position: Coords;
   scale: number;
+  url: string;
 }
 
-export default function useSetUpModel(): (options: ObjectOptions) => void {
-  const [{ allSet, baseSet, headSet, legSet }, dispatchModelState] = useModelState();
+export default function useSetupModel(): {
+  setupModel: (options: ObjectOptions) => void
+} {
   const [model, setModel] = useState<Object3D>();
+  const [c, increment] = useState(0);
+
+  const animate = useAnimate();
+  const [scene] = useScene();
+  const [{ ALL, MODEL, TEXTURES }, setModelAction] = useModelState();
 
   useEffect(() => {
-    if (baseSet && headSet && legSet) {
-      dispatchModelState({ type: ModelStateActionType.ALL_SET, payload: true });
+    if (c === 3) {
+      setModelAction({ type: ModelAction.ALL, payload: 'done' });
+      increment(0);
     }
-  }, [baseSet, headSet, legSet]);
+  }, [c]);
 
   useEffect(() => {
-    if(!allSet) {
+    if(ALL === 'inprogress') {
       return;
     }
 
     if(model) {
       model.visible = true;
     }
-  }, [model, allSet]);
+
+    animate();
+  }, [model, ALL]);
 
   function setup(options: ObjectOptions) {
     reset();
   
     const { name, base, head, leg, position, scale } = options;
-    const object: Object3D = scene.getObjectByName(name) as Object3D;
+    const object: Object3D = scene?.getObjectByName(name) as Object3D;
 
     setModel(object);
 
@@ -73,37 +85,30 @@ export default function useSetUpModel(): (options: ObjectOptions) => void {
       object.position.set(position.x, position.y, position.z);
     }
 
-    // Set up Head
-    function setHeadCallback(): void {
-      dispatchModelState({ type: ModelStateActionType.HEAD_SET, payload: true });
+    function callback(): void {
+      increment(c => c + 1);
     }
 
-    setObjectHead(object, head, setHeadCallback);
+    // Set up Head
+    setObjectHead(object, head, callback);
 
     // Set up Base
-    function setBedCallback(): void {
-      dispatchModelState({ type: ModelStateActionType.BASE_SET, payload: true });
-    }
-
     const { textureMap } = base;
 
-    setObjectBase(object, { textureMap }, setBedCallback);
+    setObjectBase(object, { textureMap }, callback);
 
     // Set up Legs
-    function setLegCallback(): void {
-      dispatchModelState({ type: ModelStateActionType.LEG_SET, payload: true });
-    }
-
-    setLegs(object, leg, setLegCallback);
+    setLegs(object, leg, callback);
   }
 
   function reset(): void {
-    if (!allSet) {
+    if (ALL === 'inprogress' || TEXTURES === 'loading') {
       return;
     }
 
-    dispatchModelState({ type: ModelStateActionType.ALL_SET, payload: false });
+    setModelAction({ type: ModelAction.ALL, payload: 'inprogress' });
+    setModelAction({ type: ModelAction.TEXTURES, payload: 'loading' });
   }
 
-  return setup;
+  return { setupModel: setup };
 }

@@ -1,56 +1,88 @@
-import { useState, useEffect } from 'react';
-import { Group, Object3D } from 'three';
+import { Dispatch, useState, useEffect } from 'react';
 import { FBXLoader } from '../three/constants';
+import useAddToScene from './useAddToScene';
+import useHideModels from './useHideModels';
+import useLoading from './useLoading';
+import useScene from './useScene';
+import useSetupModel from './useSetupModel';
+import useModelState, { ModelAction } from './useModelState';
+import useAnimate from './useAnimate';
 
-type HookResult = {
-  data: Object3D | Group | null;
-  isLoading: boolean;
-  progress: number;
-  isError: boolean;
-}
-
-type LoadModel = [HookResult, React.Dispatch<React.SetStateAction<string>>];
-
-export default function useLoadModel(): LoadModel {
+export default function useLoadModel(): [
+  {
+    isLoading: boolean;
+    progress: number;
+  },
+  Dispatch<any>
+] {
   const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [url, setUrl] = useState<string>('');
-  const [isError, setIsError] = useState(false);
- 
+
+  const animate = useAnimate();
+  const { addToScene } = useAddToScene();
+  const { hideModels } = useHideModels();
+  const [isLoading, setLoading] = useLoading();
+  const [scene] = useScene();
+  const { setupModel } = useSetupModel();
+  const [{ ALL }, setModelAction] = useModelState();
+
+  // Reset loading indicator
   useEffect(() => {
-    async function fetchData() {
-      const Loader = new FBXLoader();
-
-      setIsError(false);
-      setIsLoading(true);
-
-      Loader.load(url as string,
-        function onLoadDone(object) {
-          setData(object);
-          setIsLoading(false);
-        },
-        function onProgress(event: ProgressEvent<EventTarget>) {
-          const { loaded, total } = event;
-          const percent = Math.round((loaded / total) * 100);
-
-          if(data) {
-            setData(null);
-          }
-          
-          setProgress(percent);
-        },
-        function onError(error) {
-          setIsError(true);
-        }
-      );
-    };
- 
-    if (url) {
-      fetchData();
+    if (ALL === 'inprogress') {
+      return;
     }
-  }, [url]);
+
+    setLoading(false);
+  }, [ALL]);
  
-  return [{ data, isLoading, progress, isError }, setUrl];
+  // Manage model setup
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    const inScene: boolean = !!scene?.getObjectByName(data.name);
+
+    if (inScene) {
+      hideModels();
+      setupModel(data);
+    } else {
+      fetchData(data.url);
+    }
+  }, [data]);
+
+  // fetch 3D model
+  async function fetchData(url: string): Promise<void> {
+    const Loader = new FBXLoader();
+
+    setModelAction({ type: ModelAction.MODEL, payload: 'loading' });
+    setLoading(true);
+
+    Loader.load(url as string,
+      function onLoadDone(object) {
+        hideModels();
+        addToScene(object, data.name);
+        setupModel(data);
+
+        setModelAction({ type: ModelAction.MODEL, payload: 'done' });
+        setLoading(false);
+      },
+      function onProgress(event: ProgressEvent<EventTarget>) {
+        const { loaded, total } = event;
+        const percent = Math.round((loaded / total) * 100);
+        
+        if (percent === 100) {
+          setProgress(0);
+        }
+        
+        setProgress(percent);
+      },
+      function onError(error: ErrorEvent) {
+        throw new Error(error?.message);
+      }
+    );
+  }
+ 
+  return [{ isLoading, progress }, setData];
 }
 

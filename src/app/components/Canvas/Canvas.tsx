@@ -1,149 +1,92 @@
-import React, { memo, useEffect, useLayoutEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
 import {
   ACESFilmicToneMapping,
   PCFSoftShadowMap,
-  Object3D,
   sRGBEncoding,
 } from 'three';
+import { cameraPosition, cameraTarget } from '../../constants';
 import {
-  scene,
-  camera,
-  cameraPosition,
-  cameraTarget,
-  controls,
-  renderer,
-} from '../../constants';
-import { useAnimate, useScreeshot } from '../../hooks';
-import { onDocumentMouseDown, onDocumentTouchDown, onWindowResize } from '../../three/utils';
+  useAnimate,
+  useCamera,
+  useControls,
+  useRenderer,
+  useResize,
+  useScene
+} from '../../hooks';
 import Lights from '../../three/objects/Lights';
 import Ground from '../../three/objects/Ground';
-import Button from '../Button';
-import Loader from '../Loader';
-import { StyledAbsolute, StyledWrapper } from './Canvas.styled';
-import { Trans } from '@lingui/macro';
 
-type Props = {
-  loading: boolean;
-};
+import { StyledWrapper } from './Canvas.styled';
 
-function Canvas(props: Props): JSX.Element {
-  const { loading } = props;
+export default function Canvas(): JSX.Element {
+  const canvasWrapper = useRef<HTMLDivElement>(null);
 
-  const wrapper = useRef(null);
-  const history = useHistory();
   const animate = useAnimate();
-  const { takeScreenshots } = useScreeshot();
+  const [camera] = useCamera();
+  const [controls] = useControls();
+  const [renderer] = useRenderer();
+  const [scene] = useScene();
 
-  useLayoutEffect(() => {
-    let canvas: HTMLCanvasElement | undefined = undefined;
+  useResize();
 
-    if (!wrapper) {
+  // Setup webgl base
+  useEffect(() => {
+    if (!canvasWrapper.current ||
+      !camera ||
+      !controls ||
+      !renderer ||
+      !scene) {
       return;
     }
 
-    function setUpScene(): void {
-      console.log('Init scene');
+    const { start: { x, y, z } } = cameraPosition;
 
-      // Camera setup
-      const { start: { x, y, z } } = cameraPosition;
-  
-      camera.position.set(x, y, z);
-      camera.lookAt(scene.position);
-  
-      // Controls setup
-      // console.log(controls);
-      controls.target.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
-      controls.update();
-      controls.maxPolarAngle = Math.PI / 2.05;
-      controls.minDistance = 5.5;
-      controls.maxDistance = 15;
-  
-      // Renderer setup
-      renderer.clearDepth();
-      renderer.setPixelRatio(window.devicePixelRatio || 1);
-      // renderer.setClearColor(0xffffff, 1);
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = PCFSoftShadowMap;
-      renderer.toneMapping = ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1; // 0.95; // 0.375;
-      renderer.outputEncoding = sRGBEncoding;
-      renderer.gammaFactor = 2.75; //2.75;
-      renderer.physicallyCorrectLights = true;
-  
-      if (!scene.getObjectByName('Lights') && !scene.getObjectByName('Ground')) {
-        // Setup scene enviroment
-        const lights: Object3D = Lights();
-        const ground: Object3D = Ground();
-        
-        scene.add(lights);
-        scene.add(ground);
-      }
-  
-      const { offsetHeight: height, offsetWidth: width } = wrapper?.current as unknown as HTMLCanvasElement; // window;
-  
-      renderer.setSize(width, height, true);
-      renderer.compile(scene, camera);
-      renderer.setPixelRatio(window.devicePixelRatio || 1);
-  
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-  
-      canvas = renderer.domElement;
-  
-      (wrapper?.current as unknown as HTMLDivElement).appendChild(canvas);
+    camera.position.set(x, y, z);
+    camera.lookAt(scene.position);
 
-      animate();
+    controls.target.set(cameraTarget.x, cameraTarget.y, cameraTarget.z);
+    controls.update();
+    controls.maxPolarAngle = Math.PI / 2.05;
+    controls.minDistance = 5.5;
+    controls.maxDistance = 15;
+
+    if (!scene.getObjectByName('Lights') && !scene.getObjectByName('Ground')) {
+      scene.add(Lights());
+      scene.add(Ground());
     }
 
-    setUpScene();
+    const { offsetWidth: width } = canvasWrapper.current.closest('#canvasWrapper') as HTMLElement;
+      const { offsetHeight } = canvasWrapper.current.closest('#canvas') as HTMLElement;
+      const height: number = offsetHeight || Math.round(window.innerHeight);
 
-    // Listeners setup
-    controls.addEventListener('change', animate);
-    renderer?.domElement?.addEventListener('click', onDocumentMouseDown, false);
-    renderer?.domElement?.addEventListener('touchstart', onDocumentTouchDown, false);
-    window.addEventListener('resize', onWindowResize, false);
+    renderer.clearDepth();
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = PCFSoftShadowMap;
+    renderer.toneMapping = ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.85;
+    renderer.gammaFactor = 2.45;
+    renderer.outputEncoding = sRGBEncoding;
+    renderer.physicallyCorrectLights = true;
+
+    renderer.setSize(width, height, true);
+    renderer.compile(scene, camera);
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    const canvas = renderer.domElement;
+
+    canvasWrapper?.current.append(canvas);
+    animate();
+
+    controls?.addEventListener('change', animate);
 
     return () => {
-      controls.removeEventListener('change', animate);
-      renderer?.domElement?.removeEventListener('click', onDocumentMouseDown, false);
-      renderer?.domElement?.removeEventListener('touchstart', onDocumentTouchDown, false);
-      window.removeEventListener('resize', onWindowResize, false);
+      controls?.removeEventListener('change', animate);
     };
-  }, []);
+  }, [camera, controls, renderer, scene]);
 
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
-
-    animate();
-  }, [loading]);
-
-  function handleOnClick(): void {
-    const path = '/summary';
-
-    takeScreenshots();
-    history.push(path);
-  }
-
-  return (
-    <>
-      <StyledWrapper ref={wrapper}>
-      {
-        loading ? (
-          <Loader progress={99} />
-        ) : (
-          <StyledAbsolute>
-            <Button onClick={handleOnClick} type="button">
-              <Trans>Summary</Trans>
-            </Button>
-          </StyledAbsolute>
-        )
-      }
-      </StyledWrapper>
-    </>
-  );
+  return <StyledWrapper ref={canvasWrapper} />;
 }
-
-export default memo(Canvas);

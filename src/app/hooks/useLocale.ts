@@ -1,13 +1,19 @@
-export default function useLocale(locale?: string): 'cs' | 'en' | 'sk' {
-  const uri: string = window.location.href.toLowerCase();
+type Locale = 'cs' | 'en' | 'sk';
 
-  if (locale || uri.indexOf('/en/') > -1) {
-    return 'en';
+export default function useLocale(locale?: Locale): Locale {
+  if (locale) {
+    return locale;
   }
 
-  if (uri.indexOf('/sk/') > -1) {
+  const uri: string = window.location.href.toLowerCase();
+
+  if (uri.indexOf('/en/') > -1) {
+    return 'en';
+  } else if (uri.indexOf('/sk/') > -1) {
     return 'sk';
-  } else {
+  } else if (uri.indexOf('/cs/') > -1) {
     return 'cs';
+  } else {
+    return 'en';
   }
 }

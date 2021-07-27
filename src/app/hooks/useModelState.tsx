@@ -2,86 +2,81 @@ import React, {
   createContext,
   Dispatch,
   ReactNode,
+  useReducer,
   useContext,
-  useState
 } from 'react';
-import { useReducer } from 'react';
 
-type ModelState = {
-  allSet: boolean;
-  headSet: boolean;
-  baseSet: boolean;
-  legSet: boolean;
+type State = {
+  ALL: 'inprogress' | 'done';
+  MODEL: 'loading' | 'done';
+  TEXTURES: 'loading' | 'done';
 };
 
-const initModelState = {
-  allSet: false,
-  headSet: false,
-  baseSet: false,
-  legSet: false,
+const initState: State = {
+  ALL: 'inprogress',
+  MODEL: 'loading',
+  TEXTURES: 'loading'
 };
 
 export const ModelStateContext = createContext<{
-  modelState: ModelState;
-  dispatch: Dispatch<ModelStateAction>;
+  state: State;
+  dispatch: Dispatch<Action>;
 }>({
-  modelState: initModelState,
+  state: initState,
   dispatch: () => null,
 });
 
-type ModelStateProviderProps = {
-  children: ReactNode;
+export enum ModelAction {
+  ALL = 'ALL',
+  MODEL = 'MODEL',
+  TEXTURES = 'TEXTURES'
 }
 
-export enum ModelStateActionType {
-  ALL_SET = 'ALL_SET',
-  HEAD_SET = 'HEAD_SET',
-  BASE_SET = 'BASE_SET',
-  LEG_SET = 'LEG_SET'
-}
-
-type ModelStateAction = {
-  type: ModelStateActionType;
-  payload: boolean;
+type Action = {
+  type: ModelAction;
+  payload: 'inprogress' | 'loading' | 'done'; 
 };
 
-function Reducer(state: ModelState, action: ModelStateAction): ModelState {
-  switch(action.type) {
-    case ModelStateActionType.ALL_SET:
+function Reducer(state: State, action: Action): State {
+  const { payload, type } = action;
+
+  switch(type) {
+    case ModelAction.ALL:
       return {
         ...state,
-        headSet: action.payload,
-        baseSet: action.payload,
-        legSet: action.payload,
-        allSet: action.payload
+        MODEL: payload === 'done' ? 'done' : 'loading',
+        TEXTURES: payload === 'done' ? 'done' : 'loading',
+        ALL: payload as 'inprogress' | 'done'
       };
-    case ModelStateActionType.HEAD_SET:
-      return { ...state, headSet: action.payload };
-    case ModelStateActionType.BASE_SET:
-      return { ...state, baseSet: action.payload };
-    case ModelStateActionType.LEG_SET:
-      return { ...state, legSet: action.payload };
+    case ModelAction.MODEL:
+      return { ...state, MODEL: payload as 'loading' | 'done' };
+    case ModelAction.TEXTURES:
+      return { ...state, TEXTURES: payload as 'loading' | 'done' };
     default:
       return state;
   }
 }
 
-export const ModelStateProvider = (props: ModelStateProviderProps) => {
+type Props = {
+  children: ReactNode;
+}
+
+export const ModelStateProvider = (props: Props) => {
   const { children } = props;
-  const [state, dispatch] = useReducer(Reducer, initModelState);
+  const [state, dispatch] = useReducer(Reducer, initState);
 
   return (
-    <ModelStateContext.Provider value={{ modelState: state, dispatch }}>
+    <ModelStateContext.Provider value={{ state, dispatch }}>
       {children}
     </ModelStateContext.Provider>
   );
 }
 
-export default function useNavigation(): [
-  ModelState,
-  Dispatch<ModelStateAction>
+export default function useModelState(): [
+  State,
+  Dispatch<Action>
 ] {
-  const { modelState, dispatch } = useContext(ModelStateContext);
+  const { state, dispatch } = useContext(ModelStateContext);
 
-  return [modelState, dispatch];
+  return [state, dispatch];
 }

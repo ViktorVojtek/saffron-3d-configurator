@@ -1,1 +1,1 @@
-export { ModelStateActionType } from '../hooks/useModelState';
+export { ModelAction } from '../hooks/useModelState';

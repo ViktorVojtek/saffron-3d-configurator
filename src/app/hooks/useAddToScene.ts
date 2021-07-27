@@ -1,9 +1,19 @@
 import { Group } from 'three';
-import { scene } from '../three/constants';
+import useScene from './useScene';
 
-export default function useAddToScene(object: Group, name: string): void {
-  object.name = name.toLowerCase();
-  object.visible = false;
+export default function useAddToScene(): {
+  addToScene: (object: Group, name: string) => void;
+} {
+  const [scene] = useScene();
 
-  scene.add(object);
+  function handleAddToScene(object: Group, name: string): void {
+    object.name = name.toLowerCase();
+    object.visible = false;
+
+    scene?.add(object);
+  }
+
+  return {
+    addToScene: handleAddToScene,
+  };
 }

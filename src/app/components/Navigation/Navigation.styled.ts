@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
-export const StyledWrapper = styled.div`
-  border-right: 1px solid #000;
-  min-width: 400px;
-  flex: 1;
+export const StyledWrapper = styled.div<{ border?: boolean }>`
+  border-right: ${({ border }) => (border ? '1px solid #000' : '0 none')};
+  // min-width: 400px;
 
   @media screen and (max-width: 768px) {
     max-width: 100%;
-    min-width: auto;
+    // min-width: auto;
   }
 `;
 

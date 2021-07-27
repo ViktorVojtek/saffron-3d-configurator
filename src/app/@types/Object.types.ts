@@ -1,4 +1,4 @@
-export type { ObjectOptions } from '../hooks/useSetUpModel';
+export type { ObjectOptions } from '../hooks/useSetupModel';
 
 import type { Data } from '../components/Carousel/Carousel';
 

@@ -75,7 +75,20 @@
     }
   ],
   "headDefault": ["Royal", "Frame", "Buttons", "Buttons", "Buttons"],
-  "leg": ["Aurelia", "Cube", "Lean"],
+  "leg": [
+    {
+      "title": "Aurelia",
+      "thumbnail": "https://saffron.enli.technology/static/images/legs_set/aurelia.png"
+    },
+    {
+      "title": "Cube",
+      "thumbnail": "https://saffron.enli.technology/static/images/legs_set/cube.png"
+    },
+    {
+      "title": "Lean",
+      "thumbnail": "https://saffron.enli.technology/static/images/legs_set/lean.png"
+    }
+  ],
   "model": [
     "https://saffron.enli.technology/static/models/saffron/Aurelia/Aurelia_r.FBX",
     "https://saffron.enli.technology/static/models/saffron/Authentica/Authentica_g.FBX",
@@ -299,7 +312,7 @@
       ],
       "leg": [
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood1.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood1.png",
           "title": {
             "cs": "Přírodní dub",
             "en": "Prírodný dub",
@@ -307,7 +320,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood2.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood2.png",
           "title": {
             "cs": "Ořech",
             "en": "Walnut",
@@ -315,7 +328,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood3.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood3.png",
           "title": {
             "cs": "Bílá lesklá",
             "en": "White glossy",
@@ -323,7 +336,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood4.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood4.png",
           "title": {
             "cs": "Tmavý ořech",
             "en": "Dark walnut",
@@ -331,7 +344,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood5.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood5.png",
           "title": {
             "cs": "Třešeň",
             "en": "Cherry",
@@ -339,7 +352,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood6.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood6.png",
           "title": {
             "cs": "Černá lesklá",
             "en": "Black glossy",
@@ -347,7 +360,7 @@
           }
         },
         {
-          "thumb": "./static/images/material_set/saffron/legs/wood7.png",
+          "thumbnail": "https://saffron.enli.technology/static/images/material_set/saffron/legs/wood7.png",
           "title": {
             "cs": "Antracit",
             "en": "Antracit",
@@ -371,12 +384,12 @@
           "textureTuftMap": [
             [
               "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c1_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c2_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c3_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c4_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c5_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c6_w1_n1.png",
-              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c7_w1_n1.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c1_w1_n2.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c1_w1_n3.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c4_w1_n4.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c5_w1_n5.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c6_w1_n6.png",
+              "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c7_w1_n7.png",
               "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c8_w1_n1.png",
               "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c9_w1_n1.png",
               "https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c10_w1_n1.png",
@@ -1418,34 +1431,154 @@
       ],
       [
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c1_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c2_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c3_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c4_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c5_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c6_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c7_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c8_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c9_n10.png"
+          ]
         },
         {
-          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n1.png"
+          "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n1.png",
+          "textureTuftMap": [
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n1.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n2.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n3.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n4.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n5.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n6.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n7.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n8.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n9.png",
+            "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c10_n10.png"
+          ]
         },
         {
           "textureMap": "https://saffron.enli.technology/static/models/saffron/Authentica/textures/bed/authentica_c11_n1.png"
