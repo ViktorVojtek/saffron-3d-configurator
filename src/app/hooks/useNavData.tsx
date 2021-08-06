@@ -35,7 +35,7 @@ export default function useNavData(): [
             title: t`Head`,
             data: data.head.map((_item: Keyable) => ({
               image: _item.thumbnail,
-              title: _item.title
+              title: _item.title.replace(/_/g, ' ')
             }))
           };
         case 'Cover':
