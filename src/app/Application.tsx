@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
-
 import { useLocale, useDynamicLangActivate } from './hooks';
 import { CameraProvider } from './hooks/useCamera';
 import { ControlsProvider } from './hooks/useControls';
@@ -16,7 +15,7 @@ import { NavigationProvider } from './hooks/useNavigation';
 import { ModelStateProvider } from './hooks/useModelState';
 import { RendererProvider } from './hooks/useRenderer';
 import { SceneProvider } from './hooks/useScene';
-import { ScreenshotsProvider } from './hooks/useScreenshot';
+import { ScreenshotsProvider } from './hooks/useTakeScreenshot';
 
 import GlobalStyle from './components/styled/Global';
 import Configurator from './pages/Configurator';

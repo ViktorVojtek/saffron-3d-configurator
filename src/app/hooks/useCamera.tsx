@@ -37,7 +37,7 @@ export function CameraProvider(props: Props): JSX.Element {
     if (renderer && scene) {
       const { offsetHeight: width, offsetHeight: height } = renderer.domElement;
 
-      const _camera = new PerspectiveCamera(30, width / height, 0.1, 1000);
+      const _camera = new PerspectiveCamera(40, width / height, 1, 1000);
 
       dispatch(_camera);
     }

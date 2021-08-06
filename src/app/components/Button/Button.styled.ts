@@ -11,6 +11,11 @@ export const StyledButton = styled(StyledButtonBase)`
   border-radius: 0.25rem;
   color: #fff;
   padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+
+  &:disabled {
+    background-color: #868282;
+  }
 `;
 
 export const StyledCloseButton = styled(StyledButtonBase)`

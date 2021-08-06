@@ -1,28 +1,51 @@
-import React, { ReactNode, createContext } from 'react';
-import { UseFormReturn, FormProvider } from 'react-hook-form';
+import React, {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useState
+} from 'react';
 
-export const FormContext = createContext<{ submit: Function; } | undefined>(undefined);
+export type FormDataItem = {
+  value: string;
+  error: boolean;
+};
+
+export type FormData = {
+  [key: string]: FormDataItem;
+}
+
+export const FormContext = createContext<{
+  data: FormData;
+  dispatch: Dispatch<any>;
+  submit: Function;
+} | undefined>(undefined);
 
 type Props = {
   children: ReactNode;
-  methods: UseFormReturn<any>;
-  onSubmit: (values: any) => Promise<void> | void;
+  initData?: any;
+  onSubmit: Function;
 };
 
 export default function Form(props: Props) {
-  const { methods, onSubmit, children } = props;
+  const { initData, onSubmit, children } = props;
 
-  const handleSubmit = methods.handleSubmit(onSubmit);
+  const [data, dispatch] = useState(initData || {});
+
+  const handleSubmit = onSubmit;
 
   const context = {
+    data,
+    dispatch,
     submit: handleSubmit,
   };
 
+  // console.log('FORM CONTEXT', context);
+
   return (
     <FormContext.Provider value={context}>
-      <FormProvider {...methods}>
+      <form onSubmit={(evt) => evt.preventDefault()}>
         {children}
-      </FormProvider>
+      </form>
     </FormContext.Provider>
   );
 }

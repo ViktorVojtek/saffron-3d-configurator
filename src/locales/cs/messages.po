@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/pages/Summary/Sumary.tsx:107
+#: src/app/pages/Summary/Sumary.tsx:110
 msgid "Bed material type: {0}"
 msgstr "Typ materiálu postele: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:104
+#: src/app/pages/Summary/Sumary.tsx:107
 msgid "Bed type: {0}"
 msgstr "Typ postele: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:85
+#: src/app/pages/Summary/Sumary.tsx:89
 msgid "Configured bed"
 msgstr "Nakonfigurovaná postel"
 
@@ -29,7 +29,7 @@ msgstr "Nakonfigurovaná postel"
 msgid "Cover"
 msgstr "Potah"
 
-#: src/app/pages/Summary/Sumary.tsx:23
+#: src/app/pages/Summary/Sumary.tsx:24
 msgid "Email is required"
 msgstr "E-mail je vyžadován"
 
@@ -54,7 +54,7 @@ msgstr "Vyplňte své příjmení"
 msgid "Head"
 msgstr "Čelo"
 
-#: src/app/pages/Summary/Sumary.tsx:110
+#: src/app/pages/Summary/Sumary.tsx:113
 msgid "Head type: {0}"
 msgstr "Typ čela: {0}"
 
@@ -70,11 +70,11 @@ msgstr "Souhlasím se zpracováním osobních údajů."
 msgid "I want a Saffron dealer to contact me."
 msgstr "Chci, aby mě kontaktoval prodejce Saffronu."
 
-#: src/app/pages/Summary/Sumary.tsx:119
+#: src/app/pages/Summary/Sumary.tsx:122
 msgid "Leg material type: {0}"
 msgstr "Typ materiálu nohy: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:116
+#: src/app/pages/Summary/Sumary.tsx:119
 msgid "Leg type: {0}"
 msgstr "Typ nohy: {0}"
 
@@ -86,39 +86,52 @@ msgstr "Nohy"
 msgid "Legs Material"
 msgstr "Materiál nohou"
 
+#: src/app/components/Loader/Loader.tsx:34
+msgid "Loading"
+msgstr "Nahrávam"
+
+#: src/app/pages/Configurator/Configurator.tsx:88
+msgid "Loading {0}"
+msgstr "Nahrávam {0}"
+
 #: src/app/hooks/useNavData.tsx:54
 msgid "Mattress Stitches"
 msgstr "Stehy matrace"
 
 #: src/app/hooks/useNavData.tsx:25
+#: src/app/pages/Configurator/Configurator.tsx:88
 msgid "Model"
 msgstr "Model"
 
-#: src/app/pages/Summary/Sumary.tsx:27
+#: src/app/pages/Summary/Sumary.tsx:28
 msgid "Must consent the processing of, personal data"
 msgstr "Musíte souhlasit se zpracováním osobních údajů"
 
-#: src/app/pages/Summary/Sumary.tsx:101
+#: src/app/pages/Summary/Sumary.tsx:104
 msgid "Ordered Product"
 msgstr "Objednaný produkt"
 
-#: src/app/pages/Summary/Sumary.tsx:161
+#: src/app/pages/Summary/Sumary.tsx:164
 msgid "Send summary"
 msgstr "Odeslat souhrn"
 
-#: src/app/pages/Summary/Sumary.tsx:113
+#: src/app/pages/Summary/Sumary.tsx:116
 msgid "Stitching color type: {0}"
 msgstr "Typ barvy stehu: {0}"
 
-#: src/app/components/Canvas/Canvas.tsx:134
-#: src/app/pages/Summary/Sumary.tsx:97
+#: src/app/pages/Configurator/Configurator.tsx:115
+#: src/app/pages/Summary/Sumary.tsx:100
 msgid "Summary"
 msgstr "Souhrn"
 
-#: src/app/pages/Summary/Sumary.tsx:21
+#: src/app/pages/Configurator/Configurator.tsx:88
+msgid "Textures"
+msgstr "Textúry"
+
+#: src/app/pages/Summary/Sumary.tsx:22
 msgid "What's your name?"
 msgstr "Jak se jmenuješ?"
 
-#: src/app/pages/Summary/Sumary.tsx:22
+#: src/app/pages/Summary/Sumary.tsx:23
 msgid "What's your surname?"
 msgstr "Jaké je tvé příjmení?"

@@ -7,8 +7,8 @@ module.exports = merge(common, {
   watch: true,
   devtool: 'inline-source-map',
   output: {
-    path: `${__dirname}/public`,
-    publicPath: '/',
+    path: `${__dirname}/public/js`,
+    publicPath: '/js',
     filename: '[name].js',
   },
   plugins: [

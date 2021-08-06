@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useEffect } from 'react';
-import { isMobileOnly } from 'react-device-detect';
-import {Grid, Col, Row} from 'react-styled-flexboxgrid';
+import { useHistory } from 'react-router-dom';
+import { Container, Col, Row } from 'react-awesome-styled-grid';
 import { t, Trans } from '@lingui/macro';
 import { ObjectOptions } from '../../@types';
 import {
@@ -9,18 +9,22 @@ import {
   useScene,
   useStore,
   useModelState,
+  useTakeScreeshot,
 } from '../../hooks';
+import Button from '../../components/Button';
 import Canvas from '../../components/Canvas';
 import LoaderBase from '../../components/Loader';
 import Navigation from '../../components/Navigation';
 import Text from '../../components/styled/Text';
-import { StyledRelativeView } from './Configurator.styled';
+import { StyledAbsoluteView, StyledRelativeView } from './Configurator.styled';
 
 import data from '../../../assets/data.json';
 
 function Configurator(): JSX.Element {
+  const history = useHistory();
   const [isLoading] = useLoading();
   const [{ progress }, loadModel] = useLoadModel();
+  const { takeScreenshots } = useTakeScreeshot();
   const [{ MODEL, TEXTURES }] = useModelState();
   const [scene] = useScene();
   const [{
@@ -31,14 +35,14 @@ function Configurator(): JSX.Element {
     matIdx,
     tuftIdx
   }] = useStore();
-  
+
   // Object settings
   const object: ObjectOptions = useMemo(() => ({
     name: data.bed[bedIdx].title.toLowerCase(),
     base: { 
-      textureMap: !!bedIdx
+      textureMap: bedIdx > 0
         ? (
-          !!tuftIdx
+          tuftIdx > 0
             ? (data.textures.bed[bedIdx][matIdx] as any).textureTuftMap[tuftIdx] as string
             : data.textures.bed[bedIdx][matIdx].textureMap as string
         )
@@ -69,54 +73,54 @@ function Configurator(): JSX.Element {
     loadModel(object);
   }, [bedIdx, headIdx, matIdx, tuftIdx, legIdx, legMatIdx, object]);
 
+  function handleOnClick(): void {
+    const path = '/summary';
+
+    takeScreenshots();
+
+    history.push(path);
+  }
+
   function Loader(): JSX.Element {
     return (
       <LoaderBase progress={progress}>
-        <Text>
+        <Text inline textAlign="center">
           <Trans>Loading {MODEL !== 'done' ? t`Model` : (TEXTURES !== 'done' ? t`Textures` : '')}</Trans>
         </Text>
       </LoaderBase>
     );
   }
 
-  if (isLoading && scene.children.length < 3) {
+  if (
+    isLoading &&
+    scene.children.length < 3 &&
+    TEXTURES !== 'done' &&
+    MODEL !== 'done'
+  ) {
     return <Loader />;
   }
 
-  if (isMobileOnly) {
-    return (
-      <Grid fluid id="appWrapper">
-        <Col>
-          <Row id="canvasWrapper">
-            <StyledRelativeView>
-              {
-                isLoading && <Loader />
-              }
-              <Canvas />
-            </StyledRelativeView>
-          </Row>
-          <Row>
-            <Navigation data={data} />
-          </Row>
-        </Col>
-      </Grid>
-    );
-  }
-
   return (
-    <Grid fluid id="appWrapper">
-      <Row reverse={isMobileOnly}>
-        <Col xs={12} md={4} reverse={isMobileOnly}>
-          <Navigation data={data} />
-        </Col>
-        <Col xs={12} md={8} reverse={isMobileOnly} id="canvasWrapper">
-          <StyledRelativeView>
-            {isLoading && <Loader />}
-            <Canvas />
-          </StyledRelativeView>
-        </Col>
-      </Row>
-    </Grid>
+    <>
+      <Container fluid>
+        <Row>
+          <Col sm={4} md={3} lg={4} order={{ xs: 2, sm: 1, md: 1, lg: 1 }}>
+            <Navigation data={data} />
+          </Col>
+          <Col lg={8} order={{ xs: 1, sm: 1, md: 2, lg: 2 }}>
+            <StyledRelativeView>
+              {isLoading && <Loader />}
+              <Canvas />
+              <StyledAbsoluteView bottom="1rem" right="1rem">
+                <Button onClick={handleOnClick}>
+                  <Trans>Summary</Trans>
+                </Button>
+              </StyledAbsoluteView>
+            </StyledRelativeView>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 

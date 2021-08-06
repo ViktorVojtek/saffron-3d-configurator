@@ -4,6 +4,7 @@ import {
   PCFSoftShadowMap,
   sRGBEncoding,
 } from 'three';
+import { isMobileOnly, withOrientationChange } from 'react-device-detect';
 import { cameraPosition, cameraTarget } from '../../constants';
 import {
   useAnimate,
@@ -15,10 +16,16 @@ import {
 } from '../../hooks';
 import Lights from '../../three/objects/Lights';
 import Ground from '../../three/objects/Ground';
-
 import { StyledWrapper } from './Canvas.styled';
 
-export default function Canvas(): JSX.Element {
+type Props = {
+  isLandscape?: boolean;
+  isPortraint?: boolean;
+};
+
+function Canvas(props: Props): JSX.Element {
+  const { isLandscape } = props;
+
   const canvasWrapper = useRef<HTMLDivElement>(null);
 
   const animate = useAnimate();
@@ -55,9 +62,16 @@ export default function Canvas(): JSX.Element {
       scene.add(Ground());
     }
 
-    const { offsetWidth: width } = canvasWrapper.current.closest('#canvasWrapper') as HTMLElement;
-      const { offsetHeight } = canvasWrapper.current.closest('#canvas') as HTMLElement;
-      const height: number = offsetHeight || Math.round(window.innerHeight);
+    const width: number = isMobileOnly ? window.innerWidth : canvasWrapper.current.parentElement?.clientWidth as number;
+    const { innerHeight } = window;
+    const height: number = isMobileOnly
+      ? Math.round(
+        innerHeight / (2.5)
+      )
+      : innerHeight;
+
+    // const viewerWidth = Math.round(width / window.devicePixelRatio);
+    // const viewerHeight = Math.round(height / window.devicePixelRatio);
 
     renderer.clearDepth();
     renderer.setPixelRatio(window.devicePixelRatio || 1);
@@ -69,16 +83,17 @@ export default function Canvas(): JSX.Element {
     renderer.outputEncoding = sRGBEncoding;
     renderer.physicallyCorrectLights = true;
 
+    const canvas = renderer.domElement;
+    
     renderer.setSize(width, height, true);
     renderer.compile(scene, camera);
     renderer.setPixelRatio(window.devicePixelRatio || 1);
 
-    camera.aspect = width / height;
+    camera.aspect = (width / height);
     camera.updateProjectionMatrix();
 
-    const canvas = renderer.domElement;
-
     canvasWrapper?.current.append(canvas);
+    
     animate();
 
     controls?.addEventListener('change', animate);
@@ -88,5 +103,7 @@ export default function Canvas(): JSX.Element {
     };
   }, [camera, controls, renderer, scene]);
 
-  return <StyledWrapper ref={canvasWrapper} />;
+  return <StyledWrapper ref={canvasWrapper} position={isMobileOnly ? 'static' : 'absolute'} />;
 }
+
+export default withOrientationChange(Canvas);

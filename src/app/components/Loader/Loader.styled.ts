@@ -10,6 +10,7 @@ export const StyledWrapper = styled.div`
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
+  z-index: 1;
 `;
 
 export const StyledCircle = styled.circle<{

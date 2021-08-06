@@ -1,98 +1,146 @@
-import React, { useContext, useMemo, ReactNode, ComponentPropsWithoutRef } from 'react';
-import { get } from 'lodash';
-import { useFormContext, useController } from 'react-hook-form';
-import IconAlert from '../Icon/IconAlert';
+import React, {
+  ComponentPropsWithoutRef,
+  FormEvent,
+  useContext,
+  useState
+} from 'react';
+import { FormContext, FormData, FormDataItem } from '../Form';
 import ErrorMessage from '../ErrorMessage';
 import { StyledContainer, StyledInput, StyledTextarea, StyledWrapper } from './Input.styled';
-import { FormContext } from '../Form/Form';
-import Text from '../styled/Text';
 
-
-type InputProps = ComponentPropsWithoutRef<any> & {
-  name: string;
-  defaultValue?: string;
-  rules?: Object;
-  label?: ReactNode;
-  next?: string;
+type Props = ComponentPropsWithoutRef<any> & {
+  errorMessage?: string;
+  label?: boolean;
   multiline?: boolean;
-  rows?: number;
-  transparent?: boolean;
-  hideError?: boolean;
+  name: string;
 };
 
-export default function Input(props: InputProps) {
-  const { name, rules, defaultValue, label, next, multiline, transparent, hideError, ...rest } = props;
-  const { control, formState: { errors } } = useFormContext();
+export default function Input(props: Props) {
+  const { errorMessage, label, multiline, name, ...rest } = props;
+
   const formContext = useContext(FormContext);
-  const { field } = useController({
-    name,
-    control,
-    defaultValue,
-  });
 
-  const error = useMemo(() => get(errors, name), [errors, name]);
-  const showError = !hideError && !!error;
+  const isEmail = name.indexOf('email') > -1;
 
-  function handleSubmit(): void {
-    if(rest?.type !== 'submit') {
+  function handleOnBlur() {
+    if (!errorMessage) {
       return;
     }
 
-    if(!formContext) {
-      throw new Error('Form context is not defined. Are you using Form component?');
+    if (!formContext) {
+      throw new Error('Input is not a child of Form component');
     }
 
-    formContext.submit();
+    const { dispatch } = formContext;
+  
+    if (!formContext.data[name].value) {
+      dispatch({
+        ...formContext.data,
+        [name]: {
+          ...formContext.data[name],
+          error: true
+        }
+      });
+    } else {
+      if (isEmail && !isEmailAddress(formContext.data[name].value)) {
+        dispatch({
+          ...formContext.data,
+          [name]: {
+            ...formContext.data[name],
+            error: true
+          }
+        });
+      } else {
+        dispatch({
+          ...formContext.data,
+          [name]: {
+            ...formContext.data[name],
+            error: false
+          }
+        });
+      }
+    }
   }
+
+  function handleOnChange(e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    if (!formContext) {
+      throw new Error('Input is not a child of Form component');
+    }
+  
+    formContext.dispatch({
+      ...formContext.data,
+      [name]: {
+        ...formContext.data[name],
+        value: (e.target as HTMLInputElement).value
+      }
+    });
+  }
+
+  const data = formContext?.data;
+  const { error } = formContext?.data[name] as FormDataItem;
 
   return (
     <StyledWrapper>
-      {label && (
-        <Text>
-          {label}
-        </Text>
-      )}
-      <div>
-        <StyledContainer
-          transparent={transparent}
-          error={showError}
-        >
-          {multiline ? (
-            <StyledTextarea
-              ref={field.ref}
-              value={field.value}
-              onChange={field.onChange}
-              onSubmit={handleSubmit}
-              {...rest}
-            />
-          ) : (
-            <StyledInput
-              ref={field.ref}
-              value={field.value}
-              onChange={field.onChange}
-              onSubmit={handleSubmit}
-              {...rest}
-            />
-          )}
-          {showError && (
-            <IconAlert>!</IconAlert>
-          )}
-        </StyledContainer>
-        {showError && (
-          <ErrorMessage name={name} />
-        )}
-      </div>
+      {
+        label ? (
+            <label htmlFor={name}>
+              <p>{capitalise(name)}</p>
+              <StyledContainer>
+                {multiline ? (
+                  <StyledTextarea
+                    name={name}
+                    value={(data as FormData)[name].value}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    {...rest}
+                  />
+                ) : (
+                  <StyledInput
+                    name={name}
+                    value={(data as FormData)[name].value}
+                    onChange={handleOnChange}
+                    onBlur={handleOnBlur}
+                    {...rest}
+                  />
+                )}
+              </StyledContainer>
+            </label>
+        ) : (
+          <StyledContainer>
+            {multiline ? (
+              <StyledTextarea
+                name={name}
+                value={(data as FormData)[name].value}
+                onChange={handleOnChange}
+                onBlur={handleOnBlur}
+                {...rest}
+              />
+            ) : (
+              <StyledInput
+                name={name}
+                value={(data as FormData)[name].value}
+                onChange={handleOnChange}
+                onBlur={handleOnBlur}
+                {...rest}
+              />
+            )}
+          </StyledContainer>
+        )
+      }
+      {error && errorMessage && <ErrorMessage message={errorMessage} />}
     </StyledWrapper>
   );
 }
 
 Input.defaultProps = {
-  rules: undefined,
-  defaultValue: undefined,
-  label: undefined,
-  next: undefined,
-  multiline: false,
-  rows: 5,
-  transparent: false,
-  hideError: false,
+  label: false,
+  multiline: false
 };
+
+function capitalise(str: string): string {
+  return (str.charAt(0).toUpperCase() + str.slice(1)).replace(/_/g, ' ');
+}
+
+function isEmailAddress(str: string): boolean {
+  return !!str.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+}

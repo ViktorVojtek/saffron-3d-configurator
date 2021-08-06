@@ -10503,6 +10503,16 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
+react-awesome-styled-grid@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-awesome-styled-grid/-/react-awesome-styled-grid-3.1.1.tgz#2ef07e0b9aaa25a878d288516528b469620ec9d0"
+  integrity sha512-sNvQBy8VznmjQG5AI9wbjMuw75xWOKgdK5SGhcYvl8VTBG+tm/IMFB5h/sMvudKU8KmMeqPs1US/+Oowpm2MjA==
+
+react-cool-portal@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-cool-portal/-/react-cool-portal-1.1.1.tgz#5b5c11b549e617356a74a1b976182ab2e4bae2c1"
+  integrity sha512-F9M5QnVABNcKxNy9KkXF3jRY21sgh77LiW+ByRlFIAeH9vnvoP0RxQyZObLFP3msfSfzKkBGyR6z6pIis4xN5w==
+
 react-dev-utils@^11.0.3:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.4.tgz#a7ccb60257a1ca2e0efe7a83e38e6700d17aa37a"

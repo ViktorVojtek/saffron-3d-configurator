@@ -2,7 +2,6 @@ import React, { useRef, ReactNode } from 'react';
 import { Trans } from '@lingui/macro';
 import useRadians from '../../hooks/useRadians';
 import { StyledCircle, StyledWrapper } from './Loader.styled';
-// import LoaderSVGIcon from './LoaderSVGIcon';
 import Text from '../styled/Text';
 
 type Props = {
@@ -31,7 +30,9 @@ export default function Loader(props: Props): JSX.Element {
       {children ? (
         children
       ) : (
-        <Text><Trans>Loading</Trans></Text>
+        <Text textAlign="center">
+          <Trans>Loading</Trans>
+        </Text>
       )}
     </StyledWrapper>
   );
