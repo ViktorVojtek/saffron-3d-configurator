@@ -40,12 +40,32 @@ export const StyledItem = styled.div<{ selected: boolean }>`
   transition: all 0.3s ease 0s;
   scroll-snap-align: center;
   scroll-behavior: smooth;
+  position: relative;
 
   &:hover {
     border-color: rgba(33, 28, 23, 0.35);
+
+    &:before {
+      background-color: rgba(33, 28, 23, 0.35);
+      color: rgba(33, 28, 23, 0.65);
+    }
   }
   ${({ selected }) => selected && (`
     border-color: rgba(33, 28, 23, 0.65);
+
+    &:before {
+      content: '\\2713';
+      color: #fff;
+      display: flex;
+      align-items: center;
+      background-color: rgba(33, 28, 23, 0.65);
+      justify-content: center;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 30px;
+      height: 30px;
+    }
   `)}
 `;
 
