@@ -1,12 +1,12 @@
 import { Dispatch, useState, useEffect } from 'react';
-import { FBXLoader } from '../three/constants';
+import { FBXLoader } from '../constants';
+import useAnimate from './useAnimate';
 import useAddToScene from './useAddToScene';
 import useHideModels from './useHideModels';
 import useLoading from './useLoading';
 import useScene from './useScene';
 import useSetupModel from './useSetupModel';
 import useModelState, { ModelAction } from './useModelState';
-import useAnimate from './useAnimate';
 
 export default function useLoadModel(): [
   {

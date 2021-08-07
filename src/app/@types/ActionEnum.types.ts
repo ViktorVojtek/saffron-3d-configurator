@@ -1,1 +1,1 @@
-export { ActionEnumType } from '../hooks/useStore/reducer';
+export type { ActionType } from '../hooks/useStore/reducer';

@@ -1,5 +1,4 @@
 import { remPx } from '../constants';
-
 export * from '../three/utils';
 
 export const getRemUnitFlat: (n: number) => number = (n) => Math.round(n * remPx || 16);
@@ -16,5 +15,6 @@ export const hexToRGBA: (hexColor: string, alpha: number) => string = (
   const [r, g, b] = (hexColor.match(/\w\w/g) as RegExpMatchArray).map((x) =>
     parseInt(x, 16),
   );
+
   return `rgba(${r},${g},${b},${alpha})`;
 };

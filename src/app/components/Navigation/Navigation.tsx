@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { isMobileOnly } from 'react-device-detect';
+import { ActionType } from '../../@types';
+import {
+  useLoading,
+  useLocale,
+  useNavData,
+  useNavigation,
+  useStore
+} from '../../hooks';
 import Carousel from '../Carousel';
+import NavigationItem from './NavigationItem';
 import {
   StyledWrapper, StyledUl, StyledLi, StyledButton
 } from './Navigation.styled';
-import { useLoading, useLocale, useNavData, useNavigation, useStore } from '../../hooks';
-import { ActionEnumType } from '../../@types';
-import NavigationItem from './NavigationItem';
 
 interface keyable {
   [key: string]: any  
@@ -36,18 +42,18 @@ function Navigation(props: Props): JSX.Element {
     const idx = getIdx();
 
     function getIdx(): number {
-      switch(item.action) {
-        case ActionEnumType.BED_IDX:
+      switch(item.action as ActionType) {
+        case 'BED_IDX':
           return bedIdx;
-        case ActionEnumType.HEAD_IDX:
+        case 'HEAD_IDX':
           return headIdx || 0;
-        case ActionEnumType.MAT_IDX:
+        case 'MAT_IDX':
           return matIdx;
-        case ActionEnumType.TUFT_IDX:
+        case 'TUFT_IDX':
           return tuftIdx;
-        case ActionEnumType.LEG_IDX:
+        case 'LEG_IDX':
           return legIdx;
-        case ActionEnumType.LEG_MAT_IDX:
+        case 'LEG_MAT_IDX':
           return legMatIdx;
         default:
           return 0;

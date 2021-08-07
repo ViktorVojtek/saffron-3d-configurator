@@ -26,8 +26,6 @@ export default function useResize(): void {
       )
       : innerHeight;
 
-      // console.log(width, height);
-
       renderer.setSize(width, height, true);
       renderer.compile(scene, (camera as PerspectiveCamera));
       renderer.setPixelRatio(window.devicePixelRatio || 1);

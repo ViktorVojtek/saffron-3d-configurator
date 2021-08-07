@@ -47,7 +47,7 @@ function Configurator(): JSX.Element {
             : data.textures.bed[bedIdx][matIdx].textureMap as string
         )
         : (
-          data.textures.bed[bedIdx][matIdx].textureMap[legMatIdx] as string
+          `https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c${matIdx+1}_w${legMatIdx+1}_n${tuftIdx+1}.png`
         )
     },
     head: {

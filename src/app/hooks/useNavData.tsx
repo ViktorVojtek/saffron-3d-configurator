@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { ActionEnumType } from '../@types';
 import { t } from '@lingui/macro';
 
 type Keyable = { [key: string]: any };
@@ -21,7 +20,7 @@ export default function useNavData(): [
       switch(item) {
         case 'Model':
           return {
-            action: ActionEnumType.BED_IDX,
+            action: 'BED_IDX',
             title: t`Model`,
             data: data.bed.map((_item: Keyable, _i: number) => ({
               description: data.description[_i][locale],
@@ -31,7 +30,7 @@ export default function useNavData(): [
           };
         case 'Head':
           return {
-            action: ActionEnumType.HEAD_IDX,
+            action: 'HEAD_IDX',
             title: t`Head`,
             data: data.head.map((_item: Keyable) => ({
               image: _item.thumbnail,
@@ -40,8 +39,7 @@ export default function useNavData(): [
           };
         case 'Cover':
           return {
-            action: ActionEnumType.MAT_IDX,
-            // id: 'COVER',
+            action: 'MAT_IDX',
             title: t`Cover`,
             data: data.textures.thumbnail.material.map(((_item: Keyable) => ({
               image: _item.thumbnail,
@@ -50,7 +48,7 @@ export default function useNavData(): [
           };
         case 'Mattress Stitches':
           return {
-            action: ActionEnumType.TUFT_IDX,
+            action: 'TUFT_IDX',
             title: t`Mattress Stitches`,
             data: data.textures.thumbnail.tuft.map(((_item: Keyable) => ({
               image: _item.thumbnail,
@@ -59,7 +57,7 @@ export default function useNavData(): [
           };
         case 'Legs':
           return {
-            action: ActionEnumType.LEG_IDX,
+            action: 'LEG_IDX',
             title: t`Legs`,
             data: data.leg.map(((_item: Keyable) => ({
               image: _item.thumbnail,
@@ -68,7 +66,7 @@ export default function useNavData(): [
           };
         case 'Leg Material':
           return {
-            action: ActionEnumType.LEG_MAT_IDX,
+            action: 'LEG_MAT_IDX',
             title: t`Legs Material`,
             data: data.textures.thumbnail.leg.map(((_item: Keyable) => ({
               image: _item?.thumbnail,

@@ -1,4 +1,9 @@
-import { PlaneBufferGeometry, ShadowMaterial, Color, Mesh } from 'three';
+import {
+  PlaneBufferGeometry,
+  ShadowMaterial,
+  Color,
+  Mesh
+} from 'three';
 
 export default function Ground(): Mesh<PlaneBufferGeometry, ShadowMaterial> {
   const geometry: PlaneBufferGeometry = new PlaneBufferGeometry(5, 20, 32);

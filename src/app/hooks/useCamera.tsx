@@ -1,11 +1,11 @@
 import React, {
   createContext,
   useContext,
+  useEffect,
   Dispatch,
   ReactNode,
   useState
 } from 'react';
-import { useEffect } from 'react';
 import { PerspectiveCamera } from 'three';
 import useRenderer from './useRenderer';
 import useScene from './useScene';

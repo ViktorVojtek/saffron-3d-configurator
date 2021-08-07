@@ -14,6 +14,7 @@ import {
 import useCamera from './useCamera';
 import useControls from './useControls';
 import useRenderer from './useRenderer';
+import useStorage from './useStorage';
 
 const ScreenshotsContext = createContext<{
   screenshots: string[];
@@ -28,8 +29,8 @@ type Props = {
 }
 
 export function ScreenshotsProvider(props: Props) {
-  const storage = window.localStorage;
   const { children } = props;
+  const storage = useStorage();
   const [screenshots, dispatch] = useState<string[]>(
     JSON.parse(storage.getItem('screenshots') as string) || []
   );
@@ -50,10 +51,10 @@ export default function useTakeScreenshot(): {
   takeScreenshots: (callback?: () => void) => void;
   deleteScreenshots: () => void
 } {
-  const storage = window.localStorage;
   const [camera] = useCamera();
   const [controls] = useControls();
   const [renderer] = useRenderer();
+  const storage = useStorage();
   const { screenshots } = useContext(ScreenshotsContext);
 
   function handleTakeScreenshot(callback?: () => void): void {

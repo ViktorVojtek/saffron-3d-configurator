@@ -5,10 +5,10 @@ import React, {
   ReactNode,
   useEffect
 } from 'react';
+import { PerspectiveCamera } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import useRenderer from './useRenderer';
 import useCamera from './useCamera';
-import { PerspectiveCamera, WebGLRenderer } from 'three';
 
 const ControlsContext = createContext<{
   controls?: OrbitControls;
