@@ -16,7 +16,8 @@ import { ModelStateProvider } from './hooks/useModelState';
 import { RendererProvider } from './hooks/useRenderer';
 import { SceneProvider } from './hooks/useScene';
 import { ScreenshotsProvider } from './hooks/useTakeScreenshot';
-
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme as theme } from './components/styled/theme';
 import GlobalStyle from './components/styled/Global';
 import Configurator from './pages/Configurator';
 import Summary from './pages/Summary';
@@ -30,37 +31,39 @@ export default function App() {
 
   return (
     <StrictMode>
-      <GlobalStyle />
-      <I18nProvider i18n={i18n}>
-        <StoreProvider>
-          <LoadingProvider>
-            <Router>
-              <Switch>
-                <Route path="/summary">
-                  <ScreenshotsProvider>
-                    <Summary />
-                  </ScreenshotsProvider>
-                </Route>
-                <Route path="/">
-                  <NavigationProvider>
-                    <ModelStateProvider>
-                      <CameraProvider>
-                        <RendererProvider>
-                          <SceneProvider>
-                            <ControlsProvider>
-                              <Configurator />
-                            </ControlsProvider>
-                          </SceneProvider>
-                        </RendererProvider>
-                      </CameraProvider>
-                    </ModelStateProvider>
-                  </NavigationProvider>
-                </Route>
-              </Switch>
-            </Router>
-          </LoadingProvider>
-        </StoreProvider>
-      </I18nProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <I18nProvider i18n={i18n}>
+          <StoreProvider>
+            <LoadingProvider>
+              <Router>
+                <Switch>
+                  <Route path="/summary">
+                    <ScreenshotsProvider>
+                      <Summary />
+                    </ScreenshotsProvider>
+                  </Route>
+                  <Route path="/">
+                    <NavigationProvider>
+                      <ModelStateProvider>
+                        <CameraProvider>
+                          <RendererProvider>
+                            <SceneProvider>
+                              <ControlsProvider>
+                                <Configurator />
+                              </ControlsProvider>
+                            </SceneProvider>
+                          </RendererProvider>
+                        </CameraProvider>
+                      </ModelStateProvider>
+                    </NavigationProvider>
+                  </Route>
+                </Switch>
+              </Router>
+            </LoadingProvider>
+          </StoreProvider>
+        </I18nProvider>
+      </ThemeProvider>
     </StrictMode>
   );
 }

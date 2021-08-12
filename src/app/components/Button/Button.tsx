@@ -1,6 +1,6 @@
 import React, { ComponentPropsWithoutRef, ReactNode, useContext } from 'react';
 // import { useFormContext } from 'react-hook-form';
-import { FormContext, FormData, FormDataItem } from '../Form';
+// import { FormContext, FormData, FormDataItem } from '../Form';
 import { StyledButton } from './Button.styled';
 
 type Props = ComponentPropsWithoutRef<'button'> & {
@@ -10,13 +10,13 @@ type Props = ComponentPropsWithoutRef<'button'> & {
 
 export default function Button(props: Props) {
   const { children, submit, ...rest } = props;
-  const formContext = useContext(FormContext);
+  // const formContext = useContext(FormContext);
   // const useUseFormContext = useFormContext();
 
   // const isSubmitting = useUseFormContext?.formState?.isSubmitting;
   // const isLoading = submit && isSubmitting;
 
-  function handleOnClick(evt:any): void {
+  /* function handleOnClick(evt:any): void {
     if (rest?.type === 'submit') {
       handleOnSubmit();
 
@@ -58,12 +58,12 @@ export default function Button(props: Props) {
 
   // console.log(formContext);
 
-  const disabled = isDisabled();
+  const disabled = isDisabled(); */
 
   return (
     <StyledButton
-      disabled={disabled}
-      onClick={handleOnClick}
+      // disabled={disabled}
+      // onClick={handleOnClick}
       {...rest}
     >
       {children}

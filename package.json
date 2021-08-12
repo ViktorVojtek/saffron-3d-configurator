@@ -19,6 +19,7 @@
     "@types/webpack-env": "1.15.1",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
+    "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "prop-types": "15.7.2",
     "react": "^17.0.2",
@@ -29,9 +30,9 @@
     "react-hook-form": "^7.11.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "react-styled-flexboxgrid": "^3.2.1",
     "styled-components": "5.0.0",
     "three": "^0.130.1",
+    "yup": "^0.32.9",
     "zod": "^3.5.1"
   },
   "devDependencies": {

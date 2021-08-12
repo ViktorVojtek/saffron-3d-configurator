@@ -42,7 +42,7 @@ export default function useSetupModel(): {
 
   const animate = useAnimate();
   const [scene] = useScene();
-  const [{ ALL, MODEL, TEXTURES }, setModelAction] = useModelState();
+  const [{ ALL, TEXTURES }, setModelAction] = useModelState();
 
   useEffect(() => {
     if (c === 3) {
@@ -67,6 +67,7 @@ export default function useSetupModel(): {
     reset();
   
     const { name, base, head, leg, position, scale } = options;
+
     const object: Object3D = scene?.getObjectByName(name) as Object3D;
 
     setModel(object);

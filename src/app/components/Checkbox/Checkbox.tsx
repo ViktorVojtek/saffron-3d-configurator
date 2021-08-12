@@ -36,7 +36,7 @@ export default function Checkbox(props: CheckboProps) {
       {label && (
         <Col>
           <Text>{label}</Text>
-          <ErrorMessage message={name} />
+          <ErrorMessage>{name}</ErrorMessage>
         </Col>
       )}  
     </Row>

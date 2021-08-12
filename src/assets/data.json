@@ -74,7 +74,28 @@
       "thumbnail": "https://saffron.enli.technology/static/images/heads_set/royal.png"
     }
   ],
-  "headDefault": ["Royal", "Frame", "Buttons", "Buttons", "Buttons"],
+  "headDefault": [
+    {
+      "title": "Royal",
+      "value": 5
+    },
+    {
+      "title": "Frame",
+      "value": 3
+    },
+    {
+      "title": "Buttons",
+      "value": 1
+    },
+    {
+      "title": "Buttons",
+      "value": 1
+    },
+    {
+      "title": "Buttons",
+      "value": 1
+    }
+  ],
   "leg": [
     {
       "title": "Aurelia",

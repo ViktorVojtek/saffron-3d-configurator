@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/pages/Summary/Sumary.tsx:110
+#: src/app/components/Summary/Summary.tsx:26
 msgid "Bed material type: {0}"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:107
+#: src/app/components/Summary/Summary.tsx:23
 msgid "Bed type: {0}"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:89
+#: src/app/pages/Summary/Sumary.tsx:40
 msgid "Configured bed"
 msgstr ""
 
@@ -29,32 +29,40 @@ msgstr ""
 msgid "Cover"
 msgstr ""
 
+#: src/app/components/Form/Form.tsx:73
+msgid "Email Address"
+msgstr "Email Address"
+
 #: src/app/pages/Summary/Sumary.tsx:24
-msgid "Email is required"
-msgstr ""
+#~ msgid "Email is required"
+#~ msgstr ""
 
 #: src/app/pages/Summary/Sumary.tsx:146
-msgid "Fill in your message"
-msgstr ""
+#~ msgid "Fill in your message"
+#~ msgstr ""
 
 #: src/app/pages/Summary/Sumary.tsx:129
-msgid "Fill in your name"
-msgstr ""
+#~ msgid "Fill in your name"
+#~ msgstr ""
 
 #: src/app/pages/Summary/Sumary.tsx:141
-msgid "Fill in your phone number"
-msgstr ""
+#~ msgid "Fill in your phone number"
+#~ msgstr ""
 
 #: src/app/pages/Summary/Sumary.tsx:133
 #: src/app/pages/Summary/Sumary.tsx:137
-msgid "Fill in your surname"
-msgstr ""
+#~ msgid "Fill in your surname"
+#~ msgstr ""
 
-#: src/app/hooks/useNavData.tsx:35
+#: src/app/components/Form/Form.tsx:59
+msgid "First Name"
+msgstr "First Name"
+
+#: src/app/hooks/useNavData.tsx:36
 msgid "Head"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:113
+#: src/app/components/Summary/Summary.tsx:29
 msgid "Head type: {0}"
 msgstr ""
 
@@ -62,19 +70,27 @@ msgstr ""
 #~ msgid "Hello {name}!"
 #~ msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:151
+#: src/app/components/Form/Form.tsx:93
 msgid "I consent to the processing of personal data."
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:155
+#: src/app/components/Form/Form.tsx:100
 msgid "I want a Saffron dealer to contact me."
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:122
+#: src/app/components/Form/Form.tsx:36
+msgid "Invalid email address"
+msgstr "Invalid email address"
+
+#: src/app/components/Form/Form.tsx:66
+msgid "Last Name"
+msgstr "Last Name"
+
+#: src/app/components/Summary/Summary.tsx:38
 msgid "Leg material type: {0}"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:119
+#: src/app/components/Summary/Summary.tsx:35
 msgid "Leg type: {0}"
 msgstr ""
 
@@ -82,7 +98,7 @@ msgstr ""
 msgid "Legs"
 msgstr ""
 
-#: src/app/hooks/useNavData.tsx:72
+#: src/app/hooks/useNavData.tsx:80
 msgid "Legs Material"
 msgstr ""
 
@@ -98,29 +114,52 @@ msgstr "Loading {0}"
 msgid "Mattress Stitches"
 msgstr ""
 
-#: src/app/hooks/useNavData.tsx:25
+#: src/app/components/Form/Form.tsx:86
+msgid "Message"
+msgstr "Message"
+
+#: src/app/hooks/useNavData.tsx:26
 #: src/app/pages/Configurator/Configurator.tsx:88
 msgid "Model"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:28
-msgid "Must consent the processing of, personal data"
-msgstr ""
+#: src/app/components/Form/Form.tsx:31
+msgid "Must be 15 characters or less"
+msgstr "Must be 15 characters or less"
 
-#: src/app/pages/Summary/Sumary.tsx:104
+#: src/app/components/Form/Form.tsx:34
+msgid "Must be 20 characters or less"
+msgstr "Must be 20 characters or less"
+
+#: src/app/pages/Summary/Sumary.tsx:28
+#~ msgid "Must consent the processing of, personal data"
+#~ msgstr ""
+
+#: src/app/components/Summary/Summary.tsx:20
 msgid "Ordered Product"
 msgstr ""
 
-#: src/app/pages/Summary/Sumary.tsx:164
-msgid "Send summary"
-msgstr ""
+#: src/app/components/Form/Form.tsx:80
+msgid "Phone"
+msgstr "Phone"
 
-#: src/app/pages/Summary/Sumary.tsx:116
+#: src/app/components/Form/Form.tsx:32
+#: src/app/components/Form/Form.tsx:35
+#: src/app/components/Form/Form.tsx:36
+#: src/app/components/Form/Form.tsx:39
+msgid "Required"
+msgstr "Required"
+
+#: src/app/pages/Summary/Sumary.tsx:164
+#~ msgid "Send summary"
+#~ msgstr ""
+
+#: src/app/components/Summary/Summary.tsx:32
 msgid "Stitching color type: {0}"
 msgstr ""
 
-#: src/app/pages/Configurator/Configurator.tsx:115
-#: src/app/pages/Summary/Sumary.tsx:100
+#: src/app/pages/Configurator/Configurator.tsx:116
+#: src/app/pages/Summary/Sumary.tsx:48
 msgid "Summary"
 msgstr ""
 
@@ -129,9 +168,17 @@ msgid "Textures"
 msgstr "Textures"
 
 #: src/app/pages/Summary/Sumary.tsx:22
-msgid "What's your name?"
-msgstr ""
+#~ msgid "What's your name?"
+#~ msgstr ""
 
 #: src/app/pages/Summary/Sumary.tsx:23
-msgid "What's your surname?"
-msgstr ""
+#~ msgid "What's your surname?"
+#~ msgstr ""
+
+#: src/app/components/Form/Form.tsx:40
+msgid "You must consent to the processing of personal data."
+msgstr "You must consent to the processing of personal data."
+
+#: src/app/pages/Summary/Sumary.tsx:59
+msgid "Your data has been sucessfully send."
+msgstr "Your data has been sucessfully send."

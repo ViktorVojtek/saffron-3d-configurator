@@ -1,16 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { ReactNode } from 'react';
 import StyledErrorMessage from './ErrorMessage.styled';
 
 type Props = {
-  message: string;
+  children: ReactNode;
 };
 
 export default function ErrorMessage(props: Props): JSX.Element | null {
-  const { message } = props;
+  const { children } = props;
   
   return (
     <StyledErrorMessage>
-      {message}
+      {children}
     </StyledErrorMessage>
   );
 }

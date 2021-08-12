@@ -1,10 +1,15 @@
-import React, {
+/* import React, {
   ComponentPropsWithoutRef,
   FormEvent,
   useContext,
-  useState
-} from 'react';
-import { FormContext, FormData, FormDataItem } from '../Form';
+  // useState
+} from 'react'; */
+
+export default function Input() {
+  return null;
+}
+
+/* import { FormContext, FormData, FormDataItem } from '../Form';
 import ErrorMessage from '../ErrorMessage';
 import { StyledContainer, StyledInput, StyledTextarea, StyledWrapper } from './Input.styled';
 
@@ -143,4 +148,4 @@ function capitalise(str: string): string {
 
 function isEmailAddress(str: string): boolean {
   return !!str.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
-}
+} */

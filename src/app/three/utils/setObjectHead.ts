@@ -1,4 +1,4 @@
-import { Mesh, MeshStandardMaterial, Object3D, Texture } from 'three';
+import { Mesh, Object3D, Texture } from 'three';
 import AjaxTextureLoader from './ajaxTextureLoader';
 import setMaterial from './setMaterial';
 import setTexture from './setTexture';

@@ -11,6 +11,7 @@ export { default as useLoadModel } from './useModel';
 export { default as useModelState } from './useModelState';
 export { default as useNavData } from './useNavData';
 export { default as useNavigation } from './useNavigation';
+export { default as useOrientation } from './useOrientation';
 export { default as useRadians } from './useRadians';
 export { default as useResize } from './useResize';
 export { default as useRenderer } from './useRenderer';

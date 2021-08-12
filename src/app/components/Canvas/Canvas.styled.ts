@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const StyledWrapper = styled.div<{ position: 'absolute' | 'static'}>`
-  position: ${({ position }) => (position || 'absolute')};
+export const StyledWrapper = styled.div<{ position?: 'absolute' | 'static'}>`
+  // position: ${({ position }) => (position || 'absolute')};
   top: 0;
   left: 0;
   width: 100%;

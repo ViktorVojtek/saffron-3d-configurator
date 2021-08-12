@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import useStore from './useStore';
 import { t } from '@lingui/macro';
 
 type Keyable = { [key: string]: any };
@@ -7,6 +8,7 @@ export default function useNavData(): [
   any[] | undefined,
   (_data: Keyable, _locale: 'cs' | 'en' | 'sk') => void
 ] {
+  const [{ bedIdx }] = useStore();
   const [data, setData] = useState<Keyable | undefined>(undefined);
   const [locale, setLocale] = useState('en');
   const navTitles = ['Model', 'Head', 'Cover', 'Mattress Stitches', 'Legs', 'Leg Material'];
@@ -59,10 +61,18 @@ export default function useNavData(): [
           return {
             action: 'LEG_IDX',
             title: t`Legs`,
-            data: data.leg.map(((_item: Keyable) => ({
-              image: _item.thumbnail,
-              title: _item.title
-            })))
+            data: bedIdx !== 0
+              ? (
+                data.leg.map(((_item: Keyable) => ({
+                  image: _item.thumbnail,
+                  title: _item.title
+                }))).slice(1)
+              ) : (
+                data.leg.map(((_item: Keyable) => ({
+                  image: _item.thumbnail,
+                  title: _item.title
+                })))
+              )
           };
         case 'Leg Material':
           return {

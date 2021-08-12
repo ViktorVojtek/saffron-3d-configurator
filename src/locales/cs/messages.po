@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/pages/Summary/Sumary.tsx:110
+#: src/app/components/Summary/Summary.tsx:26
 msgid "Bed material type: {0}"
 msgstr "Typ materiálu postele: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:107
+#: src/app/components/Summary/Summary.tsx:23
 msgid "Bed type: {0}"
 msgstr "Typ postele: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:89
+#: src/app/pages/Summary/Sumary.tsx:40
 msgid "Configured bed"
 msgstr "Nakonfigurovaná postel"
 
@@ -29,32 +29,40 @@ msgstr "Nakonfigurovaná postel"
 msgid "Cover"
 msgstr "Potah"
 
+#: src/app/components/Form/Form.tsx:73
+msgid "Email Address"
+msgstr "Emailová adresa"
+
 #: src/app/pages/Summary/Sumary.tsx:24
-msgid "Email is required"
-msgstr "E-mail je vyžadován"
+#~ msgid "Email is required"
+#~ msgstr "E-mail je vyžadován"
 
 #: src/app/pages/Summary/Sumary.tsx:146
-msgid "Fill in your message"
-msgstr "Vyplňte svou zprávu"
+#~ msgid "Fill in your message"
+#~ msgstr "Vyplňte svou zprávu"
 
 #: src/app/pages/Summary/Sumary.tsx:129
-msgid "Fill in your name"
-msgstr "Vyplňte své jméno"
+#~ msgid "Fill in your name"
+#~ msgstr "Vyplňte své jméno"
 
 #: src/app/pages/Summary/Sumary.tsx:141
-msgid "Fill in your phone number"
-msgstr "Vyplňte své telefonní číslo"
+#~ msgid "Fill in your phone number"
+#~ msgstr "Vyplňte své telefonní číslo"
 
 #: src/app/pages/Summary/Sumary.tsx:133
 #: src/app/pages/Summary/Sumary.tsx:137
-msgid "Fill in your surname"
-msgstr "Vyplňte své příjmení"
+#~ msgid "Fill in your surname"
+#~ msgstr "Vyplňte své příjmení"
 
-#: src/app/hooks/useNavData.tsx:35
+#: src/app/components/Form/Form.tsx:59
+msgid "First Name"
+msgstr "Jméno"
+
+#: src/app/hooks/useNavData.tsx:36
 msgid "Head"
 msgstr "Čelo"
 
-#: src/app/pages/Summary/Sumary.tsx:113
+#: src/app/components/Summary/Summary.tsx:29
 msgid "Head type: {0}"
 msgstr "Typ čela: {0}"
 
@@ -62,19 +70,27 @@ msgstr "Typ čela: {0}"
 #~ msgid "Hello {name}!"
 #~ msgstr "Ahoj {name}!"
 
-#: src/app/pages/Summary/Sumary.tsx:151
+#: src/app/components/Form/Form.tsx:93
 msgid "I consent to the processing of personal data."
 msgstr "Souhlasím se zpracováním osobních údajů."
 
-#: src/app/pages/Summary/Sumary.tsx:155
+#: src/app/components/Form/Form.tsx:100
 msgid "I want a Saffron dealer to contact me."
 msgstr "Chci, aby mě kontaktoval prodejce Saffronu."
 
-#: src/app/pages/Summary/Sumary.tsx:122
+#: src/app/components/Form/Form.tsx:36
+msgid "Invalid email address"
+msgstr "Neplatná emailová adresa"
+
+#: src/app/components/Form/Form.tsx:66
+msgid "Last Name"
+msgstr "Příjmení"
+
+#: src/app/components/Summary/Summary.tsx:38
 msgid "Leg material type: {0}"
 msgstr "Typ materiálu nohy: {0}"
 
-#: src/app/pages/Summary/Sumary.tsx:119
+#: src/app/components/Summary/Summary.tsx:35
 msgid "Leg type: {0}"
 msgstr "Typ nohy: {0}"
 
@@ -82,7 +98,7 @@ msgstr "Typ nohy: {0}"
 msgid "Legs"
 msgstr "Nohy"
 
-#: src/app/hooks/useNavData.tsx:72
+#: src/app/hooks/useNavData.tsx:80
 msgid "Legs Material"
 msgstr "Materiál nohou"
 
@@ -98,29 +114,52 @@ msgstr "Nahrávam {0}"
 msgid "Mattress Stitches"
 msgstr "Stehy matrace"
 
-#: src/app/hooks/useNavData.tsx:25
+#: src/app/components/Form/Form.tsx:86
+msgid "Message"
+msgstr "Zpráva"
+
+#: src/app/hooks/useNavData.tsx:26
 #: src/app/pages/Configurator/Configurator.tsx:88
 msgid "Model"
 msgstr "Model"
 
-#: src/app/pages/Summary/Sumary.tsx:28
-msgid "Must consent the processing of, personal data"
-msgstr "Musíte souhlasit se zpracováním osobních údajů"
+#: src/app/components/Form/Form.tsx:31
+msgid "Must be 15 characters or less"
+msgstr "Musí mít 15 znaků nebo méně"
 
-#: src/app/pages/Summary/Sumary.tsx:104
+#: src/app/components/Form/Form.tsx:34
+msgid "Must be 20 characters or less"
+msgstr "Musí mít ľé znaků nebo méně"
+
+#: src/app/pages/Summary/Sumary.tsx:28
+#~ msgid "Must consent the processing of, personal data"
+#~ msgstr "Musíte souhlasit se zpracováním osobních údajů"
+
+#: src/app/components/Summary/Summary.tsx:20
 msgid "Ordered Product"
 msgstr "Objednaný produkt"
 
-#: src/app/pages/Summary/Sumary.tsx:164
-msgid "Send summary"
-msgstr "Odeslat souhrn"
+#: src/app/components/Form/Form.tsx:80
+msgid "Phone"
+msgstr "Telefon"
 
-#: src/app/pages/Summary/Sumary.tsx:116
+#: src/app/components/Form/Form.tsx:32
+#: src/app/components/Form/Form.tsx:35
+#: src/app/components/Form/Form.tsx:36
+#: src/app/components/Form/Form.tsx:39
+msgid "Required"
+msgstr "Požadované"
+
+#: src/app/pages/Summary/Sumary.tsx:164
+#~ msgid "Send summary"
+#~ msgstr "Odeslat souhrn"
+
+#: src/app/components/Summary/Summary.tsx:32
 msgid "Stitching color type: {0}"
 msgstr "Typ barvy stehu: {0}"
 
-#: src/app/pages/Configurator/Configurator.tsx:115
-#: src/app/pages/Summary/Sumary.tsx:100
+#: src/app/pages/Configurator/Configurator.tsx:116
+#: src/app/pages/Summary/Sumary.tsx:48
 msgid "Summary"
 msgstr "Souhrn"
 
@@ -129,9 +168,17 @@ msgid "Textures"
 msgstr "Textúry"
 
 #: src/app/pages/Summary/Sumary.tsx:22
-msgid "What's your name?"
-msgstr "Jak se jmenuješ?"
+#~ msgid "What's your name?"
+#~ msgstr "Jak se jmenuješ?"
 
 #: src/app/pages/Summary/Sumary.tsx:23
-msgid "What's your surname?"
-msgstr "Jaké je tvé příjmení?"
+#~ msgid "What's your surname?"
+#~ msgstr "Jaké je tvé příjmení?"
+
+#: src/app/components/Form/Form.tsx:40
+msgid "You must consent to the processing of personal data."
+msgstr "Se zpracováním osobních údajů musíte souhlasit"
+
+#: src/app/pages/Summary/Sumary.tsx:59
+msgid "Your data has been sucessfully send."
+msgstr "Vaše data byla úspěšně odeslána."

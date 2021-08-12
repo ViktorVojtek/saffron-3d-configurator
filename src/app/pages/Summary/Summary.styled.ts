@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const StyledButtonWrapper = styled.div`
+  padding: .5rem 0;
+`;
+
 export const StyledImageContainer = styled.div`
   align-items: center;
   width: 50%;

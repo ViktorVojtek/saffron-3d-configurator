@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Col, Row } from 'react-awesome-styled-grid';
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import { ObjectOptions } from '../../@types';
 import {
   useLoadModel,
@@ -15,7 +15,6 @@ import Button from '../../components/Button';
 import Canvas from '../../components/Canvas';
 import LoaderBase from '../../components/Loader';
 import Navigation from '../../components/Navigation';
-import Text from '../../components/styled/Text';
 import { StyledAbsoluteView, StyledRelativeView } from './Configurator.styled';
 
 import data from '../../../assets/data.json';
@@ -47,15 +46,23 @@ function Configurator(): JSX.Element {
             : data.textures.bed[bedIdx][matIdx].textureMap as string
         )
         : (
-          `https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c${matIdx+1}_w${legMatIdx+1}_n${tuftIdx+1}.png`
+          `https://saffron.enli.technology/static/models/saffron/Aurelia/textures/bed/aurelia_c${matIdx+1}_w${legMatIdx+1}.png` // _n${tuftIdx+1}
         )
     },
     head: {
-      name: data.head[headIdx || 0].title.toLowerCase(),
+      name: typeof headIdx === 'number'
+        ? data.head[headIdx].title.toLowerCase()
+        : data.headDefault[bedIdx].title,
       position: data.position[bedIdx].head,
-      textureMap: headIdx !== 3
-        ? data.textures.head[headIdx || 0][bedIdx][matIdx].textureMap as string
-        : data.textures.head[headIdx || 0][bedIdx][matIdx].textureMap[legMatIdx],
+      textureMap: headIdx !== undefined ? (
+        headIdx !== 3
+          ? data.textures.head[headIdx][bedIdx][matIdx].textureMap as string
+          : data.textures.head[headIdx][bedIdx][matIdx].textureMap[legMatIdx]
+      ) : (
+        data.headDefault[bedIdx].value !== 3
+          ? data.textures.head[data.headDefault[bedIdx].value][bedIdx][matIdx].textureMap as string
+          : data.textures.head[data.headDefault[bedIdx].value][bedIdx][matIdx].textureMap[legMatIdx]
+      )
     },
     leg: {
       name: !bedIdx
@@ -81,46 +88,44 @@ function Configurator(): JSX.Element {
     history.push(path);
   }
 
-  function Loader(): JSX.Element {
-    return (
-      <LoaderBase progress={progress}>
-        <Text inline textAlign="center">
-          <Trans>Loading {MODEL !== 'done' ? t`Model` : (TEXTURES !== 'done' ? t`Textures` : '')}</Trans>
-        </Text>
-      </LoaderBase>
-    );
-  }
-
   if (
     isLoading &&
     scene.children.length < 3 &&
     TEXTURES !== 'done' &&
     MODEL !== 'done'
   ) {
-    return <Loader />;
+    return <LoaderBase percentage={progress} />;
   }
 
   return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col sm={4} md={3} lg={4} order={{ xs: 2, sm: 1, md: 1, lg: 1 }}>
-            <Navigation data={data} />
-          </Col>
-          <Col lg={8} order={{ xs: 1, sm: 1, md: 2, lg: 2 }}>
-            <StyledRelativeView>
-              {isLoading && <Loader />}
-              <Canvas />
-              <StyledAbsoluteView bottom="1rem" right="1rem">
-                <Button onClick={handleOnClick}>
-                  <Trans>Summary</Trans>
-                </Button>
-              </StyledAbsoluteView>
-            </StyledRelativeView>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container fluid>
+      <Row>
+        <Col
+          sm={3}
+          md={3}
+          lg={4}
+          order={{ xs: 2, sm: 1, md: 1, lg: 1 }}
+        >
+          <Navigation data={data} />
+        </Col>
+        <Col
+          sm={5}
+          md={5}
+          lg={8}
+          order={{ xs: 1, sm: 2, md: 2, lg: 2 }}
+        >
+          <StyledRelativeView>
+            {isLoading && <LoaderBase percentage={progress} />}
+            <Canvas />
+            <StyledAbsoluteView bottom="1rem" right="1rem">
+              <Button onClick={handleOnClick}>
+                <Trans>Summary</Trans>
+              </Button>
+            </StyledAbsoluteView>
+          </StyledRelativeView>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

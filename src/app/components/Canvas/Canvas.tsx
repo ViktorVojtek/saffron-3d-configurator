@@ -4,12 +4,13 @@ import {
   PCFSoftShadowMap,
   sRGBEncoding,
 } from 'three';
-import { isMobileOnly, withOrientationChange } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { cameraPosition, cameraTarget } from '../../constants';
 import {
   useAnimate,
   useCamera,
   useControls,
+  useOrientation,
   useRenderer,
   useResize,
   useScene
@@ -18,22 +19,15 @@ import Lights from '../../three/objects/Lights';
 import Ground from '../../three/objects/Ground';
 import { StyledWrapper } from './Canvas.styled';
 
-type Props = {
-  isLandscape?: boolean;
-  isPortraint?: boolean;
-};
-
-function Canvas(props: Props): JSX.Element {
-  const { isLandscape } = props;
-
+function Canvas(): JSX.Element {
   const canvasWrapper = useRef<HTMLDivElement>(null);
 
   const animate = useAnimate();
   const [camera] = useCamera();
   const [controls] = useControls();
+  const orientation = useOrientation();
   const [renderer] = useRenderer();
   const [scene] = useScene();
-
   useResize();
 
   // Setup webgl base
@@ -62,19 +56,17 @@ function Canvas(props: Props): JSX.Element {
       scene.add(Ground());
     }
 
-    const width: number = isMobileOnly ? window.innerWidth : canvasWrapper.current.parentElement?.clientWidth as number;
-    const { innerHeight } = window;
-    const height: number = isMobileOnly
+    const { devicePixelRatio: pixelRatio, innerHeight } = window;
+
+    const width: number = isMobile ? screen.availWidth : canvasWrapper.current.parentElement?.clientWidth as number;
+    const height: number = isMobile
       ? Math.round(
-        innerHeight / (2.5)
+        screen.availHeight / (orientation === 'landscape' ? 1.25 : 2.5)
       )
       : innerHeight;
 
-    // const viewerWidth = Math.round(width / window.devicePixelRatio);
-    // const viewerHeight = Math.round(height / window.devicePixelRatio);
-
     renderer.clearDepth();
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.setPixelRatio(pixelRatio || 1);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = PCFSoftShadowMap;
     renderer.toneMapping = ACESFilmicToneMapping;
@@ -103,7 +95,7 @@ function Canvas(props: Props): JSX.Element {
     };
   }, [camera, controls, renderer, scene]);
 
-  return <StyledWrapper ref={canvasWrapper} position={isMobileOnly ? 'static' : 'absolute'} />;
+  return <StyledWrapper ref={canvasWrapper} />;
 }
 
-export default withOrientationChange(Canvas);
+export default Canvas;

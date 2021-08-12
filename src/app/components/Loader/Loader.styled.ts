@@ -1,26 +1,26 @@
 import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
-  background-color: #fff;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -50px;
-  margin-top: -50px;
-  z-index: 1;
+  transform: translate(-50%, -50%);
 `;
 
-export const StyledCircle = styled.circle<{
-  circumference: number;
-}>`
-  transition: 0.35s stroke-dashoffset;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  stroke: #525151;
-  stroke-width: 4;
-  stroke-dasharray: ${({ circumference }) => circumference};
-  stroke-dashoffset: ${({ offset }) => offset};
+export const StyledCircleBackground = styled.circle`
+  fill: #fff;
+  stroke: ${({ theme }) => (theme.palette.common.grey)};
+`;
+
+export const StyledCircleProgress = styled.circle`
+  fill: none;
+  stroke: ${({ theme }) => (theme.palette.common.black)};
+  stroke-linecap: round;
+  stroke-linejoin: round;
+`;
+
+export const StyledCircleText = styled.text`
+  font-size: 1em;
+  font-weight: bold;
+  fill: ${({ theme }) => (theme.palette.common.black)};
 `;

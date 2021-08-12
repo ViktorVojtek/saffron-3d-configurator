@@ -4,7 +4,7 @@ export default function useRadians(
   progress: number,
   ref: MutableRefObject<any>
 ): [number, number] {
-  const [radians, setRadians] = useState([1, 250]);
+  const [radians, setRadians] = useState([0, 250]);
 
   useEffect(() => {
     if (!ref.current || !progress) {
