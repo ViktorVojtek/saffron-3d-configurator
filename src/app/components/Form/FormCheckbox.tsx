@@ -19,9 +19,7 @@ export default function FormCheckbox(props: Props) {
       </label>
       {meta.touched && meta.error ? (
         <ErrorMessage>
-          <p>
-            {meta.error}
-          </p>
+          {meta.error}
         </ErrorMessage>
       ) : null}
     </StyledWrapper>

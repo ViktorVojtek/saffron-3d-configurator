@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react';
+import React, { StrictMode, useEffect, useLayoutEffect } from 'react';
 import {
   HashRouter as Router,
   Switch,
@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
+import smoothscroll from 'smoothscroll-polyfill';
 import { useLocale, useDynamicLangActivate } from './hooks';
 import { CameraProvider } from './hooks/useCamera';
 import { ControlsProvider } from './hooks/useControls';
@@ -25,6 +26,10 @@ import Summary from './pages/Summary';
 export default function App() {
   const locale = useLocale();
 
+  useLayoutEffect(() => {
+    smoothscroll.polyfill();
+  }, []);
+  
   useEffect(() => {
     useDynamicLangActivate(locale || 'en');
   }, [locale]);

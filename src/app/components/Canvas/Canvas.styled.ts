@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledWrapper = styled.div<{ position?: 'absolute' | 'static'}>`
-  // position: ${({ position }) => (position || 'absolute')};
-  top: 0;
-  left: 0;
+export const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;

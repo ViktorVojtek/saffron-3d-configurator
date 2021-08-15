@@ -4,6 +4,7 @@ import {
   StyledWrapper,
   StyledImage,
   StyledItem,
+  StyledItemWrapper,
   StyledH3,
   StyledP,
   StyledContainer,
@@ -52,8 +53,8 @@ function Carousel(props: Props) {
       return;
     }
 
-    container?.current?.scroll({
-      left: container?.current?.offsetWidth * selected,
+    container.current?.scroll({
+      left: container.current?.getBoundingClientRect().width * selected,
       top: 0,
       behavior: 'smooth'
     });
@@ -63,9 +64,17 @@ function Carousel(props: Props) {
 
   function handleScrollBy(_direction: Direction): void {
     const carousel = container.current;
-    const negative = _direction === 'left' ? -1 : 1;
-    const left: number = (carousel?.children[selected]?.clientWidth as number) * negative;
+    const item = carousel?.children[selected] as HTMLDivElement;
+    const style = (item as any)?.currentStyle || window?.getComputedStyle(item);
 
+    const itemWidth = item.getBoundingClientRect().width;
+    const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    const border = parseFloat(style.borderLeft) + parseFloat(style.borderRight);
+    const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    const negative = _direction === 'left' ? -1 : 1;
+
+    const left = ((itemWidth + margin - border - padding) + 1) * negative;
+ 
     carousel?.scrollBy({
       left,
       top: 0,
@@ -95,15 +104,16 @@ function Carousel(props: Props) {
           const { description, image, title } = item;
 
           return (
-            <StyledItem
-              onClick={() => handleOnItemClick(i)}
-              key={title}
-              selected={i === selected}
-            >
-              <StyledImage src={image} alt={title} />
-              <StyledH3>{title}</StyledH3>
-              {description && (<StyledP>{description}</StyledP>)}
-            </StyledItem>
+            <StyledItemWrapper key={`${title}-${i}`}>
+              <StyledItem
+                onClick={() => handleOnItemClick(i)}
+                selected={i === selected}
+              >
+                <StyledImage src={image} alt={title} />
+                <StyledH3>{title}</StyledH3>
+                {description && (<StyledP>{description}</StyledP>)}
+              </StyledItem>
+            </StyledItemWrapper>
           );
         })}
       </StyledContainer>

@@ -13,7 +13,7 @@ import {
 } from '../../hooks';
 import Button from '../../components/Button';
 import Canvas from '../../components/Canvas';
-import LoaderBase from '../../components/Loader';
+import Loader, { StyledLoaderWrapper } from '../../components/Loader';
 import Navigation from '../../components/Navigation';
 import { StyledAbsoluteView, StyledRelativeView } from './Configurator.styled';
 
@@ -65,9 +65,7 @@ function Configurator(): JSX.Element {
       )
     },
     leg: {
-      name: !bedIdx
-        ? data.leg[legIdx].title.toLowerCase()
-        : data.leg[legIdx < 1 ? 1 : legIdx].title.toLowerCase(),
+      name: data.leg[legIdx].title.toLowerCase(),
       position: data.position[bedIdx].leg,
       textureMap: data.textures.leg[bedIdx][legMatIdx].textureMap
     },
@@ -94,28 +92,36 @@ function Configurator(): JSX.Element {
     TEXTURES !== 'done' &&
     MODEL !== 'done'
   ) {
-    return <LoaderBase percentage={progress} />;
+    return (
+      <StyledLoaderWrapper>
+        <Container fluid>
+          <Row>
+            <Col align="center" justify="center">
+              <Loader percentage={progress} />
+            </Col>
+          </Row>
+        </Container>
+      </StyledLoaderWrapper>
+    );
   }
 
   return (
     <Container fluid>
       <Row>
         <Col
-          sm={3}
           md={3}
           lg={4}
-          order={{ xs: 2, sm: 1, md: 1, lg: 1 }}
+          order={{ xs: 2, sm: 2, md: 1, lg: 1 }}
         >
           <Navigation data={data} />
         </Col>
         <Col
-          sm={5}
           md={5}
           lg={8}
-          order={{ xs: 1, sm: 2, md: 2, lg: 2 }}
+          order={{ xs: 1, sm: 1, md: 2, lg: 2 }}
         >
-          <StyledRelativeView>
-            {isLoading && <LoaderBase percentage={progress} />}
+          <StyledRelativeView id="canvas-r-wrap">
+            {isLoading && <Loader percentage={progress} />}
             <Canvas />
             <StyledAbsoluteView bottom="1rem" right="1rem">
               <Button onClick={handleOnClick}>

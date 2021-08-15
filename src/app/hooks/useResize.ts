@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 import { PerspectiveCamera } from 'three';
 import useAnimate from './useAnimate';
 import useCamera from './useCamera';
@@ -20,18 +20,19 @@ export default function useResize(): void {
     }
 
     function onWindowResize(): void {
-      const { devicePixelRatio: ratio, innerHeight } = window;
+      const { devicePixelRatio: ratio } = window;
 
       const width: number = isMobile
-        ? screen.availWidth
-        : renderer.domElement?.parentElement?.parentElement?.offsetWidth as number;
+        ? window.innerWidth
+        : document?.getElementById('canvas-r-wrap')?.clientWidth as number;
+
       const height: number = isMobile
         ? Math.round(
-          screen.availHeight / (
-            orientation === 'landscape' ? 2 : 2.5
+          window.innerHeight / (
+            orientation === 'landscape' ? 1.25 : 2.5
           )
         )
-        : innerHeight;
+        : document?.getElementById('canvas-r-wrap')?.clientHeight as number;
 
       renderer.setSize(width, height, true);
       renderer.compile(scene, (camera as PerspectiveCamera));

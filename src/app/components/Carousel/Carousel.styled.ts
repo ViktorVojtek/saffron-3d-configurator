@@ -27,16 +27,25 @@ export const StyledContainer = styled.div`
   align-items: center;
   height: 100%;
   display: flex;
-  overflow-x: auto;
+  overflow-x: scroll;
   scroll-snap-type: x mandatory;
   width: 100%;
 `;
 
+export const StyledItemWrapper = styled.div`
+  flex: 0 0 100%;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`;
+
 export const StyledItem = styled.div<{ selected: boolean }>`
   border: 4px solid transparent;
+  box-sizing: content-box;
   height: 70%;
   margin: 10%;
-  flex: 0 0 75%;
+  flex: 0 0 80%;
   transition: all 0.3s ease 0s;
   scroll-snap-align: center;
   scroll-behavior: smooth;

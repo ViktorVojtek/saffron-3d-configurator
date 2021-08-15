@@ -26,7 +26,7 @@ function Navigation(props: Props): JSX.Element {
   const { data } = props;
   const [{ bedIdx, headIdx, matIdx, legIdx, legMatIdx, tuftIdx }, dispatch] = useStore();
   const locale = useLocale();
-  const [_isLoading, loading] = useLoading();
+  const [isLoading, loading] = useLoading();
   const [navdata, setData] = useNavData();
   const [active, setActive] = useNavigation();
 
@@ -39,14 +39,12 @@ function Navigation(props: Props): JSX.Element {
       return null;
     }
 
-    const idx = getIdx();
-
     function getIdx(): number {
       switch(item.action as ActionType) {
         case 'BED_IDX':
           return bedIdx;
         case 'HEAD_IDX':
-          return headIdx || 0;
+          return headIdx || data.headDefault[bedIdx].value;
         case 'MAT_IDX':
           return matIdx;
         case 'TUFT_IDX':
@@ -60,13 +58,22 @@ function Navigation(props: Props): JSX.Element {
       }
     }
 
+    const idx = getIdx();
+
     function onClick(n: number): void {
-      if (idx === n) {
+      const m = item.action === 'LEG_IDX' ? (bedIdx === 0 ? n : n + 1) : n;
+
+      if (idx === m || isLoading) {
         return;
       }
 
       loading(true);
-      dispatch({ type: item.action, payload: n });
+      
+      if (item.action === 'BED_IDX' && m > 0 && legIdx === 0) {
+        dispatch({ type: 'LEG_IDX', payload: 1 });
+      }
+
+      dispatch({ type: item.action, payload: m });
     }
 
     function handleOnButtonPress(n: number): void {
@@ -77,6 +84,16 @@ function Navigation(props: Props): JSX.Element {
       setActive(n);
     }
 
+    const selected = (
+      item.action === 'LEG_IDX'
+        ? (
+          bedIdx !== 0 && idx > 1
+          ? idx - 1
+          : (bedIdx !== 0 && legIdx === 1 ? 0 : legIdx)
+        )
+        : idx
+    );
+
     return (
       <StyledLi active={active === i} key={item.title.toLowerCase()}>
         <StyledButton active={active === i} onClick={() => handleOnButtonPress(i)}>{item.title}</StyledButton>
@@ -84,7 +101,7 @@ function Navigation(props: Props): JSX.Element {
           <Carousel
             data={item.data}
             onItemPress={onClick}
-            selected={idx}
+            selected={selected} // idx
             visible={active === i}
           />
         </NavigationItem>

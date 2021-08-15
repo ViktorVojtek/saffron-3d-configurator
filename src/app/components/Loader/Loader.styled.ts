@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const StyledLoaderWrapper = styled.div`
+  width: 100%;
+  min-height: 250px;
+`;
+
 export const StyledWrapper = styled.div`
   position: absolute;
   top: 50%;

@@ -30,6 +30,8 @@ function Canvas(): JSX.Element {
   const [scene] = useScene();
   useResize();
 
+  const clientHeight = document?.getElementById('canvas-r-wrap')?.clientHeight;
+
   // Setup webgl base
   useEffect(() => {
     if (!canvasWrapper.current ||
@@ -56,14 +58,16 @@ function Canvas(): JSX.Element {
       scene.add(Ground());
     }
 
-    const { devicePixelRatio: pixelRatio, innerHeight } = window;
+    const { devicePixelRatio: pixelRatio } = window;
 
-    const width: number = isMobile ? screen.availWidth : canvasWrapper.current.parentElement?.clientWidth as number;
+    const width: number = isMobile
+      ? window.innerWidth
+      : document?.getElementById('canvas-r-wrap')?.clientWidth as number;
     const height: number = isMobile
       ? Math.round(
-        screen.availHeight / (orientation === 'landscape' ? 1.25 : 2.5)
+        window.innerHeight / (orientation === 'landscape' ? 1.25 : 2.5)
       )
-      : innerHeight;
+      : clientHeight as number;
 
     renderer.clearDepth();
     renderer.setPixelRatio(pixelRatio || 1);
@@ -76,11 +80,15 @@ function Canvas(): JSX.Element {
     renderer.physicallyCorrectLights = true;
 
     const canvas = renderer.domElement;
+
+    // canvas.style.borderColor = 'red';
+    // canvas.style.borderWidth = '1px';
+    // canvas.style.borderStyle = 'solid';
     
     renderer.setSize(width, height, true);
     renderer.compile(scene, camera);
     renderer.setPixelRatio(window.devicePixelRatio || 1);
-
+  
     camera.aspect = (width / height);
     camera.updateProjectionMatrix();
 
@@ -93,7 +101,7 @@ function Canvas(): JSX.Element {
     return () => {
       controls?.removeEventListener('change', animate);
     };
-  }, [camera, controls, renderer, scene]);
+  }, [camera, controls, renderer, scene, clientHeight]);
 
   return <StyledWrapper ref={canvasWrapper} />;
 }

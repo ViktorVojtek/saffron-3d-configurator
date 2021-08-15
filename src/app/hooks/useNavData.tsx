@@ -86,7 +86,7 @@ export default function useNavData(): [
         default: undefined;
       }
     });
-  }, [data]);
+  }, [data, bedIdx]);
 
   function handleSetData(_data: Object, _locale: 'cs' | 'en' | 'sk'): void {
     setLocale(_locale);

@@ -32,7 +32,7 @@ export default function SummaryPage(): JSX.Element {
           </Col>
         </Row>
         <Row>
-          <Col order={{ xs: 2, sm: 1, md: 1, lg: 1 }} align="center">
+          <Col xs={4} sm={8} md={4} lg={6} order={{ xs: 2, sm: 2, md: 1, lg: 1 }} align="center">
             {screenshots && screenshots.length > 0 && (
               screenshots.map((item, i) => (
                 <StyledImg
@@ -43,13 +43,13 @@ export default function SummaryPage(): JSX.Element {
               ))
             )}
           </Col>
-          <Col order={{ xs: 1, sm: 1, md: 2, lg: 2 }}>
+          <Col xs={4} sm={8} md={4} lg={6} order={{ xs: 1, sm: 1, md: 2, lg: 2 }}>
             <h2>
               <Trans>Summary</Trans>
             </h2>
             <Hr />
             <Summary />
-
+            <Hr />
             <Form onSubmit={show} />
           </Col>
         </Row>
